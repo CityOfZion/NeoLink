@@ -5,7 +5,7 @@ This is a Chrome extension wallet for the Neo Smart Economy.
 
 Currently the project is undergoing heavy development and is hardcoded to only operate on TestNet.
 
-![alt](https://github.com/phetter/NeoLink/blob/master/neolink_alpha_ss.png)
+![alt](https://i.gyazo.com/816b21e8fcbb35073919603c9d6030c1.gif)
 
 
 ## Current Features
@@ -34,13 +34,18 @@ Currently the project is undergoing heavy development and is hardcoded to only o
 
 ## Setup
 
-yarn install
+`yarn install`
 
-cd node_modules/neon-js; npm run-script build; cd ../../
+```
+cd node_modules/neon-js
+npm install
+npm run-script build
+cd ../../
+```
 
-yarn run start &#35; (for development with live reload)
+`yarn run start` (for development with live reload)
 
-yarn run build &#35; (production)
+`yarn run build` (production)
 
 
 Your unpacked extension will be in the ./build/ folder.
@@ -88,6 +93,5 @@ document.getElementById("runInvokeButton).addEventListener("click",
 Please note that currently the code is limited to a maximum of three arguments to the smart contract.
 
 TODO: add arbritrary number of arguments
-
 
 
