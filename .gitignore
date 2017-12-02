@@ -1,4 +1,4 @@
 node_modules
 build
 secrets.*.js
-frontend-concept/*
+frontend_concept
