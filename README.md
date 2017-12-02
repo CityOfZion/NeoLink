@@ -5,7 +5,7 @@ This is a Chrome extension wallet for the Neo Smart Economy.
 
 Currently the project is undergoing heavy development and is hardcoded to only operate on TestNet.
 
-![alt](https://i.gyazo.com/b4465c41c2e0b5d0c5e74c151bb4dc87.gif)
+![alt](https://i.gyazo.com/816b21e8fcbb35073919603c9d6030c1.gif)
 
 
 ## Current Features
