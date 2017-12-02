@@ -245,12 +245,12 @@ html, body {
       width: 100%;
       height: calc(100% - 95px);
       background: #f9f9f9; }
-      #container .mockup .content-cont .todays {
+      #container .mockup .content-cont .card {
         position: absolute;
         width: 100%;
         height: 100%;
         transition: width 0.3s; }
-        #container .mockup .content-cont .todays .plan-card {
+        #container .mockup .content-cont .card .plan-card {
           position: relative;
           width: 90%;
           height: 60px;
@@ -261,67 +261,73 @@ html, body {
           box-shadow: 0px 6px 8px 2px rgba(0, 0, 0, 0.03);
           margin-bottom: 17px;
           overflow: hidden; }
-          #container .mockup .content-cont .todays .plan-card .card-info {
+          #container .mockup .content-cont .card .plan-card .card-info {
             float: left;
             width: 25%;
             height: 100%;
             border-right: 2px solid rgba(0, 0, 0, 0.04);
             text-align: center; }
-            #container .mockup .content-cont .todays .plan-card .card-info .date {
+            #container .mockup .content-cont .card .plan-card .card-info .date {
               padding: 4px 0;
               margin: 0;
               font-size: 12px;
               color: rgba(0, 0, 0, 0.5);
               font-weight: 600; }
-              #container .mockup .content-cont .todays .plan-card .card-info .date span {
+              #container .mockup .content-cont .card .plan-card .card-info .date span {
                 display: block;
                 font-size: 9px;
                 padding-top: 6px; }
-            #container .mockup .content-cont .todays .plan-card .card-info .urgent {
+            #container .mockup .content-cont .card .plan-card .card-info .urgent {
               font-size: 8px;
               color: rgba(0, 0, 0, 0.25);
               font-weight: 600; }
-              #container .mockup .content-cont .todays .plan-card .card-info .urgent span {
+              #container .mockup .content-cont .card .plan-card .card-info .urgent span {
                 font-size: 10px;
                 color: #86d13e; }
-          #container .mockup .content-cont .todays .plan-card .card-plans {
+          #container .mockup .content-cont .card .plan-card .card-plans {
             float: left;
             width: 74%;
             height: 100%; }
-            #container .mockup .content-cont .todays .plan-card .card-plans .todo {
+            #container .mockup .content-cont .card .plan-card .card-plans .todo {
               margin: 0;
               padding: 4px 10px;
               font-size: 8px;
               font-weight: 600;
               color: rgba(0, 0, 0, 0.4);
               line-height: 13px; }
-              #container .mockup .content-cont .todays .plan-card .card-plans .todo span {
+              #container .mockup .content-cont .card .plan-card .card-plans .todo span {
                 font-size: 10px;
                 display: block;
                 color: rgba(0, 0, 0, 0.6); }
-        #container .mockup .content-cont .todays .upcoming {
+        #container .mockup .content-cont .card .card-container {
+          display: flex;
+          flex-direction: column;
+          align-self: center;
+          align-items: center;
+          justify-content: center;
           position: relative;
           width: 90%;
           height: auto;
           background: white;
           border-radius: 5px;
           margin: auto;
-          box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.03); }
-          #container .mockup .content-cont .todays .upcoming .up-title {
+          box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.03);
+          padding: 10px; }
+          #container .mockup .content-cont .card .card-container .card-title {
             padding: 10px 15px;
             margin: 0;
-            font-size: 12px;
+            font-size: 18px;
             color: rgba(0, 0, 0, 0.5);
-            font-weight: 600; }
-          #container .mockup .content-cont .todays .upcoming .up-plan {
+            font-weight: 400; }
+          #container .mockup .content-cont .card .card-container .card-content {
             list-style: none;
             margin: 0;
             padding: 5px 15px; }
-            #container .mockup .content-cont .todays .upcoming .up-plan li {
+            #container .mockup .content-cont .card .card-container .card-content li {
               position: relative;
               font-size: 10px;
               padding: 8px 0px; }
-              #container .mockup .content-cont .todays .upcoming .up-plan li .roundhead {
+              #container .mockup .content-cont .card .card-container .card-content li .roundhead {
                 width: 25px;
                 height: 25px;
                 float: left;
@@ -329,16 +335,16 @@ html, body {
                 margin-right: 10px;
                 z-index: 100;
                 text-align: center; }
-                #container .mockup .content-cont .todays .upcoming .up-plan li .roundhead i {
+                #container .mockup .content-cont .card .card-container .card-content li .roundhead i {
                   line-height: 25px;
                   color: white;
                   font-size: 13px; }
-              #container .mockup .content-cont .todays .upcoming .up-plan li .secondo {
+              #container .mockup .content-cont .card .card-container .card-content li .secondo {
                 display: block;
                 font-size: 9px;
                 font-weight: 600;
                 color: rgba(0, 0, 0, 0.2); }
-              #container .mockup .content-cont .todays .upcoming .up-plan li .up-date {
+              #container .mockup .content-cont .card .card-container .card-content li .card-info {
                 position: absolute;
                 right: 0;
                 top: 0;
@@ -348,7 +354,7 @@ html, body {
                 font-weight: 600;
                 color: rgba(0, 0, 0, 0.6);
                 text-align: center; }
-                #container .mockup .content-cont .todays .upcoming .up-plan li .up-date .up-priority {
+                #container .mockup .content-cont .card .card-container .card-content li .card-info .up-priority {
                   display: block;
                   font-weight: 300;
                   font-size: 8px;

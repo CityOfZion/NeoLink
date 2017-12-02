@@ -320,7 +320,7 @@ html, body {
       width: 100%;
       height: calc(100% - 95px);
       background: #f9f9f9;
-      .todays {
+      .card {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -384,7 +384,12 @@ html, body {
             }
           }
         }
-        .upcoming {
+        .card-container {
+          display:flex;
+          flex-direction:column;
+          align-self:center;
+          align-items:center;
+          justify-content:center;
           position: relative;
           width: 90%;
           height: auto;
@@ -392,14 +397,17 @@ html, body {
           border-radius: 5px;
           margin: auto;
           box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.03);
-          .up-title {
+          padding: 10px;
+
+          .card-title {
             padding: 10px 15px;
             margin: 0;
-            font-size: 12px;
+            font-size: 18px;
             color: rgba(0, 0, 0, 0.5);
-            font-weight: 600;
+            font-weight: 400;
           }
-          .up-plan {
+          .card-content {
+
             list-style: none;
             margin: 0;
             padding: 5px 15px;
@@ -427,7 +435,7 @@ html, body {
                 font-weight: 600;
                 color: rgba(0, 0, 0, 0.2);
               }
-              .up-date {
+              .card-info {
                 position: absolute;
                 right: 0;
                 top: 0;
