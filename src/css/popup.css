@@ -36,6 +36,8 @@ html, body {
     color: white;
     border: none;
     background-color: transparent; }
+  #container #networkStatus {
+    font-size: 11px; }
   #container .content {
     display: flex;
     flex-direction: column;
