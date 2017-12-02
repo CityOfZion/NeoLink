@@ -34,13 +34,18 @@ Currently the project is undergoing heavy development and is hardcoded to only o
 
 ## Setup
 
-yarn install
+`yarn install`
 
-cd node_modules/neon-js; npm run-script build; cd ../../
+```
+cd node_modules/neon-js
+npm install
+npm run-script build
+cd ../../
+```
 
-yarn run start &#35; (for development with live reload)
+`yarn run start` (for development with live reload)
 
-yarn run build &#35; (production)
+`yarn run build` (production)
 
 
 Your unpacked extension will be in the ./build/ folder.
