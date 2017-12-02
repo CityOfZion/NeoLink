@@ -5,7 +5,7 @@ This is a Chrome extension wallet for the Neo Smart Economy.
 
 Currently the project is undergoing heavy development and is hardcoded to only operate on TestNet.
 
-![alt](https://github.com/phetter/NeoLink/blob/master/neolink_alpha_ss.png)
+![alt](https://i.gyazo.com/b4465c41c2e0b5d0c5e74c151bb4dc87.gif)
 
 
 ## Current Features
@@ -93,6 +93,5 @@ document.getElementById("runInvokeButton).addEventListener("click",
 Please note that currently the code is limited to a maximum of three arguments to the smart contract.
 
 TODO: add arbritrary number of arguments
-
 
 
