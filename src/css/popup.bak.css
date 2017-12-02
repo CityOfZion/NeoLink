@@ -1,0 +1,89 @@
+body {
+    min-width:400px;
+    margin:20px;
+    background: #444444;
+    color: #03d039;
+}
+
+button {
+    border: 2px solid currentColor;
+    background-color: #03a330;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    border-color: #444444;
+    #font-family: roboto;
+    font-size: 1rem;
+    font-weight: 100;
+    overflow: hidden;
+    #padding: 1rem 2rem;
+    position: relative;
+    text-decoration: none;
+}
+
+input, textarea {
+  background-color : #d1d1d1;
+}
+
+.wif {
+    padding: 1px;
+    width: 230px;
+}
+
+.address {
+    passing: 1px;
+    width: 200px;
+}
+
+.netStat {
+    position: absolute;
+    right: 45px;
+    top: 5px;
+    margin: 5px;
+}
+
+.logo {
+   position: absolute;
+    left: 45px;
+    top: 0px;
+    margin: 5px;
+}
+
+.neoLink {
+    top: 0px;
+    text-align: center;
+    color: #cccccc;
+}
+.vertical-menu {
+    width: 100px; /* Set a width if you like */
+    position: fixed;
+    min-height: 300px;
+}
+
+.vertical-menu button {
+    border: 2px solid currentColor;
+    background-color: #03a330;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    border-color: #444444;
+    #font-family: roboto;
+    font-size: 1rem;
+    font-weight: 100;
+    overflow: hidden;
+    #padding: 1rem 2rem;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    width: 120px;
+}
+
+.content {
+    margin-left:120px;
+    padding:1px 16px;
+    height:300px;
+    min-height: 220px;
+    max-width:200px;
+    word-break:break-all;
+}
+
+button:focus {outline:0;}
+input:focus {outline:0;}

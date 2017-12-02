@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
-  <img class="logo" src="img/icon-50.png" hspace="25" align="left" height="50" width="50">
-  <h1 class="neoLink">NeoLink</h1>
-  <div class="netStat" id="networkStatus"></div>
-  <div id="nav"></div>
-  <div id="content"></div>
+<div id="container">
+    <input type="checkbox" class="nav__input" id="nav_input">
+    <input class="rad" id="rad2" type="radio" name="rad">
+    <input class="rad" id="rad1" type="radio" name="rad" checked>
+    <div class="mockup">
+        <!--<div class="bubble-menu"><i class="material-icons">add</i></div>-->
+        <div class="top" id="tendina">
+            <div class="status">
+                <ul>
+                    <li><i class="material-icons data">import_export</i>
+                        <div class="netStat" id="networkStatus"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu">
+                <div class="sotto-menu">
+                    <label class="burger" for="nav_input"><i class="material-icons">menu</i></label>
+                    <p class="today-label"></p>
+                </div>
+            </div>
+
+            <div id="nav"></div>
+
+        </div>
+        <div id="content"></div>
+    </div>
+</div>
 </body>
 </html>

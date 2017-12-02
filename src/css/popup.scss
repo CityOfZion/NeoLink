@@ -1,4 +1,5 @@
 @import url('http://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 $neo-dark: lighten(#73BC2D, 7.5%);
 $neo-light: darken(#B9E009, 3%);
@@ -9,14 +10,81 @@ html, body {
 }
 
 #container {
-  -moz-transform: scale(1.2);
-  zoom: 1.2;
+  //-moz-transform: scale(1.2);
+  //zoom: 1.2;
   position: relative;
   display: flex;
   margin: auto;
   height: auto;
   justify-content: center;
   flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+
+  #content, #nav {
+    margin: 5px;
+  }
+
+  input {
+    border-radius: 4px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-width: 1px;
+    align-self:center;
+    padding: 5px;
+  }
+
+  select{
+    margin-top:5px;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-width: 1px;
+    align-self:center;
+    padding: 5px;
+  }
+
+  #nav {
+    #menu-items {
+      button {
+        font-size: 16px;
+        color: white;
+        border: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .content {
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    margin: 0 auto;
+  }
+
+  #content {
+    width:100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+
+    button {
+      display: block;
+      background: $neo-dark;
+      border-style: none;
+      border-radius: 4px;
+      color: white;
+      padding: 5px;
+      min-width: 100px;
+      align-self:center;
+      margin: 10px auto;
+    }
+  }
 
   .mockup {
     position: relative;
@@ -26,6 +94,9 @@ html, body {
     height: 550px;
     overflow: hidden;
 
+    #loginModalContent{
+      width:100%;
+    }
 
 
     .bubble-menu {
@@ -538,9 +609,10 @@ html, body {
 }
 
 .nav__input:checked ~ .mockup #tendina {
-  height: 240px;
+  height: 170px;
   transition: height 0.3s;
 }
+
 
 #rad1:checked ~ .mockup .selection .liselect {
   left: 23px;

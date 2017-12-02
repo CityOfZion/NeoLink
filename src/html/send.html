@@ -1,15 +1,13 @@
 <div class="content">
-<h3> Send </h3>
-Address: <br><input type='text' id='sendAddress'/><br>
-Amount: <br><input type='text' id='sendAmount'/><br>
-Type: <br>
-<!-- <input type='text' id='sendType'/> -->
-<select id='sendType'>
-  <option value="Neo">Neo</option>
-  <option value="Gas">Gas</option>
-</select>
-<br><br>
-<button id="sendButton">Send</button>
-<br><br>
-<div id="modalContent"></div>
+    <h3> Send </h3>
+    <input type='text' id='sendAddress' placeholder="Address"/><br>
+    <input type='text' id='sendAmount' placeholder="Amount"/>
+    <!-- <input type='text' id='sendType'/> -->
+    <label for="sendType" style="margin-top:5px;">Type:</label>
+    <select id='sendType'>
+        <option value="Neo">NEO</option>
+        <option value="Gas">Gas</option>
+    </select>
+    <button id="sendButton">Send</button>
+    <div id="modalContent"></div>
 </div>
