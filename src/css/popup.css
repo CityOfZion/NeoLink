@@ -185,7 +185,7 @@ html, body {
           #container .mockup .top .menu .sotto-menu .today-label::after {
             content: 'NeoLink';
             display: block;
-            font-size: 15px;
+            font-size: 20px;
             padding: 1px 0px;
             color: white; }
       #container .mockup .top .calendar {
