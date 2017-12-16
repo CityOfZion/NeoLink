@@ -5,9 +5,13 @@ var webpack = require("webpack"),
     HtmlWebpackPlugin = require("html-webpack-plugin"),
     WriteFilePlugin = require("write-file-webpack-plugin");
 
-// load the secrets
-var alias = {};
+// Setup react compat mode for preact
+var alias = {
+  "react": "preact-compat",
+  "react-dom": "preact-compat"
+};
 
+// load the secrets
 var secretsPath = path.join(__dirname, ("secrets." + env.NODE_ENV + ".js"));
 
 var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
@@ -18,6 +22,7 @@ if (fileSystem.existsSync(secretsPath)) {
 
 var options = {
   entry: {
+    app: path.join(__dirname, "src", "js", "app.js"),
     popup: path.join(__dirname, "src", "js", "popup.js"),
     options: path.join(__dirname, "src", "js", "options.js"),
     background: path.join(__dirname, "src", "js", "background.js"),
@@ -39,9 +44,30 @@ var options = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['react-hmre']
+        }
+      },
+      {
+        test: /\.(css)$/,
+        include: [path.resolve(__dirname, 'node_modules/preact-material-components')],
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[local]" },
+          { loader: "postcss-loader" }
+        ]
+      },
+      {
         test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]" },
+          { loader: "postcss-loader" }
+        ],
+        include: [path.resolve(__dirname, 'src/app')]
       },
       {
         test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
@@ -56,6 +82,11 @@ var options = {
     ]
   },
   resolve: {
+    modules: [
+      path.resolve(__dirname, "src/lib"),
+      path.resolve(__dirname, "node_modules"),
+      'node_modules'
+    ],
     alias: alias
   },
   plugins: [

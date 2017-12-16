@@ -1,0 +1,2 @@
+export const SWITCH_NETWORK = 'SWITCH_NETWORK'
+export const SET_ACCOUNT = 'SET_ACCOUNT'

@@ -1,0 +1,25 @@
+.header {
+  background-color: #86d13e;
+  height: 65px;
+}
+
+.titleBar {
+    padding: 8px 0 0 8px;
+}
+
+.menuNavWrapper {
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+}
+
+.titleWrapper {
+  vertical-align: top;
+  padding: 5px;
+  display: inline-block;
+}
+
+.titleName {
+  font-size: 20px;
+  color: white;
+}
