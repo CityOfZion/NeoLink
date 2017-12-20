@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import Neon, { api } from '@cityofzion/neon-js'
 
+import style from './SendInvoke.css'
+
 @connect(
   state => ({
     network: state.network,
@@ -31,8 +33,17 @@ export default class SendInvoke extends Component {
   resetState = () => {
     this.setState({
       errorMsg: '',
-      loading: false
+      loading: false,
+      txid: ''
     })
+  }
+
+  String2Hex (tmp) {
+    var str = ''
+    for (var i = 0; i < tmp.length; i++) {
+      str += tmp[i].charCodeAt(0).toString(16)
+    }
+    return str
   }
 
   handleSubmit = (event) => {
@@ -40,30 +51,68 @@ export default class SendInvoke extends Component {
     const { network, account } = this.props
     this.setState({
       loading: true,
-      errorMsg: ''
+      errorMsg: '',
+      txid: ''
     })
+
+    if (!this.scriptHash || !this.scriptHash.value || !this.operation || !this.operation.value || !this.amount || !this.amount.value) {
+      this.setState({
+        loading: false,
+        errorMsg: 'Error! Script hash, operation and amount are all required!'
+      })
+
+      return
+    }
 
     const txArgs = [this.arg1.value, this.arg2.value]
     const args = []
     txArgs.forEach((arg) => {
-      if (arg !== '') args.push({'type': 7, 'value': arg})
+      if (arg !== '') args.push(this.String2Hex(arg))
     })
 
-    // todo!
-    this.setState({
-      loading: false,
-      errorMsg: 'Work in progress'
-    })
+    const myAccount = Neon.create.account(account.wif)
+
+    const config = {
+      net: network.name,
+      privateKey: myAccount.privateKey,
+      address: myAccount.address,
+      intents: [{ assetId: Neon.CONST.ASSET_ID[this.type.value], value: parseFloat(this.amount.value), scriptHash: this.scriptHash.value }],
+      script: { scriptHash: this.scriptHash.value, operation: this.operation.value, args: args },
+      gas: 0
+    }
+
+    return api.doInvoke(config)
+      .then((c) => {
+        if (c.response.result === true) {
+          this.setState({
+            loading: false,
+            txid: c.response.txid
+          })
+        } else {
+          this.setState({
+            loading: false,
+            errorMsg: 'Invoke failed'
+          })
+        }
+      })
+      .catch((e) => {
+        console.log('e', e)
+        this.setState({
+          loading: false,
+          errorMsg: 'Invoke failed'
+        })
+      })
   }
 
   render () {
-    const { result, loading, errorMsg } = this.state
+    const { txid, loading, errorMsg } = this.state
 
     return (
       <div>
         <p>Invoke Contract</p>
         <form onSubmit={this.handleSubmit}>
           <input
+            autoFocus
             type='text'
             placeholder='Operation'
             ref={(input) => { this.operation = input }}
@@ -97,12 +146,12 @@ export default class SendInvoke extends Component {
             <option value='NEO'>Neo</option>
             <option value='GAS' selected>Gas</option>
           </select>
-          <button>Invoke</button>
+          <button disabled={loading}>Invoke</button>
         </form>
 
-        { result &&
+        { txid &&
           <div>
-            result: { JSON.stringify(result) }
+            Success! txid: <span className={style.transactionId}>{ txid }</span>
           </div>
         }
         { loading &&

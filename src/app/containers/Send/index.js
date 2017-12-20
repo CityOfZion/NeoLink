@@ -33,11 +33,13 @@ export default class Send extends Component {
       errorMsg: ''
     })
 
-    if (!this.address || !this.amount) {
+    if (!this.address || !this.address.value || !this.amount || !this.amount.value) {
       this.setState({
         loading: false,
         errorMsg: 'All fields are required'
       })
+
+      return
     }
 
     var amounts = {}

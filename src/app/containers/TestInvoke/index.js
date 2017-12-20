@@ -32,11 +32,13 @@ export default class TestInvoke extends Component {
       result: ''
     })
 
-    if (!this.scriptHash || this.operation) {
+    if (!this.scriptHash || !this.scriptHash.value || !this.operation || !this.operation.value) {
       this.setState({
         loading: false,
-        errorMsg: 'Error! Script hash and operation at both required!'
+        errorMsg: 'Error! Script hash and operation are both required!'
       })
+
+      return
     }
 
     const txArgs = []
