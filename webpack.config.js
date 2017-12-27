@@ -45,34 +45,58 @@ var options = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['react-hmre']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['react-hmre']
+          }
         }
       },
       {
         test: /\.(css)$/,
         include: [path.resolve(__dirname, 'node_modules/preact-material-components')],
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[local]" },
-          { loader: "postcss-loader" }
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[local]',
+              modules: true,
+              sourceMap: true,
+            }
+          },
+          { loader: 'postcss-loader' }
         ]
       },
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]" },
-          { loader: "postcss-loader" }
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+              modules: true,
+              sourceMap: true,
+            }
+          },
+          { loader: 'postcss-loader' }
         ],
         include: [path.resolve(__dirname, 'src/app')]
       },
       {
         test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
-        loader: "file-loader?name=[name].[ext]",
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: '[name].[ext]'
+          }
+        }
+
       },
       {
         test: /\.html$/,
