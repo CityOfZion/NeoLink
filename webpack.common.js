@@ -29,9 +29,6 @@ var options = {
     content: path.join(__dirname, "src", "js", "content.js")
   },
   // excludeEntriesToHotReload: ["content"],
-  chromeExtensionBoilerplate: {
-    notHotReload: ["content"]
-  },
   output: {
     path: path.join(__dirname, "build"),
     filename: "[name].bundle.js"
@@ -111,6 +108,7 @@ var options = {
     alias: alias
   },
   plugins: [
+    // expose and write the allowed env vars on the compiled bundle
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
     }),
