@@ -108,7 +108,6 @@ var options = {
     alias: alias
   },
   plugins: [
-    // expose and write the allowed env vars on the compiled bundle
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
     }),
@@ -116,6 +115,11 @@ var options = {
       template: path.join(__dirname, "src", "popup.html"),
       filename: "popup.html",
       chunks: ["popup"]
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "src", "popupWindow.html"),
+      filename: "popupWindow.html",
+      chunks: ["popupWindow"]
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "options.html"),
