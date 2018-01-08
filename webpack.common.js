@@ -29,9 +29,6 @@ var options = {
     content: path.join(__dirname, "src", "js", "content.js")
   },
   // excludeEntriesToHotReload: ["content"],
-  chromeExtensionBoilerplate: {
-    notHotReload: ["content"]
-  },
   output: {
     path: path.join(__dirname, "build"),
     filename: "[name].bundle.js"
@@ -45,34 +42,55 @@ var options = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['react-hmre']
+        use: {
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.(css)$/,
         include: [path.resolve(__dirname, 'node_modules/preact-material-components')],
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[local]" },
-          { loader: "postcss-loader" }
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[local]',
+              modules: true,
+              sourceMap: true,
+            }
+          },
+          { loader: 'postcss-loader' }
         ]
       },
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]" },
-          { loader: "postcss-loader" }
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
+              modules: true,
+              sourceMap: true,
+            }
+          },
+          { loader: 'postcss-loader' }
         ],
         include: [path.resolve(__dirname, 'src/app')]
       },
       {
         test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
-        loader: "file-loader?name=[name].[ext]",
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: '[name].[ext]'
+          }
+        }
+
       },
       {
         test: /\.html$/,
@@ -90,7 +108,6 @@ var options = {
     alias: alias
   },
   plugins: [
-    // expose and write the allowed env vars on the compiled bundle
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
     }),
@@ -117,9 +134,5 @@ var options = {
     new WriteFilePlugin()
   ]
 };
-
-if (env.NODE_ENV === "development") {
-  options.devtool = "cheap-module-eval-source-map";
-}
 
 module.exports = options;
