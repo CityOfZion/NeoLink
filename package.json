@@ -18,7 +18,7 @@
     "write-file-webpack-plugin": "3.4.2"
   },
   "dependencies": {
-    "neon-js": "git+https://github.com/phetter/neon-js.git"
+    "neon-js": "git+https://github.com/CityOfZion/neon-js.git"
   },
   "license": "MIT"
 }
