@@ -59,11 +59,11 @@ chrome.runtime.onMessage.addListener(
                 "from the extension")
     console.log('logged in: '+state.loggedIn)
     console.log('bg onMessage: '+request.msg)
-
+      
     switch (request.msg)
     {
       case 'contentInit':
-        sendResponse({'msg': 'extension is online', 'loggedIn': state.loggedIn, 'extensionInstalled': true})
+        sendResponse({'msg': 'extension is online', 'loggedIn': state.loggedIn, 'extensionInstalled': true, 'address': state.address})
       break
 
       case 'getState':

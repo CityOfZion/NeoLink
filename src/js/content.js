@@ -32,6 +32,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   var extState = {
     loggedIn: loggedIn,
     extensionInstalled: extensionInstalled,
+    address: request.address,
     result: result
   }
   // send message back to api page
@@ -56,7 +57,8 @@ chrome.runtime.sendMessage({'msg': 'contentInit'}, function(response) {
     }
     var extState = {
       loggedIn: loggedIn,
-      extensionInstalled: extensionInstalled
+      extensionInstalled: extensionInstalled,
+      address: response.address
     }
     // send message back to api page
     window.postMessage(extState, '*')
