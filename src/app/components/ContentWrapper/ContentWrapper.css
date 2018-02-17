@@ -19,6 +19,11 @@
   word-wrap: break-word;
   width: 100%; }
 
+.breakWord {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
 .fancyBox {
   width: 83%;
   height: 90%;
