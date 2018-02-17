@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
+import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
 import Loader from '../../components/Loader'
-import * as AccountActions from '../../actions/account'
-
-import style from './CreateWallet.css'
-
 
 export default class CreateWallet extends Component {
-
   state = {
     errorMsg: '',
     loading: false,
@@ -36,110 +29,96 @@ export default class CreateWallet extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    const { passPhrase, passPhraseConfirm } = this.state
+    const { passPhrase } = this.state
+
+    if (this.state.passPhrase !== this.state.passPhraseConfirm) {
+      this.setState({
+        loading: false,
+        errorMsg: 'Passphrases do not match.',
+      })
+
+      return
+    }
+
+    if (this.state.passPhrase.length < 10) {
+      this.setState({
+        loading: false,
+        errorMsg: 'Passphrases must be at least 10 characters',
+      })
+
+      return
+    }
 
     this.setState({
       loading: true,
       errorMsg: '',
     })
 
-    console.log(this.state.passPhrase);
+    // Make wallet.decrypt() async.
+    setTimeout(() => {
+      try {
+        const account = new wallet.Account(wallet.generatePrivateKey())
 
-    if (this.state.passPhrase != this.state.passPhraseConfirm) {
-      this.setState({
-        loading: true,
-        errorMsg: 'Passphrases do not match.',
-      })
-    }
-    else {
-      console.log('generating new wallet')
-      // Make wallet.decrypt() async.
-      setTimeout(() => {
-        try {
-          const { actions } = this.props
+        const { WIF, address } = account
+        const encryptedWif = wallet.encrypt(WIF, passPhrase)
 
-          const account = new wallet.Account(wallet.generatePrivateKey())
-
-          const { WIF, address } = account
-          const encryptedWif = wallet.encrypt(WIF, passPhrase)
-          // const wif = wallet.decrypt(encryptedWif, passPhrase)
-          // this.setState({ loading: false })
-          // actions.setAccount(wif)
-          this.setState({
-            loading: false,
-            encryptedWif: encryptedWif,
-            address: address,
-          })
-          console.log(encryptedWif)
-          console.log(WIF)
-          console.log(address)
-        } catch (e) {
-          this.setState({ loading: false, errorMsg: e.message })
-        }
-      }, 500)
-    }
+        this.setState({
+          loading: false,
+          encryptedWif: encryptedWif,
+          address: address,
+        })
+      } catch (e) {
+        this.setState({ loading: false, errorMsg: e.message })
+      }
+    }, 500)
   }
 
   render() {
+    const { loading, errorMsg, passPhrase, passPhraseConfirm, encryptedWif, address } = this.state
+
+    if (loading) {
+      return <Loader />
+    } else if (encryptedWif) {
+      // handle success
+      return (
+        <div className='content'>
+          <div>Wallet created!</div>
+          <div>Encrypted WIF:</div>
+          <div className={ globalStyle.breakWord }>${encryptedWif}</div>
+          <div>Address:</div>
+          <div className={ globalStyle.breakWord }>${address}</div>
+        </div>
+      )
+    }
+
     return (
-      // <div className='content'>
-      //   <p className='card-title'>Create Wallet</p>
-      //   <button id='createWallet'>Create Wallet</button>
-      //   <div id='modalContent' />
-      // </div>
       <div>
         <form onSubmit={ this.handleSubmit }>
-
           <TextField
             type='password'
             placeholder='Passphrase'
-            value={ this.state.passPhrase }
+            value={ passPhrase }
             id='passPhrase'
             onChange={ this._handleTextFieldChange }
           />
           <TextField
             type='password'
             placeholder='Confirm Passphrase'
-            value={ this.state.passPhraseConfirm }
+            value={ passPhraseConfirm }
             id='passPhraseConfirm'
             onChange={ this._handleTextFieldChange }
           />
           <div>
             <Button raised ripple>Create Wallet</Button>
-
-
           </div>
         </form>
-        {/* {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        } */}
+
         <div className='content'>
-
-          {this.state.encryptedWif &&
-            <div>
-              <div>Encrypted WIF: {this.state.encryptedWif}</div>
-              <div>Address: {this.state.address}</div>
-
-              <textarea
-                readOnly
-                className={ style.textAreaReset }
-                rows='20'
-                cols='40'
-                name='transactionList'
-                defaultValue={ 'Encrypted WIF: '+this.state.encryptedWif+'\nAddress: '+this.state.address }
-              />
-            </div>
-          }
-          {this.state.loading === true &&
-            <div>loading...</div>
-          }
           {this.state.errorMsg !== '' &&
-            <div>ERROR: {this.state.errorMsg}</div>
+            <div>ERROR: {errorMsg}</div>
           }
         </div>
-
       </div>
-
     )
   }
 }
