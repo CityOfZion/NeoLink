@@ -1,30 +1,20 @@
 .header {
-  background-color: #36b049;
-  height: 65px;
-}
-
-.titleBar {
-    padding: 8px 0 0 8px;
+	background-color: #36b049;
+	height: 65px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .menuNavWrapper {
-  display: inline-block;
-  height: 35px;
-  width: 35px;
-  cursor: pointer;
+	display: inline-block;
+	height: 35px;
+	width: 35px;
+	cursor: pointer;
 }
 
-.titleWrapper {
-  vertical-align: top;
-  padding: 5px;
-  display: inline-block;
-  margin-top:-5px;
-}
-
-.titleName {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  color: white;
-  cursor: default;
+.headerTitle {
+	width: 50%;
+	color: #fff;
+	text-align: center;
 }

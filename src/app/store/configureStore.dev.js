@@ -12,17 +12,14 @@ export const history = createHistory()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
     // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
-  })
+	  })
   : compose
 /* eslint-enable no-underscore-dangle */
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...[ thunk, routerMiddleware(history) ]),
-  storage()
-)
+const enhancer = composeEnhancers(applyMiddleware(...[thunk, routerMiddleware(history)]), storage())
 
-export default function (initialState) {
-  if (initialState.router.location) {
+export default function(initialState) {
+  if (initialState.router && initialState.router.location) {
     history.location = initialState.router.location
   }
   const store = createStore(rootReducer, initialState, enhancer)

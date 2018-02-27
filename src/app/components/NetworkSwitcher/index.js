@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import globe from '../../../img/globe.svg'
+import chevron from '../../../img/chevron-down.svg';
+
 import style from './NetworkSwitcher.css'
 
 class NetworkSwitcher extends Component {
@@ -26,11 +29,15 @@ class NetworkSwitcher extends Component {
     const networkOptions = this.generateNetworkOptions(networks)
 
     return (
-      <div>
-        <select className={ style.switcher } defaultValue={ selectedNetworkId } onChange={ this.change }>
-          { networkOptions }
-        </select>
-      </div>
+      <button className={ style.networkNavigationButton }>
+        <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
+        <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
+      </button>
+      // <div>
+      //   <select className={ style.switcher } defaultValue={ selectedNetworkId } onChange={ this.change }>
+      //     { networkOptions }
+      //   </select>
+      // </div>
     )
   }
 }

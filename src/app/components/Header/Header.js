@@ -4,20 +4,25 @@ import PropTypes from 'prop-types'
 import NetworkSwitcher from '../NetworkSwitcher'
 import MainNav from '../MainNav'
 
+// import globe from '../../../img/globe.svg'
+// import home from '../../../img/home.svg'
+
 import './Header.css'
 
-const Header = (props) => {
+const Header = props => {
   const { showMenu, setNetwork, selectedNetworkId, networks } = props
 
   return (
     <div styleName='header'>
-      <NetworkSwitcher setNetwork={ setNetwork } selectedNetworkId={ selectedNetworkId } networks={ networks } />
-      <div styleName='titleBar'>
-        { showMenu ? <div styleName='menuNavWrapper'><MainNav /></div> : null }
-        <div styleName='titleWrapper'>
-          <span styleName='titleName'>NeoLink</span>
+      {showMenu ? (
+        <div styleName='menuNavWrapper'>
+          <MainNav />
         </div>
+      ) : null}
+      <div styleName='headerTitle'>
+        <h1>NeoLink</h1>
       </div>
+      <NetworkSwitcher setNetwork={ setNetwork } selectedNetworkId={ selectedNetworkId } networks={ networks } />
     </div>
   )
 }

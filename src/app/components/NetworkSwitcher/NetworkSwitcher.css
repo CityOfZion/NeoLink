@@ -16,3 +16,15 @@
   background: #86d13e;
   border-style: none;
 }
+
+.networkNavigationButton {
+  width: 25%;
+  display: flex;
+  background-color: transparent;
+  border: none;
+}
+
+.networkNavigationGlobe,
+.networkNavigationChevron {
+  fill: #fff;
+}
