@@ -15,11 +15,17 @@ class NetworkSwitcher extends Component {
     networkMenuOpen: false,
   }
 
+  componentDidMount() {
+    window.addEventListener('click', event => {
+      if (!event.target.className.includes('NetworkSwitcher')) {
+        this.closeDropdownMenu()
+      }
+    })
+  }
+
   changeNetwork = event => {
     const { setNetwork } = this.props
     const dataset = event.target.dataset.value
-
-    console.log(dataset)
 
     if (dataset) {
       setNetwork(dataset)
