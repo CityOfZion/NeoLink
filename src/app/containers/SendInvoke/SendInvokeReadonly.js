@@ -94,14 +94,14 @@ export default class SendInvokeReadonly extends Component {
             <span className={ style.label }>Operation:</span>
             <span className={ globalStyle.infoText }>{ transaction.operation }</span>
           </div>
-          <div className={ style.entryItem }>
-            <span className={ style.label }>Argument 1:</span>
-            <span className={ globalStyle.infoText }>{ transaction.args[0] }</span>
-          </div>
-          <div className={ style.entryItem }>
-            <span className={ style.label }>Argument 2:</span>
-            <span className={ globalStyle.infoText }>{ transaction.args[1] }</span>
-          </div>
+          {transaction.args.forEach(arg => {
+            <div className={ style.entryItem }>
+              <span className={ style.label }>Argument:</span>
+              <span className={ globalStyle.infoText }>{ arg }</span>
+            </div>
+          })
+
+          }
           <div className={ style.entryItem }>
             <span className={ style.label }>Amount:</span>
             <span className={ globalStyle.infoText }>{ transaction.amount }</span>

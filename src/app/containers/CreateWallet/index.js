@@ -1,22 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
-import Loader from '../../components/Loader'
-import * as AccountActions from '../../actions/account'
-
 import style from './CreateWallet.css'
 
-
 export default class CreateWallet extends Component {
-
   state = {
     errorMsg: '',
     loading: false,
@@ -36,28 +28,25 @@ export default class CreateWallet extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    const { passPhrase, passPhraseConfirm } = this.state
+    const { passPhrase } = this.state
 
     this.setState({
       loading: true,
       errorMsg: '',
     })
 
-    console.log(this.state.passPhrase);
+    console.log(this.state.passPhrase)
 
-    if (this.state.passPhrase != this.state.passPhraseConfirm) {
+    if (this.state.passPhrase !== this.state.passPhraseConfirm) {
       this.setState({
         loading: true,
         errorMsg: 'Passphrases do not match.',
       })
-    }
-    else {
+    } else {
       console.log('generating new wallet')
       // Make wallet.decrypt() async.
       setTimeout(() => {
         try {
-          const { actions } = this.props
-
           const account = new wallet.Account(wallet.generatePrivateKey())
 
           const { WIF, address } = account
@@ -107,7 +96,6 @@ export default class CreateWallet extends Component {
           <div>
             <Button raised ripple>Create Wallet</Button>
 
-
           </div>
         </form>
         {/* {errorMsg !== '' &&
@@ -126,7 +114,7 @@ export default class CreateWallet extends Component {
                 rows='20'
                 cols='40'
                 name='transactionList'
-                defaultValue={ 'Encrypted WIF: '+this.state.encryptedWif+'\nAddress: '+this.state.address }
+                defaultValue={ 'Encrypted WIF: ' + this.state.encryptedWif + '\nAddress: ' + this.state.address }
               />
             </div>
           }
