@@ -1,0 +1,15 @@
+.accountInfoContainer {
+    margin-top: 20px;
+    width:200px;
+}
+
+.accountInfo {
+    width: 100%;
+    display: block;
+    word-wrap: break-word;
+}
+
+.accountInfo span {
+    word-wrap: break-word;
+    width:100%;
+}

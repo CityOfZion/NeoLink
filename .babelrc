@@ -1,0 +1,9 @@
+{
+  "presets": ["env", "stage-0", "react"],
+  "plugins": ["add-module-exports", "transform-decorators-legacy", "transform-runtime"],
+  "env": {
+    "development": {
+      "presets": ["react-hmre"]
+    }
+  }
+}
