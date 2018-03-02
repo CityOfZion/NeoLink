@@ -1,0 +1,18 @@
+.networkWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.deleteIcon {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.networkWrapper div.networkInfo {
+  display: block;
+  word-wrap: break-word;
+  font-size: 11px;
+}

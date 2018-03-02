@@ -1,0 +1,32 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+        "json",
+        "react"
+    ],
+    "env": {
+        "es6": true,
+        "jest": true
+    },
+    "globals": {
+        "chrome": true,
+        "clearInterval": true,
+        "clearTimeout": true,
+        "console": true,
+        "document": true,
+        "expect": true,
+        "Promise": true,
+        "setInterval": true,
+        "setTimeout": true,
+        "window": true
+    },
+    "extends": ["standard", "standard-react"],
+    "rules": {
+        "comma-dangle": ["error", "always-multiline"],
+        "object-curly-spacing": ["error", "always"],
+        "no-var": "error",
+        "quotes": ["error", "single"],
+        "react/jsx-curly-spacing": [2, {"when": "always", "allowMultiline": false}],
+        "space-before-function-paren": 0
+    }
+}

@@ -1,3 +1,3 @@
 // options.js - this is the chrome://extensions options code
 
-import "../css/options.css";
+import '../css/options.css'

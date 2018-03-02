@@ -1,0 +1,53 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: calc(100% - 65px);
+}
+
+.innerWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: width 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.infoText {
+  word-wrap: break-word;
+  width:100%;
+}
+
+.fancyBox {
+  width: 83%;
+  height: 90%;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0px auto;
+  box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  form {
+    margin-top: -50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  select {
+    width: 100px;
+  }
+
+  button {
+    margin-top: 20px;
+  }
+}

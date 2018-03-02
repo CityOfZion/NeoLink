@@ -1,0 +1,14 @@
+.label {
+  width:100%;
+  font-weight: bold;
+}
+
+.entryItem {
+  width: 80%;
+  padding-bottom: 10px;
+}
+
+.statusBox {
+  width: 200px;
+  margin: auto;
+}
