@@ -39,29 +39,29 @@ class SendInvoke extends Component {
     loading: false,
     errorMsg: '',
     txid: '',
-    args: []
+    args: [],
   }
 
   handleAddArg = () => {
     this.setState({
-      args: this.state.args.concat([{ 'value': '' }])
-    });
+      args: this.state.args.concat([{ 'value': '' }]),
+    })
   }
 
   handleRemoveArg = (idx) => () => {
     this.setState({
-      args: this.state.args.filter((s, sidx) => idx !== sidx)
-    });
+      args: this.state.args.filter((s, sidx) => idx !== sidx),
+    })
   }
 
   handleArgChange = (idx) => (evt) => {
-  const newArgs = this.state.args.map((arg, sidx) => {
-    if (idx !== sidx) return arg;
-    return { ...arg, value: evt.target.value };
-  });
+    const newArgs = this.state.args.map((arg, sidx) => {
+      if (idx !== sidx) return arg
+      return { ...arg, value: evt.target.value }
+    })
 
-  this.setState({ args: newArgs });
-}
+    this.setState({ args: newArgs })
+  }
 
   _handleTextFieldChange = (e) => {
     const key = e.target.id
@@ -138,17 +138,17 @@ class SendInvoke extends Component {
             onChange={ this._handleTextFieldChange }
           />
           {this.state.args.map((arg, idx) => (
-            <div className="arg">
+            <div className='arg'>
               <input
-                type="text"
-                placeholder={`arg #${idx + 1} value`}
-                value={arg.value}
-                onChange={this.handleArgChange(idx)}
+                type='text'
+                placeholder={ `arg #${idx + 1} value` }
+                value={ arg.value }
+                onChange={ this.handleArgChange(idx) }
               />
-              <button type="button" onClick={this.handleRemoveArg(idx)} className="small">-</button>
+              <button type='button' onClick={ this.handleRemoveArg(idx) } className='small'>-</button>
             </div>
           ))}
-          <button type="button" onClick={this.handleAddArg} className="small">Add Arg</button>
+          <button type='button' onClick={ this.handleAddArg } className='small'>Add Arg</button>
           <TextField
             type='text'
             placeholder='Amount'
