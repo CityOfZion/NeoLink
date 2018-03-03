@@ -8,7 +8,6 @@ import style from './NetworkSwitcher.css'
 
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
-// import network from '../../reducers/account'
 
 class NetworkSwitcher extends Component {
   state = {
@@ -49,10 +48,18 @@ class NetworkSwitcher extends Component {
       indicator = <img src={ neoImg } alt='neo' className={ style.mainNetNeoImg } />
     } else if (networkName === 'TestNet') {
       indicator = <img src={ flask } alt='flask' className={ style.networkOptionIcon } />
-    } else if (networkName === 'CoZ TestNet') {
-      // set icon font
     } else {
-      // set rounded colored dot with inline style
+      indicator = (
+        <div
+          style={ {
+            height: '13px',
+            width: '15px',
+            marginRight: '8px',
+            borderRadius: '3px',
+            backgroundColor: '#f15c5c',
+          } }
+        />
+      )
     }
 
     return indicator
