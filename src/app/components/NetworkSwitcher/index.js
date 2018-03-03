@@ -24,7 +24,7 @@ class NetworkSwitcher extends Component {
 
   changeNetwork = event => {
     const { setNetwork } = this.props
-    const dataset = event.target.dataset.value
+    let dataset = event.target.dataset.value
 
     if (dataset) {
       setNetwork(dataset)

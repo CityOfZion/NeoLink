@@ -23,7 +23,7 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch)
 
 export default class App extends Component {
-  render () {
+  render() {
     return (
       <div className={ style.popup }>
         <Header />
