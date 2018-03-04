@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import NetworkSwitcher from '../NetworkSwitcher'
 import MainNav from '../MainNav'
@@ -8,9 +9,15 @@ import home from '../../../img/home.svg'
 
 import style from './Header.css'
 
-const Header = props => {
-  const { showMenu, setNetwork, selectedNetworkId, networks, account } = props
+const getNavigation = (props) => {
+  const { account, history } = props
   const loggedIn = account.address && account.wif
+  const isHomepage = history.location.pathname === '/';
+
+  if (!loggedIn && isHomepage) {
+    return;
+  }
+
   let navigation
 
   if (loggedIn) {
@@ -23,10 +30,18 @@ const Header = props => {
     )
   }
 
+  return navigation;
+}
+
+const Header = props => {
+  const { setNetwork, selectedNetworkId, networks } = props
+  const navigation = getNavigation(props);
+ 
+
   return (
-    <div styleName='header'>
-      <div styleName='menuNavWrapper'>{navigation}</div>
-      <div styleName='headerTitle'>
+    <div className={ style.header }>
+      <div className= { style.menuNavWrapper}>{navigation}</div>
+      <div className= { style.headerTitle }>
         <h1>NeoLink</h1>
       </div>
       <NetworkSwitcher setNetwork={ setNetwork } selectedNetworkId={ selectedNetworkId } networks={ networks } />
@@ -35,14 +50,10 @@ const Header = props => {
 }
 
 Header.propTypes = {
-  showMenu: PropTypes.bool,
   selectedNetworkId: PropTypes.string,
   setNetwork: PropTypes.func,
   networks: PropTypes.object,
+  account: PropTypes.object
 }
 
-Header.defaultProps = {
-  showMenu: true,
-}
-
-export default Header
+export default withRouter(Header)

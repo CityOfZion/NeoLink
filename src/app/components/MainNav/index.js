@@ -10,7 +10,15 @@ import style from './MainNav.css'
 class MainNav extends Component {
   state = {
     menuIsOpen: false,
-  }
+	}
+	
+	componentDidMount() {
+		window.addEventListener('click', () => {
+			if (!event.target.className.includes('MainNav')) {
+        this.closeDropdownMenu()
+      }
+		})
+	}
 
   toggleMenu = event => {
     this.setState({ menuIsOpen: !this.state.menuIsOpen })
