@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
+
 import navData from '../../../data/mainNavigationData'
 
 import bars from '../../../img/bars.svg'
@@ -32,7 +33,7 @@ class MainNav extends Component {
   generateNavigationMarkup = () => {
     return navData.map(navItem => {
       return (
-        <button className={ style.mainNavLinkButton } data-target={ navItem.path } key={ navItem.key }>
+        <button className={ style.mainNavLinkButton } data-target={ navItem.path } key={ navItem.id }>
           <img src={ navItem.img } alt={ navItem.alt } className={ style.mainNavLinkButtonImg } />
           {navItem.title}
         </button>

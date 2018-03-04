@@ -8,6 +8,7 @@ import Header from './Header'
 const mapStateToProps = (state: Object) => ({
   selectedNetworkId: state.config.selectedNetworkId,
   networks: state.config.networks,
+  account: state.account,
 })
 
 const actionCreators = {
