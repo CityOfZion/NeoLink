@@ -27,13 +27,9 @@ class MainNav extends Component {
   closeDropdownMenu = () => this.setState({ menuIsOpen: false })
 
   pushHistory = event => {
-    let path = event.target.dataset.target
-    const { history } = this.props
-
-    if (path === undefined) {
-      path = event.target.parentNode.dataset.target
-    }
-
+    let path = event.target.dataset.target || event.target.parentNode.dataset.target;
+		const { history } = this.props
+		
     history.push(path)
     this.closeDropdownMenu()
   }

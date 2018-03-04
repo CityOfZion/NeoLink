@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import globe from '../../../img/globe.svg'
-import chevron from '../../../img/chevron-down.svg'
-
 import style from './NetworkSwitcher.css'
 
+import globe from '../../../img/globe.svg'
+import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
@@ -24,7 +23,7 @@ class NetworkSwitcher extends Component {
 
   changeNetwork = event => {
     const { setNetwork } = this.props
-    let dataset = event.target.dataset.value
+    let dataset = event.target.dataset.value || event.target.parentNode.dataset.value;
 
     if (dataset) {
       setNetwork(dataset)
@@ -65,12 +64,13 @@ class NetworkSwitcher extends Component {
     return indicator
   }
 
-  generateNetworkOptions(networks) {
+  generateNetworkOptions() {
     const networkOptions = []
-    const { selectedNetworkId } = this.props
+    const { selectedNetworkId, networks } = this.props
 
     Object.keys(networks).forEach(index => {
       const indicator = this.getIndicator(networks, index)
+      console.log(index);
 
       const selected = selectedNetworkId === networks[index].name
 
@@ -85,11 +85,8 @@ class NetworkSwitcher extends Component {
     return networkOptions
   }
 
-  render() {
-    const { networks } = this.props
+  generateDropdownClasses = () => {
     const { networkMenuOpen } = this.state
-
-    const networkOptions = this.generateNetworkOptions(networks)
 
     let dropdownStyles
     if (networkMenuOpen) {
@@ -97,6 +94,13 @@ class NetworkSwitcher extends Component {
     } else {
       dropdownStyles = style.networkNavigationDropdown
     }
+
+    return dropdownStyles;
+  }
+
+  render() {
+    const networkOptions = this.generateNetworkOptions()
+    const dropdownStyles = this.generateDropdownClasses()
 
     return (
       <section className={ style.networkNavigation }>

@@ -85,13 +85,21 @@
       "^.+\\.js$": "babel-jest"
     },
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "identity-obj-proxy"
+      "\\.(jpg|jpeg|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss|png|svg)$": "identity-obj-proxy"
     },
-    "testPathIgnorePatterns": ["__tests__/setupTests.js"],
-    "collectCoverageFrom": ["src/app/**/*.{js,jsx}", "src/js/**/*.{js,jsx}", "src/js/*.{js,jsx}"],
-    "moduleFileExtensions": ["js", "jsx"],
+    "testPathIgnorePatterns": [
+      "__tests__/setupTests.js"
+    ],
+    "collectCoverageFrom": [
+      "src/app/**/*.{js,jsx}",
+      "src/js/**/*.{js,jsx}",
+      "src/js/*.{js,jsx}"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js"
   },
   "license": "MIT"

@@ -24,7 +24,7 @@ const getNavigation = (props) => {
     navigation = <MainNav />
   } else {
     navigation = (
-      <button className={ style.mainNavigationNotLoggedIn }>
+      <button className={ style.mainNavigationNotLoggedIn } onClick={ () => history.push('/' )}>
         <img className={ style.mainNavigationNotLoggedInImg } src={ home } alt='house' />
       </button>
     )
