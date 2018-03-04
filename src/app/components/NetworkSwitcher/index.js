@@ -23,7 +23,7 @@ class NetworkSwitcher extends Component {
 
   changeNetwork = event => {
     const { setNetwork } = this.props
-    let dataset = event.target.dataset.value || event.target.parentNode.dataset.value;
+    let dataset = event.target.dataset.value || event.target.parentNode.dataset.value
 
     if (dataset) {
       setNetwork(dataset)
@@ -70,7 +70,6 @@ class NetworkSwitcher extends Component {
 
     Object.keys(networks).forEach(index => {
       const indicator = this.getIndicator(networks, index)
-      console.log(index);
 
       const selected = selectedNetworkId === networks[index].name
 
@@ -95,7 +94,7 @@ class NetworkSwitcher extends Component {
       dropdownStyles = style.networkNavigationDropdown
     }
 
-    return dropdownStyles;
+    return dropdownStyles
   }
 
   render() {
@@ -108,7 +107,7 @@ class NetworkSwitcher extends Component {
           <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
           <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
         </button>
-        <div className={ dropdownStyles } onClick={ this.changeNetwork }>
+        <div className={ dropdownStyles } onClick={ this.changeNetwork } id='networkDropdownMenu'>
           {networkOptions}
         </div>
       </section>

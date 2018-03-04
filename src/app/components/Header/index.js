@@ -5,7 +5,7 @@ import { setNetwork } from '../../actions/config'
 
 import Header from './Header'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = (state) => ({
   selectedNetworkId: state.config.selectedNetworkId,
   networks: state.config.networks,
   account: state.account,

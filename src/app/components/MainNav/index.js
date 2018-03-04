@@ -10,15 +10,15 @@ import style from './MainNav.css'
 class MainNav extends Component {
   state = {
     menuIsOpen: false,
-	}
-	
-	componentDidMount() {
-		window.addEventListener('click', () => {
-			if (!event.target.className.includes('MainNav')) {
+  }
+
+  componentDidMount() {
+    window.addEventListener('click', event => {
+      if (!event.target.className.includes('MainNav')) {
         this.closeDropdownMenu()
       }
-		})
-	}
+    })
+  }
 
   toggleMenu = event => {
     this.setState({ menuIsOpen: !this.state.menuIsOpen })
@@ -27,9 +27,9 @@ class MainNav extends Component {
   closeDropdownMenu = () => this.setState({ menuIsOpen: false })
 
   pushHistory = event => {
-    let path = event.target.dataset.target || event.target.parentNode.dataset.target;
-		const { history } = this.props
-		
+    let path = event.target.dataset.target || event.target.parentNode.dataset.target
+    const { history } = this.props
+
     history.push(path)
     this.closeDropdownMenu()
   }

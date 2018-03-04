@@ -57,6 +57,7 @@ ShallowWrapper {
         </button>,
         <div
           className="networkNavigationDropdown"
+          id="networkDropdownMenu"
           onClick={[Function]}
         >
           <button
@@ -208,6 +209,7 @@ ShallowWrapper {
             </button>,
           ],
           "className": "networkNavigationDropdown",
+          "id": "networkDropdownMenu",
           "onClick": [Function],
         },
         "ref": null,
@@ -375,6 +377,7 @@ ShallowWrapper {
           </button>,
           <div
             className="networkNavigationDropdown"
+            id="networkDropdownMenu"
             onClick={[Function]}
           >
             <button
@@ -526,6 +529,7 @@ ShallowWrapper {
               </button>,
             ],
             "className": "networkNavigationDropdown",
+            "id": "networkDropdownMenu",
             "onClick": [Function],
           },
           "ref": null,
