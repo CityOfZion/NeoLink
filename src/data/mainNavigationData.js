@@ -1,41 +1,41 @@
-import home from '../img/homeSolid.svg'
-import paperplane from '../img/paper-planeSolid.svg'
-import cog from '../img/cogSolid.svg'
-import swap from '../img/syncSolid.svg'
-import powerOff from '../img/power-offSolid.svg'
+import homeSVG from '../img/homeSolid.svg'
+import paperplaneSVG from '../img/paper-planeSolid.svg'
+import cogSVG from '../img/cogSolid.svg'
+import swapSVG from '../img/syncSolid.svg'
+import powerOffSVG from '../img/power-offSolid.svg'
 
 export default [
   {
     title: 'Home',
-    img: home,
+    img: homeSVG,
     alt: 'House',
     path: '/',
     id: 1,
   },
   {
     title: 'Send',
-    img: paperplane,
+    img: paperplaneSVG,
     alt: 'Paper plane',
     path: '/send',
     id: 2,
   },
   {
     title: 'Settings',
-    img: cog,
+    img: cogSVG,
     alt: 'Cog',
     path: '/config',
     id: 3,
   },
   {
     title: 'Switch Accounts',
-    img: swap,
+    img: swapSVG,
     alt: 'Arrows in circles',
     path: '/config',
     id: 4,
   },
   {
     title: 'Log Out',
-    img: powerOff,
+    img: powerOffSVG,
     alt: 'Power off icon',
     path: '/logout',
     id: 5,

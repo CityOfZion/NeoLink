@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import NetworkSwitcher from '../NetworkSwitcher'
 import MainNav from '../MainNav'
 
-import home from '../../../img/home.svg'
+import homeSVG from '../../../img/home.svg'
 
 import style from './Header.css'
 
@@ -25,7 +25,7 @@ const getNavigation = props => {
   } else {
     navigation = (
       <button className={ style.mainNavigationNotLoggedIn } onClick={ () => history.push('/') }>
-        <img className={ style.mainNavigationNotLoggedInImg } src={ home } alt='house' />
+        <img className={ style.mainNavigationNotLoggedInImg } src={ homeSVG } alt='house' />
       </button>
     )
   }
