@@ -10,7 +10,7 @@ export const history = createHistory()
 const enhancer = compose(applyMiddleware(...[thunk, routerMiddleware(history)]), storage())
 
 export default function(initialState) {
-  if (initialState.router.location && initialState.router.location) {
+  if (initialState.router.location) {
     history.location = initialState.router.location
   }
 
