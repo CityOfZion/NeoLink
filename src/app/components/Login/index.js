@@ -7,6 +7,7 @@ import Login from './Login'
 
 const mapStateToProps = (state: Object) => ({
   account: state.account,
+  accounts: state.wallet.accounts,
 })
 
 const actionCreators = {
