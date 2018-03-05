@@ -107,7 +107,7 @@ class NetworkSwitcher extends Component {
           <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
           <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
         </button>
-        <div className={ dropdownStyles } onClick={ this.changeNetwork } id='networkDropdownMenu'>
+        <div className={ dropdownStyles } onClick={ this.changeNetwork }>
           {networkOptions}
         </div>
       </section>
