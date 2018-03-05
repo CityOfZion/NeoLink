@@ -42,8 +42,6 @@ describe('NetworkSwitch', () => {
     const instance = wrapper.instance()
     const networkSelector = wrapper.find('.networkNavigationDropdown')
 
-    console.log(networkSelector)
-
     networkSelector.simulate('click', { target: { dataset: { value: 'TestNet' } } })
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
