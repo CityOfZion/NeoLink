@@ -5,9 +5,12 @@ import { Field, reduxForm } from 'redux-form'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
+import { Select } from 'rmwc/Select'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
+import '@material/select/dist/mdc.select.min.css'
 
+import CreateOrImportWallet from '../CreateOrImportWallet'
 import Loader from '../Loader'
 
 export class Login extends Component {
@@ -23,6 +26,17 @@ export class Login extends Component {
     ...rest
   }) => (
     <TextField
+      { ...input }
+      { ...rest }
+      onChange={ (event) => input.onChange(event.target.value) }
+    />
+  )
+
+  _renderSelectField = ({
+    input,
+    ...rest
+  }) => (
+    <Select
       { ...input }
       { ...rest }
       onChange={ (event) => input.onChange(event.target.value) }
@@ -55,9 +69,20 @@ export class Login extends Component {
     }, 500)
   }
 
+  getAccountOptions(accounts) {
+    const options = [ { label: 'Select', value: '' } ]
+
+    Object.keys(accounts).forEach((index) => {
+      const account = accounts[index]
+      options.push({ label: account.label, value: account.key })
+    })
+
+    return options
+  }
+
   render() {
     const { loading, errorMsg } = this.state
-    const { account, handleSubmit } = this.props
+    const { accounts, account, handleSubmit } = this.props
 
     if (loading) {
       return (
@@ -67,14 +92,21 @@ export class Login extends Component {
     if (account.wif !== '') {
       return null
     }
+
+    if (Object.keys(accounts).length === 0) {
+      return (
+        <CreateOrImportWallet />
+      )
+    }
+
     return (
       <div>
         <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field
-            component={ this._renderTextField }
-            type='text'
+          <Field label='Account'
+            component={ this._renderSelectField }
+            cssOnly
             name='encryptedWif'
-            placeholder='Encrypted WIF'
+            options={ this.getAccountOptions(accounts) }
           />
           <Field
             component={ this._renderTextField }
@@ -98,6 +130,7 @@ export class Login extends Component {
 Login.propTypes = {
   setAccount: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
+  accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
 }

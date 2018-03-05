@@ -35,6 +35,7 @@ export default class App extends Component {
             <Route path='/transactions' component={ Transactions } />
             <Route path='/balance' component={ Balance } />
             <Route path='/createWallet' component={ CreateWallet } />
+            <Route path='/newAccountFromWIF' render={ props => <CreateWallet manualWIF { ...props } /> } />
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />

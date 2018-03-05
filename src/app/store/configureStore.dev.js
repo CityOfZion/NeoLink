@@ -19,7 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 const enhancer = composeEnhancers(applyMiddleware(...[thunk, routerMiddleware(history)]), storage())
 
 export default function(initialState) {
-  if (initialState.router) {
+  if (initialState.router && initialState.router.location) {
     history.location = initialState.router.location
   }
   const store = createStore(rootReducer, initialState, enhancer)
