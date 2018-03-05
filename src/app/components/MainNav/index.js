@@ -13,25 +13,29 @@ class MainNav extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('click', event => {
-      if (!event.target.className.includes('MainNav')) {
-        this.closeDropdownMenu()
-      }
-    })
+    window.addEventListener('click', this.closeDropdownMenu)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.closeDropdownMenu)
   }
 
   toggleMenu = event => {
     this.setState({ menuIsOpen: !this.state.menuIsOpen })
   }
 
-  closeDropdownMenu = () => this.setState({ menuIsOpen: false })
+  closeDropdownMenu = event => {
+    if (!event.target.className.includes('MainNav')) {
+      this.setState(prevState => ({ menuIsOpen: false }))
+    }
+  }
 
   pushHistory = event => {
     let path = event.target.dataset.target || event.target.parentNode.dataset.target
     const { history } = this.props
 
     history.push(path)
-    this.closeDropdownMenu()
+    this.toggleMenu()
   }
 
   generateNavigationMarkup = () => {

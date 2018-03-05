@@ -95,6 +95,6 @@ export default [
     img: testSVG,
     alt: 'test',
     path: '/exportWallet',
-    id: 12,
+    id: 13,
   },
 ]
