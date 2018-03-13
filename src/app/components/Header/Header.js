@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 
 import NetworkSwitcher from '../NetworkSwitcher'
 import MainNav from '../MainNav'
@@ -10,9 +9,12 @@ import homeSVG from '../../../img/home.svg'
 import style from './Header.css'
 
 const getNavigation = props => {
-  const { account, history } = props
-  const loggedIn = account.address && account.wif
-  const isHomepage = history.location.pathname === '/'
+  const { account, history, location } = props
+
+  const loggedIn = (account.address && account.wif) || false
+  const isHomepage = location.pathname === '/'
+
+  console.log(account, location.pathname, loggedIn)
 
   if (!loggedIn && isHomepage) {
     return
@@ -52,6 +54,8 @@ Header.propTypes = {
   selectedNetworkId: PropTypes.string,
   setNetwork: PropTypes.func,
   networks: PropTypes.object,
+  account: PropTypes.object,
+  history: PropTypes.object,
 }
 
-export default withRouter(Header)
+export default Header

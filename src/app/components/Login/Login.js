@@ -93,11 +93,11 @@ export class Login extends Component {
       return null
     }
 
-    if (Object.keys(accounts).length === 0) {
-      return (
-        <CreateOrImportWallet />
-      )
-    }
+    // if (Object.keys(accounts).length === 0) {
+    //   return (
+    //     <CreateOrImportWallet />
+    //   )
+    // }
 
     return (
       <div>
