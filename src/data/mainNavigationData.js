@@ -10,7 +10,7 @@ export default [
     title: 'Home',
     img: homeSVG,
     alt: 'House',
-    path: '/',
+    path: '/home',
     id: 1,
   },
   {

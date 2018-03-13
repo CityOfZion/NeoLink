@@ -34,6 +34,8 @@ class MainNav extends Component {
     let path = event.target.dataset.target || event.target.parentNode.dataset.target
     const { history } = this.props
 
+    console.log(path)
+
     history.push(path)
     this.toggleMenu()
   }

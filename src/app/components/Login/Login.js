@@ -21,26 +21,12 @@ export class Login extends Component {
     passPhrase: '',
   }
 
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderTextField = ({ input, ...rest }) => (
+    <TextField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
-  _renderSelectField = ({
-    input,
-    ...rest
-  }) => (
-    <Select
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderSelectField = ({ input, ...rest }) => (
+    <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
   handleSubmit = (values, dispatch, formProps) => {
@@ -70,9 +56,9 @@ export class Login extends Component {
   }
 
   getAccountOptions(accounts) {
-    const options = [ { label: 'Select', value: '' } ]
+    const options = [{ label: 'Select', value: '' }]
 
-    Object.keys(accounts).forEach((index) => {
+    Object.keys(accounts).forEach(index => {
       const account = accounts[index]
       options.push({ label: account.label, value: account.key })
     })
@@ -81,28 +67,26 @@ export class Login extends Component {
   }
 
   render() {
+    console.log('Loading')
     const { loading, errorMsg } = this.state
     const { accounts, account, handleSubmit } = this.props
 
     if (loading) {
-      return (
-        <Loader />
-      )
+      return <Loader />
     }
     if (account.wif !== '') {
       return null
     }
 
-    // if (Object.keys(accounts).length === 0) {
-    //   return (
-    //     <CreateOrImportWallet />
-    //   )
-    // }
+    if (Object.keys(accounts).length === 0) {
+      return <CreateOrImportWallet />
+    }
 
     return (
       <div>
         <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field label='Account'
+          <Field
+            label='Account'
             component={ this._renderSelectField }
             cssOnly
             name='encryptedWif'
@@ -116,12 +100,12 @@ export class Login extends Component {
             id='passPhrase'
           />
           <div>
-            <Button raised ripple onClick={ handleSubmit(this.handleSubmit) }>Login</Button>
+            <Button raised ripple onClick={ handleSubmit(this.handleSubmit) }>
+              Login
+            </Button>
           </div>
         </form>
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
+        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
       </div>
     )
   }

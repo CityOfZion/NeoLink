@@ -13,6 +13,7 @@ import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
 import CreateOrImportWallet from '../../components/CreateOrImportWallet'
+import Login from '../../components/Login'
 
 import Header from '../../components/Header'
 import ContentWrapper from '../../components/ContentWrapper'
@@ -30,6 +31,8 @@ export default class App extends Component {
         <Header />
         <ContentWrapper>
           <ConnectedSwitch>
+            <Route path='/login' component={ Login } />
+            <Route path='/home' component={ Home } />
             <Route path='/send' component={ Send } />
             <Route path='/testInvoke' component={ TestInvoke } />
             <Route path='/sendInvoke' component={ SendInvoke } />
@@ -41,7 +44,6 @@ export default class App extends Component {
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />
             <Route path='/' component={ CreateOrImportWallet } />
-            <Route path='/home' component={ Home } />>
           </ConnectedSwitch>
         </ContentWrapper>
       </div>

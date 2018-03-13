@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import Neon from '@cityofzion/neon-js'
 
@@ -24,9 +25,11 @@ import * as AccountActions from '../../actions/account'
 )
 class Home extends Component {
   handleClick = e => {
-    const { actions } = this.props
+    const { actions, history } = this.props
+    console.log(history)
     e.preventDefault()
     actions.setAccount('', '')
+    history.push('/')
   }
 
   render() {
@@ -50,7 +53,7 @@ class Home extends Component {
   }
 }
 
-export default withLoginCheck(Home)
+export default withLoginCheck(withRouter(Home))
 
 Home.propTypes = {
   account: PropTypes.object,
