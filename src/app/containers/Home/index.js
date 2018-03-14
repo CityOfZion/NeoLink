@@ -26,7 +26,7 @@ import * as AccountActions from '../../actions/account'
 class Home extends Component {
   handleClick = e => {
     const { actions, history } = this.props
-    console.log(history)
+
     e.preventDefault()
     actions.setAccount('', '')
     history.push('/')
@@ -58,4 +58,5 @@ export default withLoginCheck(withRouter(Home))
 Home.propTypes = {
   account: PropTypes.object,
   actions: PropTypes.object,
+  history: PropTypes.object,
 }

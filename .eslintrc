@@ -24,6 +24,7 @@
     "no-var": "error",
     "quotes": ["error", "single"],
     "react/jsx-curly-spacing": [2, { "when": "always", "allowMultiline": false }],
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "experimentalDecorators": 0
   }
 }

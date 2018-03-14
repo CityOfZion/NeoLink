@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
+import withRouter from 'react-router-dom'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -30,6 +31,7 @@ export class Login extends Component {
   )
 
   handleSubmit = (values, dispatch, formProps) => {
+    const { history } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
@@ -49,6 +51,8 @@ export class Login extends Component {
         this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
+
+        history.push('/home')
       } catch (e) {
         this.setState({ loading: false, errorMsg: e.message })
       }
@@ -67,7 +71,6 @@ export class Login extends Component {
   }
 
   render() {
-    console.log('Loading')
     const { loading, errorMsg } = this.state
     const { accounts, account, handleSubmit } = this.props
 
@@ -117,6 +120,7 @@ Login.propTypes = {
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
-export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
+export default withRouter(reduxForm({ form: 'login', destroyOnUnmount: false })(Login))

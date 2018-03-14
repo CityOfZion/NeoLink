@@ -1,18 +1,13 @@
 import React from 'react'
 import MainNav from '../MainNav'
 
+import style from './Header.css'
+
 import homeSVG from '../../../img/home.svg'
 
-import style from './header.css'
-
-export const getNavigation = props => {
-  const { account, history, location } = props
-
+export const getNavigation = ({ account, history, location }) => {
   const loggedIn = (account.address && account.wif) || false
   const isHomepage = location.pathname === '/'
-
-  console.log(loggedIn, isHomepage)
-  console.log(location.pathname, account.address, account.wif)
 
   if (!loggedIn && isHomepage) {
     return
