@@ -120,7 +120,7 @@ Login.propTypes = {
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
+  history: PropTypes.object,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
