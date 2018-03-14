@@ -13,7 +13,7 @@ import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
 
-import Startpage from '../../components/Startpage'
+import StartPage from '../../components/StartPage'
 import Login from '../../components/Login'
 
 import Header from '../../components/Header'
@@ -44,7 +44,7 @@ export default class App extends Component {
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />
-            <Route path='/' component={ Startpage } />
+            <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>
       </div>

@@ -1,29 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './Startpage.css'
+import style from './StartPage.css'
 
-const Startpage = ({ history }) => {
+const StartPage = ({ history }) => {
   return (
-    <section className={ style.startpage }>
-      <button className={ style.startpageButton } onClick={ () => history.push('/createWallet') }>
-        <i className={ `${style.startpageIcon} fas fa-plus` } />
+    <section className={ style.startPage }>
+      <button className={ style.startPageButton } onClick={ () => history.push('/createWallet') }>
+        <i className={ `${style.startPageIcon} fas fa-plus` } />
         New Wallet
       </button>
-      <button className={ style.startpageButton } onClick={ () => history.push('/login') }>
-        <i className={ `${style.startpageIcon} fas fa-sign-in-alt` } />
+      <button className={ style.startPageButton } onClick={ () => history.push('/login') }>
+        <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
         Use Saved Wallet
       </button>
-      <button className={ style.startpageButton } onClick={ () => history.push('/newAccountFromWIF') }>
-        <i className={ `${style.startpageIcon} fas fa-sign-in-alt` } />
+      <button className={ style.startPageButton } onClick={ () => history.push('/newAccountFromWIF') }>
+        <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
         Use WIF
       </button>
     </section>
   )
 }
 
-Startpage.propTypes = {
+StartPage.propTypes = {
   history: PropTypes.object,
 }
 
-export default Startpage
+export default StartPage

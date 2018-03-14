@@ -1,4 +1,4 @@
-.startpage {
+.startPage {
   background-color: #36b049;
   color: #fff;
   height: 100%;
@@ -9,7 +9,7 @@
   padding-top: 80px;
 }
 
-.startpageButton {
+.startPageButton {
   background-color: transparent;
   border: 1px solid #fff;
   color: #fff;
@@ -23,7 +23,7 @@
   cursor: pointer;
 }
 
-.startpageIcon {
+.startPageIcon {
   font-size: 1.2rem;
   margin: 0 25px;
 }
