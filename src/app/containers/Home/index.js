@@ -23,6 +23,7 @@ import * as AccountActions from '../../actions/account'
     actions: bindActionCreators(AccountActions, dispatch),
   })
 )
+
 class Home extends Component {
   handleClick = e => {
     const { actions, history } = this.props

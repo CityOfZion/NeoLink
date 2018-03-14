@@ -28,7 +28,7 @@ export default class App extends Component {
   render() {
     return (
       <div className={ style.popup }>
-        <Header />
+        <Header showMenu />
         <ContentWrapper>
           <ConnectedSwitch>
             <Route path='/login' component={ Login } />

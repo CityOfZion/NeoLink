@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
-import withRouter from 'react-router-dom'
+// import { withRouter } from 'react-router-dom'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -123,4 +123,4 @@ Login.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-export default withRouter(reduxForm({ form: 'login', destroyOnUnmount: false })(Login))
+export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)

@@ -5,7 +5,8 @@ import style from './Header.css'
 
 import homeSVG from '../../../img/home.svg'
 
-export const getNavigation = ({ account, history, location }) => {
+export const getNavigation = ({ account, history, location, showMenu }) => {
+  if (!showMenu) return null
   const loggedIn = (account.address && account.wif) || false
   const isHomepage = location.pathname === '/'
 
