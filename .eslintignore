@@ -1,4 +1,4 @@
 **/*.html
 build/*
 coverage/*
-src/js/fontawesome-all.min.js
+vendor/fontawesome-all.min.js

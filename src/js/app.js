@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from '../app/Root'
-import './fontawesome-all.min.js'
+import '../../vendor/fontawesome-all.min'
 
 chrome.storage.local.get('state', obj => {
   const { state } = obj
