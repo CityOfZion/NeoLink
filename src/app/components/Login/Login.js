@@ -71,13 +71,17 @@ export class Login extends Component {
 
   render() {
     const { loading, errorMsg } = this.state
-    const { accounts, account, handleSubmit } = this.props
+    const { accounts, account, handleSubmit, history } = this.props
 
     if (loading) {
       return <Loader />
     }
     if (account.wif !== '') {
       return null
+    }
+
+    if (Object.keys(accounts).length === 0) {
+      history.push('/')
     }
 
     return (
