@@ -12,7 +12,6 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
 import Loader from '../Loader'
-import StartPage from '../StartPage'
 
 export class Login extends Component {
   state = {
@@ -79,10 +78,6 @@ export class Login extends Component {
     }
     if (account.wif !== '') {
       return null
-    }
-
-    if (Object.keys(accounts).length === 0) {
-      return <StartPage />
     }
 
     return (
