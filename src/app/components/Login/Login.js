@@ -11,8 +11,8 @@ import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
-import StartPage from '../StartPage'
 import Loader from '../Loader'
+import StartPage from '../StartPage/index'
 
 export class Login extends Component {
   state = {
