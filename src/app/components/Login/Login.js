@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
-// import { withRouter } from 'react-router-dom'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -50,7 +49,6 @@ export class Login extends Component {
         this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
-
         history.push('/home')
       } catch (e) {
         this.setState({ loading: false, errorMsg: e.message })
