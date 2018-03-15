@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 import style from './StartPage.css'
 
@@ -26,4 +27,4 @@ StartPage.propTypes = {
   history: PropTypes.object,
 }
 
-export default StartPage
+export default withRouter(StartPage)
