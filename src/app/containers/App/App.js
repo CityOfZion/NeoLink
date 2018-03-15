@@ -13,7 +13,7 @@ import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
 
-import StartPage from '../../components/startfolder'
+import StartPage from '../../components/StartPage'
 import Login from '../../components/Login'
 
 import Header from '../../components/Header'

@@ -11,6 +11,7 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
 import Loader from '../Loader'
+import StartPage from '../StartPage'
 
 export class Login extends Component {
   state = {
@@ -69,7 +70,7 @@ export class Login extends Component {
 
   render() {
     const { loading, errorMsg } = this.state
-    const { accounts, account, handleSubmit, history } = this.props
+    const { accounts, account, handleSubmit } = this.props
 
     if (loading) {
       return <Loader />
@@ -79,7 +80,7 @@ export class Login extends Component {
     }
 
     if (Object.keys(accounts).length === 0) {
-      history.push('/')
+      return <StartPage />
     }
 
     return (

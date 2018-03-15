@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 import { mount, shallow } from 'enzyme'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
-import { createMemoryHistory } from 'history'
 
 import LoginForm, { Login } from '../../src/app/components/Login/Login'
 import Loader from '../../src/app/components/Loader'
@@ -42,16 +41,8 @@ describe('Login', () => {
   })
 
   test('shows create options if no wallet accounts found', () => {
-    const history = createMemoryHistory('/')
     const loginForm = shallow(
-      <Login
-        setAccount={ jest.fn }
-        handleSubmit={ jest.fn }
-        reset={ jest.fn }
-        account={ { wif: '' } }
-        accounts={ {} }
-        history={ history }
-      />
+      <Login setAccount={ jest.fn } handleSubmit={ jest.fn } reset={ jest.fn } account={ { wif: '' } } accounts={ {} } />
     )
     expect(loginForm.contains('CreateOrImportWallet'))
   })
