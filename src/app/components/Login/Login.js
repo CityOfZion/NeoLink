@@ -12,7 +12,9 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
 import Loader from '../Loader'
-import StartPage from '../StartPage/index'
+import StartPage from '../StartPage'
+
+console.log(StartPage)
 
 export class Login extends Component {
   state = {
