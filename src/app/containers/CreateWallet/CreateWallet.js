@@ -42,7 +42,7 @@ export default class CreateWallet extends Component {
 
   _handleTextFieldChange = e => {
     const key = e.target.id
-    console.log(key)
+
     this._clearErrors(key)
     this.setState({
       [key]: e.target.value,
@@ -153,8 +153,6 @@ export default class CreateWallet extends Component {
   render() {
     const { loading, errors, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
     const { manualWIF } = this.props
-
-    console.log(errors)
 
     if (loading) {
       return <Loader />
