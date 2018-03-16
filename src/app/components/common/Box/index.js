@@ -6,7 +6,7 @@ import style from './Box.css'
 const Box = props => <section className={ style.box }>{props.children}</section>
 
 Box.propTypes = {
-  children: PropTypes.arrayOf,
+  children: PropTypes.node.isRequired,
 }
 
 export default Box

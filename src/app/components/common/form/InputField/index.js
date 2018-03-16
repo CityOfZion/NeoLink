@@ -19,7 +19,7 @@ const InputField = ({
     <input
       name={ name }
       value={ value }
-      onChangeHandler={ onChangeHandler }
+      onChange={ onChangeHandler }
       className={ `${style.inputField} ${classNames} ${inputFieldLabelStyles}` }
       type={ type }
       id={ id }

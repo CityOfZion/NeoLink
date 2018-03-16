@@ -6,11 +6,8 @@ import { wallet } from '@cityofzion/neon-js'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
-import { TextField } from 'rmwc/TextField'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
 
-import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
+import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
 
 export default class CreateWallet extends Component {
@@ -107,42 +104,55 @@ export default class CreateWallet extends Component {
         <div className='content'>
           <div>Wallet created!</div>
           <div>Encrypted WIF:</div>
-          <div className={ globalStyle.breakWord }>${encryptedWif}</div>
+          <div>${encryptedWif}</div>
           <div>Address:</div>
-          <div className={ globalStyle.breakWord }>${address}</div>
+          <div>${address}</div>
         </div>
       )
     }
 
     return (
-      <Box>
-        <form onSubmit={ this.handleSubmit }>
-          {manualWIF && (
-            <TextField type='password' placeholder='WIF' value={ wif } id='wif' onChange={ this._handleTextFieldChange } />
-          )}
-          <TextField type='input' placeholder='Label' value={ label } id='label' onChange={ this._handleTextFieldChange } />
-          <TextField
-            type='password'
-            placeholder='Passphrase'
-            value={ passPhrase }
-            id='passPhrase'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='password'
-            placeholder='Confirm Passphrase'
-            value={ passPhraseConfirm }
-            id='passPhraseConfirm'
-            onChange={ this._handleTextFieldChange }
-          />
-          <div>
-            <InputField onChangeHandler={ () => {} } label={ 'Account Name' } value='Hello' />
-            <PrimaryButton buttonText={ 'Create' } />
-          </div>
-        </form>
+      <section className={ style.createWalletWrapper }>
+        <Box>
+          <h1 className={ style.createWalletHeading }>Create Wallet</h1>
+          <form onSubmit={ this.handleSubmit } className={ style.createWalletForm }>
+            {manualWIF && (
+              <InputField
+                type='password'
+                value={ wif }
+                id='wif'
+                onChangeHandler={ this._handleTextFieldChange }
+                label='Password'
+              />
+            )}
+            <InputField
+              type='input'
+              value={ label }
+              id='label'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Account Name'
+            />
+            <InputField
+              type='password'
+              value={ passPhrase }
+              id='passPhrase'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Password'
+            />
+            <InputField
+              type='password'
+              value={ passPhraseConfirm }
+              id='passPhraseConfirm'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Confirm Password'
+            />
 
-        <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
-      </Box>
+            <PrimaryButton buttonText={ 'Create' } classNames={ style.createWalletButton } />
+          </form>
+
+          <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
+        </Box>
+      </section>
     )
   }
 }
