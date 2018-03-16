@@ -5,6 +5,7 @@ import { wallet } from '@cityofzion/neon-js'
 // import { Button } from 'rmwc/Button'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import InputField from '../../components/common/form/InputField'
+import Box from '../../components/common/Box'
 import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
@@ -114,7 +115,7 @@ export default class CreateWallet extends Component {
     }
 
     return (
-      <div>
+      <Box>
         <form onSubmit={ this.handleSubmit }>
           {manualWIF && (
             <TextField type='password' placeholder='WIF' value={ wif } id='wif' onChange={ this._handleTextFieldChange } />
@@ -141,7 +142,7 @@ export default class CreateWallet extends Component {
         </form>
 
         <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
-      </div>
+      </Box>
     )
   }
 }
