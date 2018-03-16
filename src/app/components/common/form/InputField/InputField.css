@@ -28,4 +28,33 @@
   width: 100%;
   color: #585858;
   font-size: 0.9rem;
+  position: relative;
+}
+
+.inputFieldErrorStyles {
+  border-bottom: 2px solid #ff6f6f;
+}
+
+.inputFieldErrorMessage {
+  position: absolute;
+  width: 100%;
+  background-color: #ff6f6f;
+  color: #fff;
+  border-radius: 3px;
+  padding: 7px;
+  z-index: 999;
+  top: 67px;
+}
+
+.inputFieldErrorMessage::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: -6px;
+  width: 0;
+  transition: all 0.4s ease;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 13px solid #ff6f6f;
 }

@@ -12,88 +12,146 @@ import Loader from '../../components/Loader'
 
 export default class CreateWallet extends Component {
   state = {
-    errorMsg: '',
+    errors: {
+      wif: '',
+      label: '',
+      passPhrase: '',
+      passPhraseConfirm: '',
+    },
     loading: false,
     encryptedWif: '',
     passPhrase: '',
     passPhraseConfirm: '',
+    label: '',
     address: '',
     wif: '',
   }
 
+  _clearErrors(key) {
+    this._setErrorState(key, '')
+  }
+
+  _setErrorState = (key, value) => {
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [key]: value,
+      },
+    }))
+  }
+
   _handleTextFieldChange = e => {
     const key = e.target.id
+    console.log(key)
+    this._clearErrors(key)
     this.setState({
       [key]: e.target.value,
     })
   }
 
+  _validateLabel = () => {
+    const { label } = this.state
+
+    if (!label || label.length < 1) {
+      this._setErrorState('label', 'Account name must be longer than 1.')
+      return false
+    } else {
+      this._setErrorState('label', '')
+      return true
+    }
+  }
+
+  _validatePassPhrase = () => {
+    const { passPhrase } = this.state
+
+    if (!passPhrase || passPhrase.length < 10) {
+      this._setErrorState('passPhrase', 'Passphrase must be longer than 10 characters.')
+      return false
+    } else {
+      this._setErrorState('passPhrase', '')
+      return true
+    }
+  }
+
+  _validatePasswordMatch = () => {
+    const { passPhrase, passPhraseConfirm } = this.state
+
+    if (!passPhrase || !passPhraseConfirm || passPhrase !== passPhraseConfirm) {
+      this._setErrorState('passPhraseConfirm', 'Passphrases do not match.')
+      return false
+    } else {
+      this._setErrorState('passPhraseConfirm', '')
+      return true
+    }
+  }
+
+  _validateWIF = () => {
+    const { wif } = this.state
+    const { manualWIF } = this.props
+
+    if (manualWIF && !wallet.isWIF(wif)) {
+      this._setErrorState('wif', 'Invalid WIF')
+      return false
+    } else {
+      this._setErrorState('wif', '')
+      return true
+    }
+  }
+
+  _validate = () => {
+    const labelValidated = this._validateLabel()
+    const passPhraseValidated = this._validatePassPhrase()
+    const passPhraseMatchValidated = this._validatePasswordMatch()
+    const wifValidated = this._validateWIF()
+
+    if (labelValidated && passPhraseValidated && passPhraseMatchValidated && wifValidated) {
+      return true
+    }
+    return false
+  }
+
   handleSubmit = event => {
     event.preventDefault()
 
-    const { label, passPhrase, wif, passPhraseConfirm } = this.state
+    const { label, passPhrase, wif } = this.state
     const { addAccount, manualWIF } = this.props
 
-    if (manualWIF && !wallet.isWIF(wif)) {
+    const validated = this._validate()
+
+    if (validated) {
       this.setState({
-        loading: false,
-        errorMsg: 'Invalid WIF',
+        loading: true,
       })
 
-      return
-    }
+      // Make wallet.decrypt() async.
+      setTimeout(() => {
+        try {
+          const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
+          const encryptedWif = wallet.encrypt(account.WIF, passPhrase)
 
-    if (passPhrase !== passPhraseConfirm) {
-      this.setState({
-        loading: false,
-        errorMsg: 'Passphrases do not match.',
-      })
+          const accountObject = {
+            key: encryptedWif,
+            address: account.address,
+            label: label,
+            isDefault: false,
+          }
 
-      return
-    }
+          addAccount(new wallet.Account(accountObject))
 
-    if (passPhrase.length < 10) {
-      this.setState({
-        loading: false,
-        errorMsg: 'Passphrases must be at least 10 characters',
-      })
-
-      return
-    }
-
-    this.setState({
-      loading: true,
-      errorMsg: '',
-    })
-
-    // Make wallet.decrypt() async.
-    setTimeout(() => {
-      try {
-        const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
-        const encryptedWif = wallet.encrypt(account.WIF, passPhrase)
-
-        const accountObject = {
-          key: encryptedWif,
-          address: account.address,
-          label: label,
-          isDefault: false,
+          this.setState({
+            loading: false,
+            encryptedWif: encryptedWif,
+            address: account.address,
+          })
+        } catch (e) {
+          this.setState({ loading: false, errorMsg: e.message })
         }
-
-        addAccount(new wallet.Account(accountObject))
-
-        this.setState({
-          loading: false,
-          encryptedWif: encryptedWif,
-          address: account.address,
-        })
-      } catch (e) {
-        this.setState({ loading: false, errorMsg: e.message })
-      }
-    }, 500)
+      }, 500)
+    }
   }
 
   render() {
-    const { loading, errorMsg, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
+    const { loading, errors, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
     const { manualWIF } = this.props
 
     if (loading) {
@@ -123,6 +181,7 @@ export default class CreateWallet extends Component {
                 id='wif'
                 onChangeHandler={ this._handleTextFieldChange }
                 label='Password'
+                error={ errors.wif }
               />
             )}
             <InputField
@@ -131,6 +190,7 @@ export default class CreateWallet extends Component {
               id='label'
               onChangeHandler={ this._handleTextFieldChange }
               label='Account Name'
+              error={ errors.label }
             />
             <InputField
               type='password'
@@ -138,6 +198,7 @@ export default class CreateWallet extends Component {
               id='passPhrase'
               onChangeHandler={ this._handleTextFieldChange }
               label='Password'
+              error={ errors.passPhrase }
             />
             <InputField
               type='password'
@@ -145,12 +206,11 @@ export default class CreateWallet extends Component {
               id='passPhraseConfirm'
               onChangeHandler={ this._handleTextFieldChange }
               label='Confirm Password'
+              error={ errors.passPhraseConfirm }
             />
 
             <PrimaryButton buttonText={ 'Create' } classNames={ style.createWalletButton } />
           </form>
-
-          <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
         </Box>
       </section>
     )
