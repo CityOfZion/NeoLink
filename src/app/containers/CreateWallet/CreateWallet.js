@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 
-// import { Button } from 'rmwc/Button'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'

@@ -12,8 +12,8 @@ import CreateWallet from '../CreateWallet'
 import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
-import ContentWrapper from '../ContentWrapper'
 
+import ContentWrapper from '../ContentWrapper'
 import StartPage from '../../components/StartPage'
 import Login from '../../components/Login'
 
