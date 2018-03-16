@@ -154,6 +154,8 @@ export default class CreateWallet extends Component {
     const { loading, errors, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
     const { manualWIF } = this.props
 
+    console.log(errors)
+
     if (loading) {
       return <Loader />
     } else if (encryptedWif) {

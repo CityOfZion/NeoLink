@@ -23,14 +23,17 @@ describe('CreateWallet', () => {
 
     const wrapper = mount(<CreateWallet addAccount={ addAccount } />)
 
-    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
+    wrapper
+      .find('input#passPhraseConfirm')
+      .simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
+    wrapper.find('input#label').simulate('change', { target: { id: 'label', value: 'somelabel' } })
     wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errorMsg).toEqual('')
+    expect(wrapper.state().errors).toEqual({ label: '', passPhrase: '', passPhraseConfirm: '', wif: '' })
     expect(wrapper.text().includes(wrapper.state().encryptedWif)).toEqual(true)
     expect(wrapper.text().includes(wrapper.state().address)).toEqual(true)
 
@@ -46,15 +49,17 @@ describe('CreateWallet', () => {
 
     const wrapper = mount(<CreateWallet addAccount={ jest.fn } />)
 
-    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhraseConfirm', value: passphraseConfirm } })
+    wrapper
+      .find('input#passPhraseConfirm')
+      .simulate('change', { target: { id: 'passPhraseConfirm', value: passphraseConfirm } })
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
     wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errorMsg).not.toEqual('')
-    expect(wrapper.text().includes(wrapper.state().errorMsg)).toEqual(true)
+    expect(wrapper.state().errors.passPhraseConfirm).not.toEqual('')
+    expect(wrapper.state().errors.passPhraseConfirm).toEqual('Passphrases do not match.')
   })
 
   test('passphrase must be at least 10 characters', () => {
@@ -64,15 +69,17 @@ describe('CreateWallet', () => {
 
     const wrapper = mount(<CreateWallet addAccount={ jest.fn } />)
 
-    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
+    wrapper
+      .find('input#passPhraseConfirm')
+      .simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
     wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errorMsg).not.toEqual('')
-    expect(wrapper.text().includes(wrapper.state().errorMsg)).toEqual(true)
+    expect(wrapper.state().errors.passPhrase).not.toEqual('')
+    expect(wrapper.state().errors.passPhrase).toEqual('Passphrase must be longer than 10 characters.')
   })
 
   test('Creates valid credentials with manual WIF', () => {
@@ -83,15 +90,23 @@ describe('CreateWallet', () => {
 
     const wrapper = mount(<CreateWallet addAccount={ addAccount } manualWIF />)
 
-    wrapper.find('input#wif').simulate('change', { target: { id: 'wif', value: 'KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr' } })
-    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
+    wrapper
+      .find('input#wif')
+      .simulate('change', { target: { id: 'wif', value: 'KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr' } })
+    wrapper
+      .find('input#passPhraseConfirm')
+      .simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
+    // Hack WIF needs to be rewritten
+    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
+    wrapper.find('input#label').simulate('change', { target: { id: 'label', value: 'somelabel' } })
+
     wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errorMsg).toEqual('')
+    expect(wrapper.state().errors.wif).toEqual('')
     expect(wrapper.text().includes(wrapper.state().encryptedWif)).toEqual(true)
     expect(wrapper.text().includes(wrapper.state().address)).toEqual(true)
 
@@ -107,14 +122,18 @@ describe('CreateWallet', () => {
 
     const wrapper = mount(<CreateWallet addAccount={ jest.fn } manualWIF />)
 
-    wrapper.find('input#wif').simulate('change', { target: { id: 'wif', value: '!xDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr' } })
-    wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
+    wrapper
+      .find('input#wif')
+      .simulate('change', { target: { id: 'wif', value: '!xDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr' } })
+    wrapper
+      .find('input#passPhraseConfirm')
+      .simulate('change', { target: { id: 'passPhraseConfirm', value: passphrase } })
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
     wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errorMsg).not.toEqual('')
+    expect(wrapper.state().errors.wif).not.toEqual('')
   })
 })

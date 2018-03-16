@@ -16,7 +16,6 @@ import ContentWrapper from '../ContentWrapper'
 
 import StartPage from '../../components/StartPage'
 import Login from '../../components/Login'
-import Loader from '../../components/Loader'
 
 import Header from '../../components/Header'
 
@@ -34,7 +33,6 @@ export default class App extends Component {
         <ContentWrapper>
           <ConnectedSwitch>
             <Route path='/login' component={ Login } />
-            <Route path='/loader' component={ Loader } />
             <Route path='/home' component={ Home } />
             <Route path='/send' component={ Send } />
             <Route path='/testInvoke' component={ TestInvoke } />
