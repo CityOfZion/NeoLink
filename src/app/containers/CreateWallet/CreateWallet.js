@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 
-import { Button } from 'rmwc/Button'
+// import { Button } from 'rmwc/Button'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import InputField from '../../components/common/form/InputField'
 import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
@@ -21,14 +23,14 @@ export default class CreateWallet extends Component {
     wif: '',
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleTextFieldChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
 
     const { label, passPhrase, wif, passPhraseConfirm } = this.state
@@ -114,22 +116,10 @@ export default class CreateWallet extends Component {
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
-          { manualWIF &&
-            <TextField
-              type='password'
-              placeholder='WIF'
-              value={ wif }
-              id='wif'
-              onChange={ this._handleTextFieldChange }
-            />
-          }
-          <TextField
-            type='input'
-            placeholder='Label'
-            value={ label }
-            id='label'
-            onChange={ this._handleTextFieldChange }
-          />
+          {manualWIF && (
+            <TextField type='password' placeholder='WIF' value={ wif } id='wif' onChange={ this._handleTextFieldChange } />
+          )}
+          <TextField type='input' placeholder='Label' value={ label } id='label' onChange={ this._handleTextFieldChange } />
           <TextField
             type='password'
             placeholder='Passphrase'
@@ -145,15 +135,12 @@ export default class CreateWallet extends Component {
             onChange={ this._handleTextFieldChange }
           />
           <div>
-            <Button raised ripple>Create Wallet</Button>
+            <InputField onChangeHandler={ () => {} } label={ 'Account Name' } value='Hello' />
+            <PrimaryButton buttonText={ 'Create' } />
           </div>
         </form>
 
-        <div className='content'>
-          {this.state.errorMsg !== '' &&
-            <div>ERROR: {errorMsg}</div>
-          }
-        </div>
+        <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
       </div>
     )
   }
