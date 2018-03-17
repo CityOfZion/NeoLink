@@ -78,7 +78,7 @@ export class Login extends Component {
   }
 
   render() {
-    const { loading, errorMsg } = this.state
+    const { loading } = this.state
     const { accounts, account, handleSubmit } = this.props
 
     if (loading) {
