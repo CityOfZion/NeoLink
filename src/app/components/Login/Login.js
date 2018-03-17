@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
 
-import InputField from '../common/form/InputField'
 import SelectBox from '../common/form/SelectBox'
+import InputField from '../common/form/InputField'
 import PrimaryButton from '../common/buttons/PrimaryButton'
 import Box from '../common/Box'
 
@@ -22,7 +22,16 @@ export class Login extends Component {
   }
 
   _renderTextField = ({ input, ...rest }) => (
-    <InputField { ...input } { ...rest } label='Password' onChangeHandler={ event => input.onChange(event.target.value) } />
+    <InputField
+      { ...input }
+      { ...rest }
+      error={ this.state.errorMsg }
+      label='Password'
+      onChangeHandler={ event => {
+        this.setState(prevState => ({ errorMsg: '' }))
+        input.onChange(event.target.value)
+      } }
+    />
   )
 
   _renderSelectField = ({ input, ...rest }) => (
@@ -34,8 +43,6 @@ export class Login extends Component {
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
-
-    console.log(values)
 
     this.setState({
       loading: true,
@@ -60,7 +67,7 @@ export class Login extends Component {
   }
 
   getAccountOptions(accounts) {
-    const options = [{ label: 'Select Account', value: null }]
+    const options = [{ label: 'Select Account', value: '' }]
 
     Object.keys(accounts).forEach(index => {
       const account = accounts[index]
@@ -102,7 +109,6 @@ export class Login extends Component {
               <PrimaryButton classNames={ style.loginButton } buttonText={ 'Login' } />
             </div>
           </form>
-          {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
         </Box>
       </section>
     )
