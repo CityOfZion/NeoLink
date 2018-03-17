@@ -76,11 +76,12 @@ describe('Login', () => {
         <LoginForm setAccount={ setAccount } account={ { wif: '' } } accounts={ validAccount } />
       </Provider>
     )
+
     loginForm
       .find('input[name="passPhrase"]')
       .simulate('change', { target: { name: 'passPhrase', value: validPassword } })
-    loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
-    loginForm.find('button').simulate('click')
+    loginForm.find('.selectBox').simulate('change', { target: { value: validEncryptedKey } })
+    loginForm.find('.loginButton').simulate('click')
   })
 
   test('Shows error with invalid credentials', () => {
