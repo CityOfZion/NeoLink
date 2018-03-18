@@ -9,13 +9,12 @@ import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
-@connect(
-  state => ({
-    selectedNetworkId: state.config.selectedNetworkId,
-    networks: state.config.networks,
-  })
-)
+import tempStyle from '../App/App.css'
 
+@connect(state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+}))
 export default class TestInvoke extends Component {
   state = {
     errorMsg: '',
@@ -37,14 +36,14 @@ export default class TestInvoke extends Component {
     })
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleTextFieldChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks } = this.props
     this.setState({
@@ -72,28 +71,28 @@ export default class TestInvoke extends Component {
     }
 
     const args = []
-    txArgs.forEach((arg) => {
-      if (arg !== '') args.push({ 'type': 7, 'value': arg })
+    txArgs.forEach(arg => {
+      if (arg !== '') args.push({ type: 7, value: arg })
     })
 
-    args.push({ 'type': 7, 'value': 'arg' })
+    args.push({ type: 7, value: 'arg' })
 
     const query = Neon.create.query({
       method: 'invokefunction',
       params: [this.state.scriptHash, this.state.operation, args],
     })
 
-    api.neonDB.getRPCEndpoint(networks[selectedNetworkId].url)
-      .then((endpoint) => {
-        query.execute(endpoint)
-          .then((response) => {
-            this.setState({
-              loading: false,
-              result: response.result,
-            })
+    api.neonDB
+      .getRPCEndpoint(networks[selectedNetworkId].url)
+      .then(endpoint => {
+        query.execute(endpoint).then(response => {
+          this.setState({
+            loading: false,
+            result: response.result,
           })
+        })
       })
-      .catch((e) => {
+      .catch(e => {
         this.setState({
           loading: false,
           errorMsg: 'Error testing invoke.',
@@ -105,7 +104,7 @@ export default class TestInvoke extends Component {
     const { result, loading, errorMsg } = this.state
     return (
       <div>
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ this.handleSubmit } className={ tempStyle.tempFormStyle }>
           <TextField
             type='text'
             placeholder='Script Hash'
@@ -134,22 +133,18 @@ export default class TestInvoke extends Component {
             id='arg2'
             onChange={ this._handleTextFieldChange }
           />
-          <Button raised ripple>Invoke</Button>
+          <Button raised ripple>
+            Invoke
+          </Button>
         </form>
-        {result &&
+        {result && (
           <div>
             <div>result:</div>
-            <pre>
-              {JSON.stringify(result, null, 2)}
-            </pre>
+            <pre>{JSON.stringify(result, null, 2)}</pre>
           </div>
-        }
-        {loading &&
-          <div>Loading...</div>
-        }
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
+        )}
+        {loading && <div>Loading...</div>}
+        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
       </div>
     )
   }

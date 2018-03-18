@@ -12,15 +12,15 @@ import '@material/select/dist/mdc.select.min.css'
 import { callInvoke } from '../../utils/neonWrappers'
 
 import style from './SendInvoke.css'
+import tempStyle from '../App/App.css'
+
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
-@connect(
-  state => ({
-    networks: state.config.networks,
-    selectedNetworkId: state.config.selectedNetworkId,
-    account: state.account,
-  })
-)
+@connect(state => ({
+  networks: state.config.networks,
+  selectedNetworkId: state.config.selectedNetworkId,
+  account: state.account,
+}))
 
 /*
   Test call ...
@@ -33,7 +33,6 @@ import withLoginCheck from '../../components/Login/withLoginCheck'
     assetAmount: '.00025'
   }
 */
-
 class SendInvoke extends Component {
   state = {
     loading: false,
@@ -41,14 +40,14 @@ class SendInvoke extends Component {
     txid: '',
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleTextFieldChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks, account } = this.props
 
@@ -68,7 +67,7 @@ class SendInvoke extends Component {
     }
 
     callInvoke(networks[selectedNetworkId].url, account, this.state)
-      .then((c) => {
+      .then(c => {
         if (c.response.result === true) {
           this.setState({
             loading: false,
@@ -81,7 +80,7 @@ class SendInvoke extends Component {
           })
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log('e', e)
         this.setState({
           loading: false,
@@ -95,7 +94,7 @@ class SendInvoke extends Component {
 
     return (
       <div>
-        <form onSubmit={ this.handleSubmit } style={ { paddingTop: '35px' } }>
+        <form onSubmit={ this.handleSubmit } style={ { paddingTop: '35px' } } className={ tempStyle.tempFormStyle }>
           <TextField
             type='text'
             placeholder='Script Hash'
@@ -131,9 +130,11 @@ class SendInvoke extends Component {
             id='amount'
             onChange={ this._handleTextFieldChange }
           />
-          <Select cssOnly label='Asset'
+          <Select
+            cssOnly
+            label='Asset'
             value={ this.state.assetType }
-            onChange={ (e) => {
+            onChange={ e => {
               this.setState({
                 assetType: e.target.value,
               })
@@ -149,20 +150,18 @@ class SendInvoke extends Component {
               },
             ] }
           />
-          <Button raised ripple disabled={ this.state.loading }>Invoke</Button>
+          <Button raised ripple disabled={ this.state.loading }>
+            Invoke
+          </Button>
         </form>
 
-        { txid &&
+        {txid && (
           <div className={ style.statusBox }>
-            Success! txid: <span className={ style.transactionId }>{ txid }</span>
+            Success! txid: <span className={ style.transactionId }>{txid}</span>
           </div>
-        }
-        { loading &&
-          <div className={ style.statusBox }>Loading...</div>
-        }
-        { errorMsg !== '' &&
-          <div className={ style.statusBox }>ERROR: {errorMsg}</div>
-        }
+        )}
+        {loading && <div className={ style.statusBox }>Loading...</div>}
+        {errorMsg !== '' && <div className={ style.statusBox }>ERROR: {errorMsg}</div>}
       </div>
     )
   }

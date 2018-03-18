@@ -12,6 +12,8 @@ import '@material/select/dist/mdc.select.min.css'
 
 import { toNumber, toBigNumber } from '../../utils/math'
 
+import tempStyle from '../App/App.css'
+
 export class Send extends Component {
   state = {
     errorMsg: '',
@@ -19,26 +21,12 @@ export class Send extends Component {
     txid: '',
   }
 
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderTextField = ({ input, ...rest }) => (
+    <TextField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
-  _renderSelectField = ({
-    input,
-    ...rest
-  }) => (
-    <Select
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderSelectField = ({ input, ...rest }) => (
+    <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
   resetState = () => {
@@ -52,7 +40,7 @@ export class Send extends Component {
     })
   }
 
-  validateAddress = (address) => {
+  validateAddress = address => {
     if (!address) {
       return 'Address field is required'
     }
@@ -72,14 +60,16 @@ export class Send extends Component {
     }
 
     try {
-      if (toBigNumber(amount).lte(0)) { // check for negative/zero asset
+      if (toBigNumber(amount).lte(0)) {
+        // check for negative/zero asset
         return 'You cannot send zero or negative amounts of an asset.'
       }
     } catch (e) {
       return 'You must enter a valid number.'
     }
 
-    if (assetType === 'NEO' && !toBigNumber(amount).isInteger()) { // check for fractional NEO
+    if (assetType === 'NEO' && !toBigNumber(amount).isInteger()) {
+      // check for fractional NEO
       return 'You cannot send fractional amounts of NEO.'
     }
   }
@@ -122,8 +112,9 @@ export class Send extends Component {
 
     let amounts = {}
     amounts[assetType] = toNumber(amount)
-    api.neonDB.doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
-      .then((result) => {
+    api.neonDB
+      .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
+      .then(result => {
         console.log(result)
         this.setState({
           loading: false,
@@ -131,7 +122,7 @@ export class Send extends Component {
         })
         reset()
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e)
         this.setState({
           loading: false,
@@ -145,22 +136,13 @@ export class Send extends Component {
     const { handleSubmit } = this.props
 
     return (
-      <div>
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Address'
-            name='address'
-          />
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Amount'
-            name='amount'
-          />
+      <div className={ tempStyle.tempWrapper }>
+        <form onSubmit={ handleSubmit(this.handleSubmit) } className={ tempStyle.tempFormStyle }>
+          <Field component={ this._renderTextField } type='text' placeholder='Address' name='address' />
+          <Field component={ this._renderTextField } type='text' placeholder='Amount' name='amount' />
 
-          <Field label='Asset'
+          <Field
+            label='Asset'
             component={ this._renderSelectField }
             cssOnly
             name='assetType'
@@ -175,10 +157,12 @@ export class Send extends Component {
               },
             ] }
           />
-          <Button raised ripple>Send</Button>
+          <Button raised ripple>
+            Send
+          </Button>
         </form>
         <br />
-        {txid &&
+        {txid && (
           <div>
             <div>Success!</div>
             <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
@@ -186,13 +170,9 @@ export class Send extends Component {
               <div>{txid}</div>
             </div>
           </div>
-        }
-        {loading &&
-          <div>Loading...</div>
-        }
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
+        )}
+        {loading && <div>Loading...</div>}
+        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
       </div>
     )
   }

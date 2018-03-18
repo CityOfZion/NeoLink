@@ -10,13 +10,12 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 
 import { toBigNumber } from '../../utils/math'
 
-@connect(
-  state => ({
-    selectedNetworkId: state.config.selectedNetworkId,
-    networks: state.config.networks,
-  })
-)
+import tempStyle from '../App/App.css'
 
+@connect(state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+}))
 export default class Balance extends Component {
   state = {
     errorMsg: '',
@@ -27,7 +26,7 @@ export default class Balance extends Component {
     balanceAddress: '',
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleTextFieldChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
@@ -46,7 +45,7 @@ export default class Balance extends Component {
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
     const { networks, selectedNetworkId } = this.props
     this.setState({
@@ -56,17 +55,20 @@ export default class Balance extends Component {
       address: '',
     })
 
-    api.neonDB.getBalance(networks[selectedNetworkId]['url'], this.state.balanceAddress)
-      .then((result) => {
+    api.neonDB
+      .getBalance(networks[selectedNetworkId]['url'], this.state.balanceAddress)
+      .then(result => {
         this.setState({
           loading: false,
           haveBalance: true,
           NEO: toBigNumber(result.assets.NEO.balance).toString(),
-          GAS: toBigNumber(result.assets.GAS.balance).round(8).toString(),
+          GAS: toBigNumber(result.assets.GAS.balance)
+            .round(8)
+            .toString(),
           address: this.state.balanceAddress,
         })
       })
-      .catch((e) => {
+      .catch(e => {
         this.setState({ loading: false, errorMsg: e.message })
       })
   }
@@ -76,7 +78,7 @@ export default class Balance extends Component {
 
     return (
       <div>
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ this.handleSubmit } className={ tempStyle.tempFormStyle }>
           <TextField
             type='text'
             placeholder='Address'
@@ -84,21 +86,19 @@ export default class Balance extends Component {
             id='balanceAddress'
             onChange={ this._handleTextFieldChange }
           />
-          <Button raised ripple>Get Balance</Button>
+          <Button raised ripple>
+            Get Balance
+          </Button>
         </form>
-        {haveBalance &&
+        {haveBalance && (
           <div>
             <div>NEO: {NEO}</div>
             <div>GAS: {GAS}</div>
             <div>Address: {address}</div>
           </div>
-        }
-        {loading === true &&
-          <div>loading...</div>
-        }
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
+        )}
+        {loading === true && <div>loading...</div>}
+        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
       </div>
     )
   }

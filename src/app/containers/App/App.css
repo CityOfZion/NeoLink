@@ -28,3 +28,10 @@ h6 {
   height: 550px;
   background-color: #eaeaea;
 }
+
+/* Temporary styling to make WIP pages more usable */
+.tempFormStyle {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
