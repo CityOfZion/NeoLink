@@ -10,12 +10,6 @@
   position: relative;
 }
 
-.loaderWrapperHeading {
-  position: absolute;
-  transform: translateY(-140px);
-  color: #585858;
-}
-
 .loader {
   border: 8px solid transparent;
   border-top: 8px solid #36b049;
