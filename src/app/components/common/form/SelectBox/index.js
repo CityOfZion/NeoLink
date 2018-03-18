@@ -13,7 +13,6 @@ const SelectBox = ({ options, classNames = '', name = '', id = '', label = '', v
 
   const selectBox = (
     <select
-      defaultValue={ formattedOptions[0] }
       className={ `${style.selectBox} ${classNames} ${selectBoxLabeLStyles}` }
       name={ name }
       id={ id }
