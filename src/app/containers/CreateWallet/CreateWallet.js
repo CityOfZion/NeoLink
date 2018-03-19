@@ -179,7 +179,7 @@ export default class CreateWallet extends Component {
                 value={ wif }
                 id='wif'
                 onChangeHandler={ this._handleTextFieldChange }
-                label='Password'
+                label='Wif'
                 error={ errors.wif }
               />
             )}
