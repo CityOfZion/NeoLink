@@ -63,11 +63,11 @@ export default class TestInvoke extends Component {
     }
 
     const txArgs = []
-    if (this.arg1) {
+    if (this.state.arg1) {
       txArgs.push(this.state.arg1)
     }
 
-    if (this.arg2) {
+    if (this.state.arg2) {
       txArgs.push(this.state.arg2)
     }
 
@@ -75,6 +75,8 @@ export default class TestInvoke extends Component {
     txArgs.forEach((arg) => {
       if (arg !== '') args.push({ 'type': 7, 'value': arg })
     })
+
+    args.push({ 'type': 7, 'value': 'arg' })
 
     const query = Neon.create.query({
       method: 'invokefunction',
@@ -136,7 +138,10 @@ export default class TestInvoke extends Component {
         </form>
         {result &&
           <div>
-            result: {JSON.stringify(result)}
+            <div>result:</div>
+            <pre>
+              {JSON.stringify(result, null, 2)}
+            </pre>
           </div>
         }
         {loading &&

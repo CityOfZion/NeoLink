@@ -8,6 +8,8 @@ import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
+import { toBigNumber } from '../../utils/math'
+
 @connect(
   state => ({
     selectedNetworkId: state.config.selectedNetworkId,
@@ -59,13 +61,13 @@ export default class Balance extends Component {
         this.setState({
           loading: false,
           haveBalance: true,
-          NEO: result.NEO.balance,
-          GAS: result.GAS.balance,
+          NEO: toBigNumber(result.assets.NEO.balance).toString(),
+          GAS: toBigNumber(result.assets.GAS.balance).round(8).toString(),
           address: this.state.balanceAddress,
         })
       })
       .catch((e) => {
-        this.setState({ loading: false, errorMsg: 'Could not retrieve the balance for this address.' })
+        this.setState({ loading: false, errorMsg: e.message })
       })
   }
 

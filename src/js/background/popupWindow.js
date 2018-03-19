@@ -30,14 +30,14 @@ function popWindow(type) {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendContentResponse) => {
-  if (request.msg === 'sendInvoke') {
+  if (request.type === 'NEOLINK_SEND_INVOKE') {
     const port = popWindow('open') // eslint-disable-line no-unused-vars
 
     chrome.runtime.onConnect.addListener((port) => {
-      port.postMessage({ operation: 'sendInvoke', txInfo: request.tx, senderId: sender.tab.id })
+      port.postMessage({ operation: 'POPUP_SEND_INVOKE', txInfo: request.tx, senderId: sender.tab.id })
 
       port.onMessage.addListener((message) => {
-        if (message.msg === 'sendInvokeResponse') {
+        if (message.type === 'NEOLINK_SEND_INVOKE_RESPONSE') {
           sendContentResponse(message)
         }
       })

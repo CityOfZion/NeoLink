@@ -2,7 +2,7 @@
 
 This is a Chrome extension wallet for the Neo Smart Economy.
 
-Currently the project is undergoing heavy development and is hardcoded to only operate on TestNet.
+Currently the project is undergoing heavy development.
 
 ![alt](https://i.gyazo.com/816b21e8fcbb35073919603c9d6030c1.gif)
 
@@ -18,21 +18,19 @@ Currently the project is undergoing heavy development and is hardcoded to only o
 * Send invoke smart contracts with parameters and arguments
 * Authorize both types of smart contract invocations as requested by third-party dApp
 * SemVer 2.0 compliant http://semver.org/
-
+* Easy selection of MainNet, TestNet, or custom private net
+* Persistent storage of user configuration
+* Create wallet
 
 ## Future Features
 
 *    Add progress indicator for all actions to show user something is happening
 *    Add global status bar or modal system
-*    Add custom network configuration
-*    Add persistent storage of user configuration
 *    Re-skin UI and layout
 *    Refactor: lint, modularity, and clarity
-*    Easy selection of MainNet, TestNet, or custom private net
 *    Contact book that remembers addresses used
 *    Configurable watch wallet for any saved addresses to display balances all in one view
 *    Claim Gas
-*    Create wallet
 *    Import Wallet
 *    Export Wallet
 *    Add arbitrary number of arguments for smart contract invocation
@@ -41,7 +39,7 @@ Currently the project is undergoing heavy development and is hardcoded to only o
 
 ## Roadmap for Q1 2018
 
-* Finalize Preact version + Material Design
+* Finalize React version + Material Design
 * Product Landing Page
 * Firefox plug-in
 * Version 1.0 Release (Release packed plug-in on Google and Firefox)
@@ -50,18 +48,11 @@ Currently the project is undergoing heavy development and is hardcoded to only o
 
 ## Setup
 
-`yarn install`
+`npm install`
 
-```
-cd node_modules/neon-js
-npm install
-npm run-script build
-cd ../../
-```
+`npm run start` (for development with live reload)
 
-`yarn run start` (for development with live reload)
-
-`yarn run build` (production)
+`npm run build` (production)
 
 
 Your unpacked extension will be in the ./build/ folder.
@@ -93,14 +84,15 @@ document.getElementById("runInvokeButton).addEventListener("click",
       var amount = document.getElementById("assetAmount").value
 
       var invocationObject = {
-        'scriptHash': scriptHash,
-        'operation': operation,
-        'arg1': invokeArg1,
-        'arg2': invokeArg2,
-        'assetType': type,
-        'assetAmount': amount
+        'scriptHash': scriptHash, // Your contract's script hash.
+        'operation': operation,   // Operation as defined in your contract.
+        'arg1': invokeArg1,       // Depending on your input/contract, you may need to use u.str2hexstring, u.reverseHex
+        'arg2': invokeArg2,       // or other utility methods from neon-js for these arguments.
+        'assetType': type,        // NEO or GAS currently.
+        'assetAmount': amount     // Amount, decimals allowed for GAS.
       }
-      window.postMessage({ type: "FROM_PAGE", text: invocationObject }, "*");
+
+      window.postMessage({ type: "NEOLINK_SEND_INVOKE", text: invocationObject }, "*");
 }, false);
 </script>
 ```

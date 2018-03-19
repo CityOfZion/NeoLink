@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Field, reduxForm } from 'redux-form'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -13,16 +14,20 @@ class AddCustomNetwork extends Component {
     statusMsg: '',
   }
 
-  _handleTextFieldChange = (e) => {
-    const key = e.target.id
-    this.setState({
-      [key]: e.target.value,
-    })
-  }
+  _renderTextField = ({
+    input,
+    ...rest
+  }) => (
+    <TextField
+      { ...input }
+      { ...rest }
+      onChange={ (event) => input.onChange(event.target.value) }
+    />
+  )
 
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const { name, url } = this.state
+  handleSubmit = (values, dispatch, formProps) => {
+    const { reset } = formProps
+    const { name, url } = values
     const { addCustomNetwork } = this.props
 
     if (name && url) {
@@ -32,6 +37,7 @@ class AddCustomNetwork extends Component {
         url: '',
         statusMsg: 'Success. Your custom network has been added.',
       })
+      reset()
     } else {
       this.setState({
         statusMsg: 'Name and URL are required.',
@@ -41,23 +47,22 @@ class AddCustomNetwork extends Component {
 
   render() {
     const { statusMsg } = this.state
+    const { handleSubmit } = this.props
 
     return (
       <div>
-        <form onSubmit={ this.handleSubmit }>
-          <TextField
+        <form onSubmit={ handleSubmit(this.handleSubmit) }>
+          <Field
+            component={ this._renderTextField }
             type='text'
             placeholder='Network Name'
-            value={ this.state.name }
-            id='name'
-            onChange={ this._handleTextFieldChange }
+            name='name'
           />
-          <TextField
+          <Field
+            component={ this._renderTextField }
             type='text'
             placeholder='NeonDB URL'
-            value={ this.state.url }
-            id='url'
-            onChange={ this._handleTextFieldChange }
+            name='url'
           />
           <Button raised ripple>Add Custom Network</Button>
         </form>
@@ -71,6 +76,8 @@ class AddCustomNetwork extends Component {
 
 AddCustomNetwork.propTypes = {
   addCustomNetwork: PropTypes.func,
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 }
 
-export default AddCustomNetwork
+export default reduxForm({ form: 'addCustomerNetwork', destroyOnUnmount: false })(AddCustomNetwork)

@@ -80,11 +80,6 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    // DEBUGZ
-    // this.state.args.forEach(arg => {
-    //   console.log('args: '+arg.value)
-    // })
-
     if (!this.state.scriptHash || !this.state.operation || !this.state.amount) {
       this.setState({
         loading: false,

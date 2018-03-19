@@ -1,36 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { getNavigation } from './helpers'
 
 import NetworkSwitcher from '../NetworkSwitcher'
-import MainNav from '../MainNav'
 
-import './Header.css'
+import style from './Header.css'
 
-const Header = (props) => {
-  const { showMenu, setNetwork, selectedNetworkId, networks } = props
+const Header = props => {
+  const { setNetwork, selectedNetworkId, networks } = props
+  const navigation = getNavigation(props)
 
   return (
-    <div styleName='header'>
-      <NetworkSwitcher setNetwork={ setNetwork } selectedNetworkId={ selectedNetworkId } networks={ networks } />
-      <div styleName='titleBar'>
-        { showMenu ? <div styleName='menuNavWrapper'><MainNav /></div> : null }
-        <div styleName='titleWrapper'>
-          <span styleName='titleName'>NeoLink</span>
-        </div>
+    <div className={ style.header }>
+      <div className={ style.menuNavWrapper }>{navigation}</div>
+      <div className={ style.headerTitle }>
+        <h1>NeoLink</h1>
       </div>
+      <NetworkSwitcher setNetwork={ setNetwork } selectedNetworkId={ selectedNetworkId } networks={ networks } />
     </div>
   )
 }
 
 Header.propTypes = {
-  showMenu: PropTypes.bool,
   selectedNetworkId: PropTypes.string,
   setNetwork: PropTypes.func,
   networks: PropTypes.object,
-}
-
-Header.defaultProps = {
-  showMenu: true,
 }
 
 export default Header

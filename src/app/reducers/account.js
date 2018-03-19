@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
   wif: '',
+  address: '',
 }
 
 const actionsMap = {
@@ -9,6 +10,7 @@ const actionsMap = {
     return {
       ...state,
       wif: action.wif,
+      address: action.address,
     }
   },
 }

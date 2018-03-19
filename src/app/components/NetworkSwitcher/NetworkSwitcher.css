@@ -1,18 +1,95 @@
-.switcher {
-  background: transparent;
-  font-size: 11px;
-  color: white;
-  border-style: none;
-  display: inline;
-  margin: 0;
-  outline: none;
+.networkNavigation {
+    position: relative;
+    height: 100%;
+    width: 25%;
 }
 
-.switcher :active, .switcher :hover {
-  outline: none;
+.networkNavigationButton {
+    width: 100%;
+    display: flex;
+    background-color: transparent;
+    border: none;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
 }
 
-.switcher option {
-  background: #86d13e;
-  border-style: none;
+.networkNavigationGlobe {
+    width: 14px;
+    margin-right: 5px;
+}
+
+.networkNavigationChevron {
+    width: 10px;
+    transform: translateY(5px);
+}
+
+.networkNavigationDropdown {
+    background-color: #f5f5f5;
+    position: absolute;
+    right: 8px;
+    top: 46px;
+    z-index: 999;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px #bababa;
+    display: none;
+    width: 150px;
+    flex-direction: column;
+}
+
+.networkNavigationDropdownOpen {
+    display: flex;
+    animation-name: fadeInMenu;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+.networkOptionButton {
+    display: block;
+    width: 100%;
+    margin: 4px 0;
+    border: none;
+    font-family: Roboto;
+    background: transparent;
+    color: #585858;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.networkOptionButton:first-child {
+    margin-top: 0;
+}
+
+.networkOptionButton:last-child {
+    margin-bottom: 0;
+}
+
+.networkNavigationOptionSelected {
+    background-color: #48f12f;
+    border: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.mainNetNeoImg,
+.networkOptionIcon {
+    width: 16px;
+    margin-right: 8px;
+}
+
+@keyframes fadeInMenu {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

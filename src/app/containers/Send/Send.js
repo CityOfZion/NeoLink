@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Field, reduxForm } from 'redux-form'
 
 import { api, wallet } from '@cityofzion/neon-js'
 import { Button } from 'rmwc/Button'
@@ -11,22 +12,34 @@ import '@material/select/dist/mdc.select.min.css'
 
 import { toNumber, toBigNumber } from '../../utils/math'
 
-class Send extends Component {
+export class Send extends Component {
   state = {
     errorMsg: '',
     loading: false,
     txid: '',
-    assetType: 'NEO',
-    address: '',
-    amount: '',
   }
 
-  _handleTextFieldChange = (e) => {
-    const key = e.target.id
-    this.setState({
-      [key]: e.target.value,
-    })
-  }
+  _renderTextField = ({
+    input,
+    ...rest
+  }) => (
+    <TextField
+      { ...input }
+      { ...rest }
+      onChange={ (event) => input.onChange(event.target.value) }
+    />
+  )
+
+  _renderSelectField = ({
+    input,
+    ...rest
+  }) => (
+    <Select
+      { ...input }
+      { ...rest }
+      onChange={ (event) => input.onChange(event.target.value) }
+    />
+  )
 
   resetState = () => {
     this.setState({
@@ -71,10 +84,11 @@ class Send extends Component {
     }
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault()
+  handleSubmit = (values, dispatch, formProps) => {
+    const { reset } = formProps
     const { selectedNetworkId, networks, account } = this.props
-    const { assetType, address, amount } = this.state
+    const { assetType, address, amount } = values
+
     this.setState({
       loading: true,
       errorMsg: '',
@@ -115,6 +129,7 @@ class Send extends Component {
           loading: false,
           txid: result.txid,
         })
+        reset()
       })
       .catch((e) => {
         console.log(e)
@@ -127,33 +142,28 @@ class Send extends Component {
 
   render() {
     const { txid, loading, errorMsg } = this.state
+    const { handleSubmit } = this.props
 
     return (
       <div>
-        <form onSubmit={ this.handleSubmit }>
-          <TextField
+        <form onSubmit={ handleSubmit(this.handleSubmit) }>
+          <Field
+            component={ this._renderTextField }
             type='text'
             placeholder='Address'
-            value={ this.state.address }
-            id='address'
-            onChange={ this._handleTextFieldChange }
+            name='address'
           />
-          <TextField
+          <Field
+            component={ this._renderTextField }
             type='text'
             placeholder='Amount'
-            value={ this.state.amount }
-            id='amount'
-            onChange={ this._handleTextFieldChange }
+            name='amount'
           />
 
-          <Select label='Asset'
+          <Field label='Asset'
+            component={ this._renderSelectField }
             cssOnly
-            value={ this.state.assetType }
-            onChange={ (e) => {
-              this.setState({
-                assetType: e.target.value,
-              })
-            } }
+            name='assetType'
             options={ [
               {
                 label: 'NEO',
@@ -165,7 +175,6 @@ class Send extends Component {
               },
             ] }
           />
-
           <Button raised ripple>Send</Button>
         </form>
         <br />
@@ -193,6 +202,8 @@ Send.propTypes = {
   account: PropTypes.object.isRequired,
   selectedNetworkId: PropTypes.string.isRequired,
   networks: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 }
 
-export default Send
+export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(Send)

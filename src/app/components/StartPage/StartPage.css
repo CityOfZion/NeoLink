@@ -1,0 +1,29 @@
+.startPage {
+  background-color: #36b049;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.startPageButton {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 3px;
+  width: 80%;
+  height: 65px;
+  margin: 10px 0;
+  font-size: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.startPageIcon {
+  font-size: 1.2rem;
+  margin: 0 25px;
+}

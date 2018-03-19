@@ -1,12 +1,29 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400');
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
+
+* {
+	box-sizing: border-box;
+}
 
 :root {
-  --mdc-theme-primary: #36b049;
+	--mdc-theme-primary: #36b049;
+}
+
+body {
+	font-family: Roboto, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lato;
+  font-weight: 400;
 }
 
 .popup {
-  width: 310px;
-  height: 550px;
-  background-color: #eaeaea;
-
+	width: 310px;
+	height: 550px;
+	background-color: #eaeaea;
 }

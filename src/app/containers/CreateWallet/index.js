@@ -103,10 +103,7 @@ export default class CreateWallet extends Component {
         } */}
         <div className='content'>
 
-          {this.state.encryptedWif &&
-            <div>
-              <div>Encrypted WIF: {this.state.encryptedWif}</div>
-              <div>Address: {this.state.address}</div>
+import CreateWallet from './CreateWallet'
 
               <textarea
                 readOnly
@@ -126,8 +123,6 @@ export default class CreateWallet extends Component {
           }
         </div>
 
-      </div>
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-    )
-  }
-}
+export default connect(null, mapDispatchToProps)(CreateWallet)
