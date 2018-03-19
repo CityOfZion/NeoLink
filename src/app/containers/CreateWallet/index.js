@@ -8,6 +8,8 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 
 import style from './CreateWallet.css'
 
+// import CreateWallet from './CreateWallet'
+
 export default class CreateWallet extends Component {
   state = {
     errorMsg: '',
@@ -102,9 +104,6 @@ export default class CreateWallet extends Component {
           <div>ERROR: {errorMsg}</div>
         } */}
         <div className='content'>
-
-import CreateWallet from './CreateWallet'
-
               <textarea
                 readOnly
                 className={ style.textAreaReset }
