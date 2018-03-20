@@ -17,9 +17,6 @@ import StartPage from '../../components/StartPage'
 import Login from '../../components/Login'
 import Header from '../../components/Header'
 
-// temp
-import CreateWalletSuccessPage from '../../components/successPages/CreateWalletSuccessPage'
-
 import style from './App.css'
 
 const ConnectedSwitch = connect(state => ({
@@ -41,7 +38,6 @@ export default class App extends Component {
             <Route path='/transactions' component={ Transactions } />
             <Route path='/balance' component={ Balance } />
             <Route path='/createWallet' component={ CreateWallet } />
-            <Route path='/success' component={ CreateWalletSuccessPage } />
             <Route path='/newAccountFromWIF' render={ props => <CreateWallet manualWIF { ...props } /> } />
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
