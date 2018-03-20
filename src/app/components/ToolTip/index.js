@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import style from './ToolTip.css'
 
@@ -8,5 +9,12 @@ const ToolTip = ({ icon, toolTipText, toolTipTextClassNames, classNames }) => (
     <span className={ `${style.toolTipText} ${toolTipTextClassNames}` }>{toolTipText}</span>
   </div>
 )
+
+ToolTip.propTypes = {
+  icon: PropTypes.string.isRequired,
+  toolTipText: PropTypes.string,isRequired,
+  toolTipTextClassNames: PropTypes.string,
+  classNames: PropTypes.string,
+}
 
 export default ToolTip

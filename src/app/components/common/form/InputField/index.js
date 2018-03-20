@@ -78,6 +78,7 @@ InputField.propTypes = {
   error: PropTypes.string,
   disabled: PropTypes.bool,
   labelClassNames: PropTypes.string,
+  children: PropTypes.arrayOf,
 }
 
 export default InputField

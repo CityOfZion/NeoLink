@@ -45,6 +45,7 @@ TextArea.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.string,
   labelClassNames: PropTypes.string,
+  children: PropTypes.arrayOf,
 }
 
 export default TextArea
