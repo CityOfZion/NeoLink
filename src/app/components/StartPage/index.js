@@ -11,7 +11,7 @@ const StartPage = ({ history }) => {
         <i className={ `${style.startPageIcon} fas fa-plus` } />
         New Wallet
       </button>
-      <button className={ style.startPageButton } onClick={ () => history.push('/login') }>
+      <button className={ style.startPageButton } onClick={ () => history.push('/success') }>
         <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
         Use Saved Wallet
       </button>

@@ -58,3 +58,8 @@
   border-right: 13px solid transparent;
   border-bottom: 13px solid #ff6f6f;
 }
+
+.inputFieldDisabled {
+  box-shadow: none;
+  overflow-x: scroll;
+}

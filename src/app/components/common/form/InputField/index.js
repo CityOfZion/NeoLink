@@ -13,22 +13,29 @@ const InputField = ({
   id = '',
   label = '',
   error = '',
+  disabled = false,
 }) => {
   const inputFieldLabelStyles = label ? style.inputFieldLabelStyles : ''
   const errorStyles = error ? style.inputFieldErrorStyles : ''
   const errorElement = error ? <div className={ style.inputFieldErrorMessage }>{error}</div> : ''
 
-  const input = (
-    <input
-      name={ name }
-      value={ value }
-      onChange={ onChangeHandler }
-      className={ `${style.inputField} ${classNames} ${inputFieldLabelStyles} ${errorStyles}` }
-      type={ type }
-      id={ id }
-      placeholder={ placeholder }
-    />
-  )
+  let input
+
+  if (disabled) {
+    input = <input value={ value } disabled={ disabled } className={ `${style.inputField} ${style.inputFieldDisabled}` } />
+  } else {
+    input = (
+      <input
+        name={ name }
+        value={ value }
+        onChange={ onChangeHandler }
+        className={ `${style.inputField} ${classNames} ${inputFieldLabelStyles} ${errorStyles}` }
+        type={ type }
+        id={ id }
+        placeholder={ placeholder }
+      />
+    )
+  }
 
   if (label) {
     return (
@@ -58,6 +65,7 @@ InputField.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 export default InputField

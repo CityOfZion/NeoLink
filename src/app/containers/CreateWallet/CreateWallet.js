@@ -5,6 +5,7 @@ import { wallet } from '@cityofzion/neon-js'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
+import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
@@ -157,15 +158,7 @@ export default class CreateWallet extends Component {
       return <Loader />
     } else if (encryptedWif) {
       // handle success
-      return (
-        <div className='content'>
-          <div>Wallet created!</div>
-          <div>Encrypted WIF:</div>
-          <div>${encryptedWif}</div>
-          <div>Address:</div>
-          <div>${address}</div>
-        </div>
-      )
+      return <CreateWalletSucessPage encryptedWif={ encryptedWif } address={ address } />
     }
 
     return (
