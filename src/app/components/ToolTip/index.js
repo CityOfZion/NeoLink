@@ -12,7 +12,7 @@ const ToolTip = ({ icon, toolTipText, toolTipTextClassNames, classNames }) => (
 
 ToolTip.propTypes = {
   icon: PropTypes.string.isRequired,
-  toolTipText: PropTypes.string,isRequired,
+  toolTipText: PropTypes.string.isRequired,
   toolTipTextClassNames: PropTypes.string,
   classNames: PropTypes.string,
 }
