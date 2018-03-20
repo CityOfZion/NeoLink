@@ -67,7 +67,7 @@ const InputField = ({
 }
 
 InputField.propTypes = {
-  onChangeHandler: PropTypes.func.isRequired,
+  onChangeHandler: PropTypes.func,
   value: PropTypes.string.isRequired,
   name: PropTypes.string,
   classNames: PropTypes.string,
@@ -78,7 +78,7 @@ InputField.propTypes = {
   error: PropTypes.string,
   disabled: PropTypes.bool,
   labelClassNames: PropTypes.string,
-  children: PropTypes.arrayOf,
+  children: PropTypes.node,
 }
 
 export default InputField

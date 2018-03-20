@@ -15,7 +15,7 @@ const SuccessPage = props => (
 
 SuccessPage.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf,
+  children: PropTypes.node,
 }
 
 export default SuccessPage

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 
 import SuccessPage from '../SuccessPage'
 import InputField from '../../common/form/InputField'
@@ -13,7 +12,7 @@ import questionSVG from '../../../../img/question.svg'
 
 import style from './CreateWalletSuccessPage.css'
 
-class CreateWalletSuccessPage extends Component {
+export class CreateWalletSuccessPage extends Component {
   constructor() {
     super()
 
@@ -29,7 +28,7 @@ class CreateWalletSuccessPage extends Component {
   render() {
     const { showButton } = this.state
     const { encryptedWif, address, history } = this.props
-
+    console.log(history)
     return (
       <SuccessPage title={ 'Wallet Created' }>
         <InputField value={ address } label={ 'Address' } labelClassNames={ style.createWalletSuccessPageLabel } disabled>
@@ -71,7 +70,7 @@ class CreateWalletSuccessPage extends Component {
 CreateWalletSuccessPage.propTypes = {
   encryptedWif: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  history: PropTypes.objectOf.isRequired,
+  history: PropTypes.func.isRequired,
 }
 
-export default withRouter(CreateWalletSuccessPage)
+export default CreateWalletSuccessPage

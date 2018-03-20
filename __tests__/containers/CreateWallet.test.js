@@ -34,8 +34,8 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     expect(wrapper.state().errors).toEqual({ label: '', passPhrase: '', passPhraseConfirm: '', wif: '' })
-    expect(wrapper.text().includes(wrapper.state().encryptedWif)).toEqual(true)
-    expect(wrapper.text().includes(wrapper.state().address)).toEqual(true)
+    expect(wrapper.state().encryptedWif).toBeTruthy()
+    expect(wrapper.state().address).toBeTruthy()
 
     expect(wallet.isAddress(wrapper.state().address)).toEqual(true)
     expect(addAccount.mock.calls.length).toBe(1)
@@ -107,8 +107,8 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     expect(wrapper.state().errors.wif).toEqual('')
-    expect(wrapper.text().includes(wrapper.state().encryptedWif)).toEqual(true)
-    expect(wrapper.text().includes(wrapper.state().address)).toEqual(true)
+    expect(wrapper.state().encryptedWif).toBeTruthy()
+    expect(wrapper.state().address).toBeTruthy()
 
     expect(wallet.isAddress(wrapper.state().address)).toEqual(true)
     expect(wrapper.state().address).toEqual('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y')

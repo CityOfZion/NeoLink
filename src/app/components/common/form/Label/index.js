@@ -21,7 +21,7 @@ const Label = ({ classNames, labelText, children, reversed }) => {
 Label.propTypes = {
   classNames: PropTypes.string,
   labelText: PropTypes.string,
-  children: PropTypes.arrayOf,
+  children: PropTypes.node,
   reversed: PropTypes.bool,
 }
 

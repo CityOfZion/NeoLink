@@ -14,16 +14,15 @@ const TextArea = ({ classNames, value, disabled, label, labelClassNames = '', ch
       <textarea
         className={ `${style.textArea} ${textFieldLabelStyles} ${classNames} ${style.textAreaDisabled}` }
         disabled
-      >
-        {value}
-      </textarea>
+        value={ value }
+      />
     )
   } else {
     textArea = (
-      <textarea className={ `${style.textArea} ${textFieldLabelStyles} ${classNames} ${style.textAreaDisabled}` }>
-        {value}
-        {children}
-      </textarea>
+      <textarea
+        className={ `${style.textArea} ${textFieldLabelStyles} ${classNames} ${style.textAreaDisabled}` }
+        value={ value }
+      />
     )
   }
 
@@ -45,7 +44,7 @@ TextArea.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.string,
   labelClassNames: PropTypes.string,
-  children: PropTypes.arrayOf,
+  children: PropTypes.node,
 }
 
 export default TextArea
