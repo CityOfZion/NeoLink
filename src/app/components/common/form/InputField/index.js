@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
+import Label from '../Label'
+
 import style from './InputField.css'
 
 const InputField = ({
@@ -14,6 +16,8 @@ const InputField = ({
   label = '',
   error = '',
   disabled = false,
+  labelClassNames = '',
+  children,
 }) => {
   const inputFieldLabelStyles = label ? style.inputFieldLabelStyles : ''
   const errorStyles = error ? style.inputFieldErrorStyles : ''
@@ -22,7 +26,13 @@ const InputField = ({
   let input
 
   if (disabled) {
-    input = <input value={ value } disabled={ disabled } className={ `${style.inputField} ${style.inputFieldDisabled}` } />
+    input = (
+      <input
+        value={ value }
+        disabled={ disabled }
+        className={ `${style.inputFieldLabelStyles} ${style.inputField} ${style.inputFieldDisabled}` }
+      />
+    )
   } else {
     input = (
       <input
@@ -39,11 +49,11 @@ const InputField = ({
 
   if (label) {
     return (
-      <label className={ style.inputFieldLabel }>
-        {label}
+      <Label labelText={ label } classNames={ `${style.inputFieldLabel} ${labelClassNames}` }>
         {input}
         {errorElement}
-      </label>
+        {children}
+      </Label>
     )
   }
 
@@ -51,6 +61,7 @@ const InputField = ({
     <Fragment>
       {input}
       {errorElement}
+      {children}
     </Fragment>
   )
 }
@@ -66,6 +77,7 @@ InputField.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.bool,
+  labelClassNames: PropTypes.string,
 }
 
 export default InputField

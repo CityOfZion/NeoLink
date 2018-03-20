@@ -1,0 +1,32 @@
+.createWalletSuccessPageLabel {
+  color: #fff;
+}
+
+.createWalletSuccessPageTextArea {
+  height: 67px;
+}
+
+.createWalletSuccessPageWifPageToolTipPosition {
+  position: absolute;
+  left: 97px
+}
+
+.createWalletSuccessPageAddressPageToolTipPosition {
+  position: absolute;
+  left: 63px;
+}
+
+.createWalletSuccessPageAddressToolTipTextPosition {
+   transform: translate(-30%, 22%);
+   width: 200px;
+}
+
+.createWalletSuccessPageWifToolTipTextPosition {
+  transform: translate(-50%, 13%);
+  width: 200px;
+}
+
+
+.createWalletSuccessPageButton {
+  margin-top: 30px;
+}

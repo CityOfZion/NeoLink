@@ -6,7 +6,7 @@ import style from './Button.css'
 const Button = ({ buttonText, icon, classNames, onClickHandler }) => {
   const buttonIcon = icon ? <img src={ icon } className={ style.buttonIcon } alt='' /> : ''
   return (
-    <button className={ `${style.button} ${classNames}` } onChange={ onClickHandler }>
+    <button className={ `${style.button} ${classNames}` } onClick={ onClickHandler }>
       {buttonIcon}
       {buttonText}
     </button>

@@ -1,0 +1,24 @@
+.checkBox {
+  border: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 3px;
+  margin-right: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkBox svg {
+  position: absolute;
+  top: 12%;
+  left: 16%;
+  height: 12px;
+  width: 12px;
+  pointer-events: none;
+  color: #36b049;
+}
+
+.checkBoxLabel {
+  width: 100%;
+  font-size: 0.8rem;
+}

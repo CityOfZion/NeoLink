@@ -8,7 +8,7 @@ const SuccessPage = props => (
     <div className={ style.successPageIconContainer }>
       <i className='fas fa-check' />
     </div>
-    <h2>{props.title}</h2>
+    <h2 className={ style.successPageHeading }>{props.title}</h2>
     {props.children}
   </section>
 )

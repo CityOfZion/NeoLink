@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import SuccessPage from '../SuccessPage'
 import InputField from '../../common/form/InputField'
 import CheckBox from '../../../components/common/form/CheckBox'
+import TextArea from '../../../components/common/form/TextArea'
 import SecondaryButton from '../../common/buttons/SecondaryButton'
+import ToolTip from '../../ToolTip'
+
+import questionSVG from '../../../../img/question.svg'
+
+import style from './CreateWalletSuccessPage.css'
 
 class CreateWalletSuccessPage extends Component {
   constructor() {
@@ -20,16 +28,50 @@ class CreateWalletSuccessPage extends Component {
 
   render() {
     const { showButton } = this.state
-    const { encryptedWif, address } = this.props
+    const { encryptedWif, address, history } = this.props
 
     return (
       <SuccessPage title={ 'Wallet Created' }>
-        <InputField value={ address } encryptedWif={ encryptedWif } disabled />
-        <CheckBox onClickHandler={ this.handleCheckBoxClick } labelText={ 'I\'ve saved my encrypted key' } />
-        {showButton && <SecondaryButton buttonText={ 'Proceed to Home' } />}
+        <InputField value={ address } label={ 'Address' } labelClassNames={ style.createWalletSuccessPageLabel } disabled>
+          <ToolTip
+            icon={ questionSVG }
+            toolTipText={ 'Your NEO wallet public address. Share this with anyone in order to receive NEO to this address.' }
+            toolTipTextClassNames={ style.createWalletSuccessPageAddressToolTipTextPosition }
+            classNames={ style.createWalletSuccessPageAddressPageToolTipPosition }
+          />
+        </InputField>
+        <TextArea
+          value={ encryptedWif }
+          label={ 'Encrypted Key' }
+          classNames={ style.createWalletSuccessPageTextArea }
+          labelClassNames={ style.createWalletSuccessPageLabel }
+          disabled
+        >
+          <ToolTip
+            icon={ questionSVG }
+            toolTipText={ 'Your encrypted key (also known as WIF). Do not share this with anyone, and make sure you write it down. Use this key to unlock your wallet on any NEO compatible interface.' }
+            toolTipTextClassNames={ style.createWalletSuccessPageWifToolTipTextPosition }
+            classNames={ style.createWalletSuccessPageWifPageToolTipPosition }
+          />
+        </TextArea>
+
+        <CheckBox onClickHandler={ this.handleCheckBoxClick } label={ 'I\'ve saved my encrypted key' } />
+        {showButton && (
+          <SecondaryButton
+            buttonText={ 'Proceed to Home' }
+            classNames={ style.createWalletSuccessPageButton }
+            onClickHandler={ () => history.push('/home') }
+          />
+        )}
       </SuccessPage>
     )
   }
 }
 
-export default CreateWalletSuccessPage
+CreateWalletSuccessPage.propTypes = {
+  encryptedWif: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  history: PropTypes.objectOf.isRequired,
+}
+
+export default withRouter(CreateWalletSuccessPage)
