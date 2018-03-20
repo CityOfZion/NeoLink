@@ -212,4 +212,5 @@ export default class CreateWallet extends Component {
 CreateWallet.propTypes = {
   addAccount: PropTypes.func.isRequired,
   manualWIF: PropTypes.bool,
+  history: PropTypes.object.isRequired,
 }

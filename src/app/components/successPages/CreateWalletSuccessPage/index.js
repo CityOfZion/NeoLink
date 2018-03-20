@@ -70,7 +70,7 @@ export class CreateWalletSuccessPage extends Component {
 CreateWalletSuccessPage.propTypes = {
   encryptedWif: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default CreateWalletSuccessPage
