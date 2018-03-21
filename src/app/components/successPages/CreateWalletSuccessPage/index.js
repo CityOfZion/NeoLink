@@ -28,7 +28,7 @@ export class CreateWalletSuccessPage extends Component {
   render() {
     const { showButton } = this.state
     const { encryptedWif, address, history } = this.props
-    console.log(history)
+
     return (
       <SuccessPage title={ 'Wallet Created' }>
         <InputField value={ address } label={ 'Address' } labelClassNames={ style.createWalletSuccessPageLabel } disabled>

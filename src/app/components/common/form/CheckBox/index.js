@@ -22,7 +22,8 @@ class CheckBox extends Component {
 
   render() {
     const { label } = this.props
-    const checkMark = this.state.checked ? (
+    const { checked } = this.state
+    const checkMark = checked ? (
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
         <path
           fill='#585858'
@@ -34,7 +35,7 @@ class CheckBox extends Component {
     )
 
     const button = (
-      <button className={ style.checkBox } onClick={ this.handleClick }>
+      <button className={ style.checkBox } onClick={ this.handleClick } role={ 'checkbox' } aria-checked={ checked }>
         {checkMark}
       </button>
     )
