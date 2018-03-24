@@ -6,12 +6,8 @@ import Label from '../Label'
 import style from './CheckBox.css'
 
 class CheckBox extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      checked: false,
-    }
+  state = {
+    checked: false,
   }
 
   handleClick = e => {

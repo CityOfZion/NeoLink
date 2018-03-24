@@ -13,12 +13,8 @@ import questionSVG from '../../../../img/question.svg'
 import style from './CreateWalletSuccessPage.css'
 
 export class CreateWalletSuccessPage extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      showButton: false,
-    }
+  state = {
+    showButton: false,
   }
 
   handleCheckBoxClick = () => {
