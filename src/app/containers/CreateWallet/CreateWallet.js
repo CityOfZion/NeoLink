@@ -114,7 +114,7 @@ export default class CreateWallet extends Component {
     event.preventDefault()
 
     const { label, passPhrase, wif } = this.state
-    const { addAccount, manualWIF } = this.props
+    const { addAccount, manualWIF, setAccount } = this.props
 
     const validated = this._validate()
 
@@ -138,11 +138,14 @@ export default class CreateWallet extends Component {
 
           addAccount(new wallet.Account(accountObject))
 
-          this.setState({
-            loading: false,
-            encryptedWif: encryptedWif,
-            address: account.address,
-          })
+          this.setState(
+            {
+              loading: false,
+              encryptedWif: encryptedWif,
+              address: account.address,
+            },
+            () => setAccount(account.WIF, account.address)
+          )
         } catch (e) {
           this.setState({ loading: false, errorMsg: e.message })
         }
@@ -211,6 +214,7 @@ export default class CreateWallet extends Component {
 
 CreateWallet.propTypes = {
   addAccount: PropTypes.func.isRequired,
+  setAccount: PropTypes.func.isRequired,
   manualWIF: PropTypes.bool,
   history: PropTypes.object.isRequired,
 }
