@@ -1,15 +1,54 @@
 .accountInfoContainer {
-    margin-top: 20px;
-    width:200px;
+  padding: 40px 20px 0 20px;
+  height: calc((100% - 32.5px) / 2);
+  width: 100%;
+  background-color: #fff;
 }
 
 .accountInfo {
-    width: 100%;
-    display: block;
-    word-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.accountInfo span {
-    word-wrap: break-word;
-    width:100%;
+.accountInfoDetails {
+  width: 70%;
+}
+
+.accountInfoImageContainer img {
+  height: 40px;
+}
+
+.accountInfoDetailsHeading,
+.accountInfoDetailsParagraph {
+  width: 100%;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.accountInfoDetailsHeading {
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.accountInfoDetailsParagraph {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #585858;
+}
+
+.accountActionsButton {
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  color: #585858;
+  font-size: 1.1rem;
+}
+
+.accountInfoAmounts {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
 }
