@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
+import { getAccountName } from '../../utils/helpers'
 
-import Neon, { wallet, api } from '@cityofzion/neon-js'
+import Neon from '@cityofzion/neon-js'
 import withLoginCheck from '../../components/Login/withLoginCheck'
+import RenameAccount from './RenameAccount'
 
 import style from './Home.css'
 import neonPNG from '../../../img/icon-50.png'
 
 import * as AccountActions from '../../actions/account'
+import * as walletActions from '../../actions/wallet'
 
 @connect(
   state => ({
@@ -19,14 +22,23 @@ import * as AccountActions from '../../actions/account'
   }),
   dispatch => ({
     actions: bindActionCreators(AccountActions, dispatch),
+    walletActions: bindActionCreators(walletActions, dispatch),
   })
 )
 class Home extends Component {
-  state = {
-    amounts: {
-      neo: '',
-      gas: '',
-    },
+  constructor(props) {
+    super(props)
+
+    const { account, accounts } = this.props
+
+    this.state = {
+      showInputField: false,
+      label: getAccountName(account, accounts),
+      amounts: {
+        neo: '',
+        gas: '',
+      },
+    }
   }
 
   handleClick = e => {
@@ -48,54 +60,70 @@ class Home extends Component {
     })
   }
 
-  getAccountName = () => {
-    const { account, accounts } = this.props
-    let result
+  handleRenameButtonClick = () => {
+    const { walletActions, account } = this.props
 
-    Object.keys(accounts).forEach(address => {
-      if (address === account.address) {
-        result = accounts[address].label
-      }
-    })
-    return result
+    walletActions.changeLabel({ address: account.address, label: this.state.label })
+    this.setState({ showInputField: false })
+  }
+
+  handleInputChange = e => {
+    this.setState({ label: e.target.value })
   }
 
   render() {
     const { account } = this.props
-    const { neo, gas } = this.state.amounts
+    const { amounts, showInputField, label } = this.state
+    const { neo, gas } = amounts
     const myAccount = Neon.create.account(account.wif)
-    const accountName = this.getAccountName()
 
+    const heading = (
+      <Fragment>
+        <div className={ style.accountInfoImageContainer }>
+          <img src={ neonPNG } alt='Neo' />
+        </div>
+        <div className={ style.accountInfoDetails }>
+          <h2 className={ style.accountInfoDetailsHeading }>
+            {label}
+            <button
+              className={ style.accountInfoDetailsHeadingButton }
+              onClick={ () => this.setState({ showInputField: true }) }
+            >
+              <i className='fas fa-pencil-alt' />
+            </button>
+          </h2>
+          <p className={ style.accountInfoDetailsParagraph }>{myAccount.address}</p>
+        </div>
+        <button className={ style.accountActionsButton }>
+          <i className='fa fa-ellipsis-v' />
+        </button>
+      </Fragment>
+    )
+
+    const inputField = (
+      <RenameAccount
+        accountName={ label }
+        onClickHandler={ this.handleRenameButtonClick }
+        onChangeHandler={ this.handleInputChange }
+      />
+    )
+
+    const headingContent = showInputField ? inputField : heading
     return (
       <section className={ style.accountInfoContainer }>
-        <div className={ style.accountInfo }>
-          <div className={ style.accountInfoImageContainer }>
-            <img src={ neonPNG } alt='Neo' />
+        <div className={ style.accountInfo }>{headingContent}</div>
+        {!showInputField && (
+          <div className={ style.accountInfoAmounts }>
+            <div className={ style.accountInfoNeoAmount }>
+              <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
+              <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
+            </div>
+            <div className={ style.accountInfoGasAmount }>
+              <i className='fas fa-tint' />
+              <p className={ style.accountInfoAmountParagraph }>{gas} GAS</p>
+            </div>
           </div>
-          <div className={ style.accountInfoDetails }>
-            <h2 className={ style.accountInfoDetailsHeading }>{accountName}</h2>
-            <p className={ style.accountInfoDetailsParagraph }>{myAccount.address}</p>
-          </div>
-          <button className={ style.accountActionsButton }>
-            <i className='fa fa-ellipsis-v' />
-          </button>
-        </div>
-        <div className={ style.accountInfoAmounts }>
-          <div className={ style.accountInfoNeoAmount }>{neo}</div>
-          <div className={ style.accountInfoGasAmount }>{gas}</div>
-        </div>
-
-        {/* // <button ripple raised onClick={ this.handleClick }>
-        //   Logout
-        // </button> */}
-        {/* <div className={ style.accountInfoContainer }>
-          <div className={ style.accountInfo }>
-            <span className={ style.breakWord }>Address: {myAccount.address}</span>
-          </div>
-          <div className={ style.accountInfo } style={ { marginTop: '10px' } }>
-            <span className={ style.breakWord }>Public key encoded: {myAccount.getPublicKey(true)}</span>
-          </div>
-        </div>  */}
+        )}
       </section>
     )
   }

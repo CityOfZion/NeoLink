@@ -1,11 +1,11 @@
 import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
-  accounts: { },
+  accounts: {},
 }
 
 const actionsMap = {
-  [ActionTypes.ADD_WALLET_ACCOUNT] (state, action) {
+  [ActionTypes.ADD_WALLET_ACCOUNT](state, action) {
     const accounts = { ...state.accounts }
     accounts[action.account.address] = action.account.export()
 
@@ -14,9 +14,22 @@ const actionsMap = {
       accounts,
     }
   },
-  [ActionTypes.DELETE_WALLET_ACCOUNT] (state, action) {
+  [ActionTypes.DELETE_WALLET_ACCOUNT](state, action) {
     const accounts = { ...state.accounts }
     delete accounts[action.account.address]
+
+    return {
+      ...state,
+      accounts,
+    }
+  },
+  [ActionTypes.CHANGE_WALLET_LABEL](state, action) {
+    const accounts = { ...state.accounts }
+    Object.keys(accounts).forEach(account => {
+      if (account === action.account.address) {
+        accounts[account].label = action.account.label
+      }
+    })
 
     return {
       ...state,
