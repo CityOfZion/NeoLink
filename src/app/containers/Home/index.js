@@ -41,14 +41,6 @@ class Home extends Component {
     }
   }
 
-  handleClick = e => {
-    const { actions, history } = this.props
-
-    e.preventDefault()
-    actions.setAccount('', '')
-    history.push('/')
-  }
-
   componentDidMount() {
     Neon.get.balance('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41').then(results => {
       const amounts = {
@@ -60,7 +52,7 @@ class Home extends Component {
     })
   }
 
-  handleRenameButtonClick = () => {
+  handleRenameButtonFormSubmit = () => {
     const { walletActions, account } = this.props
 
     walletActions.changeLabel({ address: account.address, label: this.state.label })
@@ -103,28 +95,35 @@ class Home extends Component {
     const inputField = (
       <RenameAccount
         accountName={ label }
-        onClickHandler={ this.handleRenameButtonClick }
+        onSubmitHandler={ this.handleRenameButtonFormSubmit }
         onChangeHandler={ this.handleInputChange }
       />
     )
 
     const headingContent = showInputField ? inputField : heading
     return (
-      <section className={ style.accountInfoContainer }>
-        <div className={ style.accountInfo }>{headingContent}</div>
-        {!showInputField && (
-          <div className={ style.accountInfoAmounts }>
-            <div className={ style.accountInfoNeoAmount }>
-              <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
-              <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
-            </div>
-            <div className={ style.accountInfoGasAmount }>
-              <i className='fas fa-tint' />
-              <p className={ style.accountInfoAmountParagraph }>{gas} GAS</p>
-            </div>
-          </div>
-        )}
-      </section>
+      <Fragment>
+        <section className={ style.accountInfo }>
+          <section className={ style.accountInfoContainer }>
+            <div className={ style.accountInfo }>{headingContent}</div>
+            {!showInputField && (
+              <div className={ style.accountInfoAmounts }>
+                <div className={ style.accountInfoNeoAmount }>
+                  <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
+                  <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
+                </div>
+                <div className={ style.accountInfoGasAmount }>
+                  <i className='fas fa-tint' />
+                  <p className={ style.accountInfoAmountParagraph }>{gas} GAS</p>
+                </div>
+              </div>
+            )}
+          </section>
+        </section>
+        <section className={ style.transactionInfo }>
+          <h2>Transactions</h2>
+        </section>
+      </Fragment>
     )
   }
 }

@@ -1,5 +1,5 @@
 .accountInfoContainer {
-  padding: 40px 20px 0 20px;
+  padding: 40px 20px 30px 20px;
   height: calc((100% - 32.5px) / 2);
   width: 100%;
   background-color: #fff;
@@ -95,4 +95,8 @@
 
 .accountInfoAmountParagraph {
   font-size: 1rem;
+}
+
+.transactionInfo {
+  padding: 20px;
 }
