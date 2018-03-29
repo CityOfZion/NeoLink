@@ -100,3 +100,8 @@
 .transactionInfo {
   padding: 20px;
 }
+
+.transactionInfoHeader {
+  margin: 0;
+  text-align: center;
+}

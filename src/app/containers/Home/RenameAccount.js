@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import InputField from '../../components/common/form/InputField'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
@@ -15,5 +16,11 @@ const RenameAccount = ({ accountName, onSubmitHandler, onChangeHandler }) => (
     </form>
   </div>
 )
+
+RenameAccount.propTypes = {
+  accountName: PropTypes.string.isRequired,
+  onSubmitHandler: PropTypes.func.isRequired,
+  onChangeHandler: PropTypes.func.isRequired,
+}
 
 export default RenameAccount

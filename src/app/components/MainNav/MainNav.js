@@ -96,4 +96,5 @@ export default withRouter(MainNav)
 
 MainNav.propTypes = {
   history: PropTypes.object,
+  setAccount: PropTypes.func,
 }

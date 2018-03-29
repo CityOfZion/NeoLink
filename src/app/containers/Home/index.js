@@ -8,6 +8,7 @@ import { getAccountName } from '../../utils/helpers'
 import Neon from '@cityofzion/neon-js'
 import withLoginCheck from '../../components/Login/withLoginCheck'
 import RenameAccount from './RenameAccount'
+import TransactionList from '../../components/TransactionList'
 
 import style from './Home.css'
 import neonPNG from '../../../img/icon-50.png'
@@ -34,22 +35,37 @@ class Home extends Component {
     this.state = {
       showInputField: false,
       label: getAccountName(account, accounts),
+      transactionHistory: [],
+      transactionHistoryError: '',
       amounts: {
         neo: '',
         gas: '',
       },
+      amountsError: '',
     }
   }
 
   componentDidMount() {
-    Neon.get.balance('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41').then(results => {
-      const amounts = {
-        neo: results.assets['NEO'].balance.c[0],
-        gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
-      }
+    this.getAccountInfo()
+  }
 
-      this.setState({ amounts })
-    })
+  getAccountInfo = () => {
+    Neon.get
+      .balance('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+      .then(results => {
+        const amounts = {
+          neo: results.assets['NEO'].balance.c[0],
+          gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
+        }
+
+        this.setState({ amounts })
+      })
+      .catch(() => ({ amountsError: 'Could not retrieve account balance. Please check your internet connection.' }))
+
+    Neon.get
+      .transactionHistory('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+      .then(results => this.setState({ transactionHistory: results }))
+      .catch(() => ({ transactionHistoryError: 'Could not retrieve transaction history.' }))
   }
 
   handleRenameButtonFormSubmit = () => {
@@ -65,9 +81,11 @@ class Home extends Component {
 
   render() {
     const { account } = this.props
-    const { amounts, showInputField, label } = this.state
+    const { amounts, showInputField, label, transactionHistory } = this.state
     const { neo, gas } = amounts
     const myAccount = Neon.create.account(account.wif)
+
+    console.log(this.state.transactionHistory)
 
     const heading = (
       <Fragment>
@@ -103,7 +121,7 @@ class Home extends Component {
     const headingContent = showInputField ? inputField : heading
     return (
       <Fragment>
-        <section className={ style.accountInfo }>
+        <section className={ style.accountInfoWrapper }>
           <section className={ style.accountInfoContainer }>
             <div className={ style.accountInfo }>{headingContent}</div>
             {!showInputField && (
@@ -121,7 +139,8 @@ class Home extends Component {
           </section>
         </section>
         <section className={ style.transactionInfo }>
-          <h2>Transactions</h2>
+          <h2 className={ style.transactionInfoHeader }>Transactions</h2>
+          {transactionHistory && <TransactionList transactions={ transactionHistory } />}
         </section>
       </Fragment>
     )
@@ -132,7 +151,6 @@ export default withLoginCheck(withRouter(Home))
 
 Home.propTypes = {
   account: PropTypes.object,
-  actions: PropTypes.object,
-  history: PropTypes.object,
   accounts: PropTypes.object,
+  walletActions: PropTypes.object,
 }
