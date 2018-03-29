@@ -1,14 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import style from './TransactionCard.css'
 
 import neoPNG from '../../../img/icon-34.png'
 
-const TransactionCard = ({ transactionId, type, amounts }) => {
-  console.log(type)
-  const icon = type === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
-  const amount = type === true ? amounts.neo : amounts.gas
-  const amountText = type === true ? 'NEO' : 'GAS'
+const TransactionCard = ({ transactionId, neoSent, amounts }) => {
+  const icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
+  const amount = neoSent === true ? amounts.neo : amounts.gas
+  const amountText = neoSent === true ? 'NEO' : 'GAS'
 
   return (
     <div className={ style.transactionCard }>
@@ -22,4 +22,11 @@ const TransactionCard = ({ transactionId, type, amounts }) => {
     </div>
   )
 }
+
+TransactionCard.propTypes = {
+  transactionId: PropTypes.string.isRequired,
+  neoSent: PropTypes.bool.isRequired,
+  amounts: PropTypes.object.isRequired,
+}
+
 export default TransactionCard
