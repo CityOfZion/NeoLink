@@ -1,6 +1,10 @@
+.accountInfoWrapper {
+  height: 50%;
+  background-color: #fff;
+}
+
 .accountInfoContainer {
   padding: 40px 20px 30px 20px;
-  height: calc((100% - 32.5px) / 2);
   width: 100%;
   background-color: #fff;
 }
