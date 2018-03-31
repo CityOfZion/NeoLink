@@ -60,12 +60,14 @@ class Home extends Component {
 
         this.setState({ amounts })
       })
-      .catch(() => ({ amountsError: 'Could not retrieve account balance. Please check your internet connection.' }))
+      .catch(() =>
+        this.setState({ amountsError: 'Could not retrieve account balance. Please check your internet connection.' })
+      )
 
     Neon.get
       .transactionHistory('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
       .then(results => this.setState({ transactionHistory: results }))
-      .catch(() => ({ transactionHistoryError: 'Could not retrieve transaction history.' }))
+      .catch(() => this.setState({ transactionHistoryError: 'Could not retrieve transaction history.' }))
   }
 
   handleRenameButtonFormSubmit = () => {

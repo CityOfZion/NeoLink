@@ -115,7 +115,7 @@ export default class CreateWallet extends Component {
 
     const { label, passPhrase, wif } = this.state
     const { addAccount, manualWIF, setAccount } = this.props
-
+    console.log(setAccount)
     const validated = this._validate()
 
     if (validated) {

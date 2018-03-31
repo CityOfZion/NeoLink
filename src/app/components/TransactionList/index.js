@@ -7,7 +7,14 @@ import style from './TransactionList.css'
 const TransactionList = ({ transactions }) => {
   const transactionCards = transactions.map(transaction => {
     const amounts = { neo: transaction.NEO, gas: transaction.GAS }
-    return <TransactionCard transactionId={ transaction.txid } neoSent={ transaction.neo_sent } amounts={ amounts } />
+    return (
+      <TransactionCard
+        key={ transaction.txid }
+        transactionId={ transaction.txid }
+        neoSent={ transaction.neo_sent }
+        amounts={ amounts }
+      />
+    )
   })
 
   return <section className={ style.transactionList }>{transactionCards}</section>
