@@ -7,12 +7,8 @@ import { getAccountName } from '../../utils/helpers'
 
 import Neon from '@cityofzion/neon-js'
 import withLoginCheck from '../../components/Login/withLoginCheck'
-import AccountInfo from '../../components/AccountInfo'
-import RenameAccount from '../../components/RenameAccount'
-import TransactionList from '../../components/TransactionList'
 
-import style from './Home.css'
-import neonPNG from '../../../img/icon-50.png'
+import Home from './Home'
 
 import * as AccountActions from '../../actions/account'
 import * as walletActions from '../../actions/wallet'
@@ -28,7 +24,7 @@ import * as walletActions from '../../actions/wallet'
     walletActions: bindActionCreators(walletActions, dispatch),
   })
 )
-class Home extends Component {
+class HomeContainer extends Component {
   constructor(props) {
     super(props)
 
@@ -58,7 +54,7 @@ class Home extends Component {
       .balance(selectedNetworkId, account.address)
       .then(results => {
         const amounts = {
-          neo: results.assets['NEO'].balance.c[0],
+          neo: Number(results.assets['NEO'].balance.c[0]),
           gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
         }
 
@@ -95,43 +91,29 @@ class Home extends Component {
     const { neo, gas } = amounts
     const myAccount = Neon.create.account(account.wif)
 
-    const inputField = (
-      <RenameAccount
-        accountName={ label }
+    return (
+      <Home
+        account={ account }
+        amounts={ amounts }
+        showInputField={ showInputField }
+        label={ label }
+        transactionHistory={ transactionHistory }
+        neo={ neo }
+        gas={ gas }
+        myAccount={ myAccount }
+        onClickHandler={ () => this.setState({ showInputField: true }) }
         onSubmitHandler={ this.handleRenameButtonFormSubmit }
         onChangeHandler={ this.handleInputChange }
       />
     )
-
-    return (
-      <Fragment>
-        <section className={ style.accountInfoWrapper }>
-          <section className={ style.accountInfoContainer }>
-            {!showInputField && (
-              <AccountInfo
-                onClickHandler={ () => this.setState({ showInputField: true }) }
-                neo={ neo }
-                gas={ gas }
-                label={ label }
-                address={ myAccount.address }
-              />
-            )}
-            {showInputField && inputField}
-          </section>
-        </section>
-        <section className={ style.transactionInfo }>
-          <h2 className={ style.transactionInfoHeader }>Transactions</h2>
-          {transactionHistory && <TransactionList transactions={ transactionHistory } />}
-        </section>
-      </Fragment>
-    )
   }
 }
 
-export default withLoginCheck(withRouter(Home))
-
-Home.propTypes = {
+HomeContainer.propTypes = {
   account: PropTypes.object,
   accounts: PropTypes.object,
   walletActions: PropTypes.object,
+  selectedNetworkId: PropTypes.string.isRequired,
 }
+
+export default withLoginCheck(withRouter(HomeContainer))

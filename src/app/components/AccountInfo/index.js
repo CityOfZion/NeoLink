@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 
 import neonPNG from '../../../img/icon-34.png'
 
@@ -31,10 +32,18 @@ const AccountInfo = ({ label, onClickHandler, neo, gas, address }) => (
       </div>
       <div className={ style.accountInfoGasAmount }>
         <i className='fas fa-tint' />
-        <p className={ style.accountInfoAmountParagraph }>{gas} GAS</p>
+        <p className={ style.accountInfoAmountParagraph }>{gas > 0 ? gas : 0} GAS</p>
       </div>
     </div>
   </Fragment>
 )
+
+AccountInfo.propTypes = {
+  label: PropTypes.string.isRequired,
+  onClickHandler: PropTypes.func,
+  neo: PropTypes.number,
+  gas: PropTypes.number,
+  address: PropTypes.string.isRequired,
+}
 
 export default AccountInfo
