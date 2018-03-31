@@ -11,15 +11,22 @@ const TransactionCard = ({ transactionId, neoSent, amounts }) => {
   const amountText = neoSent === true ? 'NEO' : 'GAS'
 
   return (
-    <div className={ style.transactionCard }>
-      <h4 className={ style.transactionCardHeading }>{transactionId}</h4>
-      <p className={ style.transactionCardParagraph }>
-        {icon}{' '}
-        <span className={ style.transactionCardAmount }>
-          {amount} {amountText}
-        </span>
-      </p>
-    </div>
+    <a
+      href={ `https://neotracker.io/tx/${transactionId}` }
+      className={ style.transactionCardLink }
+      target='_blank'
+      rel='noopener'
+    >
+      <div className={ style.transactionCard }>
+        <h4 className={ style.transactionCardHeading }>{transactionId}</h4>
+        <p className={ style.transactionCardParagraph }>
+          {icon}{' '}
+          <span className={ style.transactionCardAmount }>
+            {amount} {amountText}
+          </span>
+        </p>
+      </div>
+    </a>
   )
 }
 

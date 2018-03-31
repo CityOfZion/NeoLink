@@ -7,7 +7,8 @@ import { getAccountName } from '../../utils/helpers'
 
 import Neon from '@cityofzion/neon-js'
 import withLoginCheck from '../../components/Login/withLoginCheck'
-import RenameAccount from './RenameAccount'
+import AccountInfo from '../../components/AccountInfo'
+import RenameAccount from '../../components/RenameAccount'
 import TransactionList from '../../components/TransactionList'
 
 import style from './Home.css'
@@ -20,6 +21,7 @@ import * as walletActions from '../../actions/wallet'
   state => ({
     account: state.account,
     accounts: state.wallet.accounts,
+    selectedNetworkId: state.config.selectedNetworkId,
   }),
   dispatch => ({
     actions: bindActionCreators(AccountActions, dispatch),
@@ -50,8 +52,10 @@ class Home extends Component {
   }
 
   getAccountInfo = () => {
+    const { selectedNetworkId, account } = this.props
+
     Neon.get
-      .balance('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+      .balance(selectedNetworkId, account.address)
       .then(results => {
         const amounts = {
           neo: results.assets['NEO'].balance.c[0],
@@ -65,9 +69,13 @@ class Home extends Component {
       )
 
     Neon.get
-      .transactionHistory('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+      .transactionHistory(selectedNetworkId, account.address)
       .then(results => this.setState({ transactionHistory: results }))
-      .catch(() => this.setState({ transactionHistoryError: 'Could not retrieve transaction history.' }))
+      .catch(() =>
+        this.setState({
+          transactionHistoryError: 'Could not retrieve transaction history. Please check your internet connection.',
+        })
+      )
   }
 
   handleRenameButtonFormSubmit = () => {
@@ -87,31 +95,6 @@ class Home extends Component {
     const { neo, gas } = amounts
     const myAccount = Neon.create.account(account.wif)
 
-    console.log(this.state.transactionHistory)
-
-    const heading = (
-      <Fragment>
-        <div className={ style.accountInfoImageContainer }>
-          <img src={ neonPNG } alt='Neo' />
-        </div>
-        <div className={ style.accountInfoDetails }>
-          <h2 className={ style.accountInfoDetailsHeading }>
-            {label}
-            <button
-              className={ style.accountInfoDetailsHeadingButton }
-              onClick={ () => this.setState({ showInputField: true }) }
-            >
-              <i className='fas fa-pencil-alt' />
-            </button>
-          </h2>
-          <p className={ style.accountInfoDetailsParagraph }>{myAccount.address}</p>
-        </div>
-        <button className={ style.accountActionsButton }>
-          <i className='fa fa-ellipsis-v' />
-        </button>
-      </Fragment>
-    )
-
     const inputField = (
       <RenameAccount
         accountName={ label }
@@ -120,24 +103,20 @@ class Home extends Component {
       />
     )
 
-    const headingContent = showInputField ? inputField : heading
     return (
       <Fragment>
         <section className={ style.accountInfoWrapper }>
           <section className={ style.accountInfoContainer }>
-            <div className={ style.accountInfo }>{headingContent}</div>
             {!showInputField && (
-              <div className={ style.accountInfoAmounts }>
-                <div className={ style.accountInfoNeoAmount }>
-                  <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
-                  <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
-                </div>
-                <div className={ style.accountInfoGasAmount }>
-                  <i className='fas fa-tint' />
-                  <p className={ style.accountInfoAmountParagraph }>{gas} GAS</p>
-                </div>
-              </div>
+              <AccountInfo
+                onClickHandler={ () => this.setState({ showInputField: true }) }
+                neo={ neo }
+                gas={ gas }
+                label={ label }
+                address={ myAccount.address }
+              />
             )}
+            {showInputField && inputField}
           </section>
         </section>
         <section className={ style.transactionInfo }>

@@ -1,0 +1,77 @@
+.accountInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accountInfoDetails {
+  width: 70%;
+}
+
+.accountInfoDetailsHeadingButton {
+  background: transparent;
+  border: none;
+  color: #585858;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+.accountInfoImageContainer svg {
+  height: 30px;
+}
+
+.accountInfoDetailsHeading,
+.accountInfoDetailsParagraph {
+  width: 100%;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.accountInfoDetailsHeading {
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.accountInfoDetailsParagraph {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #585858;
+}
+
+.accountActionsButton {
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  color: #585858;
+  font-size: 1.1rem;
+}
+
+.accountInfoAmounts {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  color: #585858;
+}
+
+.accountInfoNeoAmount,
+.accountInfoGasAmount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accountInfoNeoAmountImg {
+  width: 25px;
+}
+
+.accountInfoGasAmount svg {
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+  color: #36b049;
+}
+
+.accountInfoAmountParagraph {
+  font-size: 1rem;
+}
