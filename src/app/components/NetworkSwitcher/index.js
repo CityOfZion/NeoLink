@@ -14,11 +14,11 @@ class NetworkSwitcher extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('click', event => {
-      if (!event.target.className.includes('NetworkSwitcher')) {
-        this.closeDropdownMenu()
-      }
-    })
+    window.addEventListener('click', this.closeDropdownMenu)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.closeDropdownMenu)
   }
 
   changeNetwork = event => {
@@ -35,8 +35,10 @@ class NetworkSwitcher extends Component {
     this.setState({ networkMenuOpen: !this.state.networkMenuOpen })
   }
 
-  closeDropdownMenu = () => {
-    this.setState({ networkMenuOpen: false })
+  closeDropdownMenu = event => {
+    if (!event.target.className.includes('NetworkSwitcher')) {
+      this.setState({ networkMenuOpen: false })
+    }
   }
 
   getIndicator = (networks, index) => {

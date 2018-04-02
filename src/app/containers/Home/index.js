@@ -35,6 +35,7 @@ class HomeContainer extends Component {
       label: getAccountName(account, accounts),
       transactionHistory: [],
       transactionHistoryError: false,
+      showDropDown: false,
       labelError: '',
       amounts: {
         neo: '',
@@ -45,13 +46,19 @@ class HomeContainer extends Component {
   }
 
   componentDidMount() {
-    this.getAccountInfo()
+    this._getAccountInfo()
+
+    window.addEventListener('click', this._closeDropDownMenu)
+  }
+
+  comoponentWillUnmount() {
+    window.removeEventListener('click', this._closeDropDownMenu)
   }
 
   getBalance = () => {
     const { selectedNetworkId, account } = this.props
 
-    this.setState({ amountsError: false }, () => {
+    this.setState({ amountsError: '' }, () => {
       Neon.get
         .balance(selectedNetworkId, account.address)
         .then(results => {
@@ -62,28 +69,38 @@ class HomeContainer extends Component {
 
           this.setState({ amounts })
         })
-        .catch(() => this.setState({ amountsError: true }))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amounts.' }))
     })
   }
 
   getTransactions = () => {
     const { selectedNetworkId, account } = this.props
 
-    this.setState({ transactionHistoryError: false }, () => {
+    this.setState({ transactionHistoryError: '' }, () => {
       Neon.get
         .transactionHistory(selectedNetworkId, account.address)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
-            transactionHistoryError: true,
+            transactionHistoryError: 'Could not retrieve transactions.',
           })
         )
     })
   }
 
-  getAccountInfo = () => {
+  toggleDropDownMenu = () => {
+    this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
+  }
+
+  _getAccountInfo = () => {
     this.getBalance()
     this.getTransactions()
+  }
+
+  _closeDropDownMenu = event => {
+    if (!event.target.className.includes('DropDown')) {
+      this.setState({ showDropDown: false })
+    }
   }
 
   handleRenameButtonFormSubmit = e => {
@@ -92,7 +109,7 @@ class HomeContainer extends Component {
 
     if (validateLength(this.state.label, 3)) {
       walletActions.changeLabel({ address: account.address, label: this.state.label })
-      this.setState({ showInputField: false })
+      this.setState({ showInputField: false, showDropDown: false })
     } else {
       this.setState({ labelError: 'Label must be longer than 3 characters.' })
     }
@@ -101,6 +118,10 @@ class HomeContainer extends Component {
   handleInputChange = e => {
     this.setState({ labelError: '' })
     this.setState({ label: e.target.value })
+  }
+
+  showInputField = () => {
+    this.setState({ showInputField: true })
   }
 
   render() {
@@ -113,6 +134,7 @@ class HomeContainer extends Component {
       amountsError,
       transactionHistoryError,
       labelError,
+      showDropDown,
     } = this.state
     const { neo, gas } = amounts
 
@@ -126,7 +148,7 @@ class HomeContainer extends Component {
         neo={ neo }
         gas={ gas }
         address={ account.address }
-        onClickHandler={ () => this.setState({ showInputField: true }) }
+        onClickHandler={ this.showInputField }
         onSubmitHandler={ this.handleRenameButtonFormSubmit }
         onChangeHandler={ this.handleInputChange }
         amountsError={ amountsError }
@@ -134,6 +156,8 @@ class HomeContainer extends Component {
         getTransactions={ this.getTransactions }
         getBalance={ this.getBalance }
         labelError={ labelError }
+        showDropDown={ showDropDown }
+        toggleDropDownMenu={ this.toggleDropDownMenu }
       />
     )
   }

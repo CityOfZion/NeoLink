@@ -24,7 +24,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
   if (transactionHistoryError) {
     content = (
       <div className={ style.transactionHistoryErrorContainer }>
-        <FlashMessage flashMessage='Could not retrieve transactions.' />
+        <FlashMessage flashMessage={ transactionHistoryError } />
         <SecondaryButton
           buttonText='Retry'
           classNames={ style.retryTransactionHistoryButton }
@@ -45,7 +45,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
 
 TransactionList.propTypes = {
   transactions: PropTypes.array.isRequired,
-  transactionHistoryError: PropTypes.bool,
+  transactionHistoryError: PropTypes.string,
   getTransactions: PropTypes.func.isRequired,
 }
 

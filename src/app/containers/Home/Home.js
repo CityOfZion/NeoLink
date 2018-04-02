@@ -22,6 +22,8 @@ const Home = ({
   getBalance,
   getTransactions,
   labelError,
+  showDropDown,
+  toggleDropDownMenu,
 }) => (
   <Fragment>
     <section className={ style.accountInfoWrapper }>
@@ -42,6 +44,8 @@ const Home = ({
             address={ address }
             amountsError={ amountsError }
             getBalance={ getBalance }
+            toggleDropDownMenu={ toggleDropDownMenu }
+            showDropDown={ showDropDown }
           />
         )}
       </section>
@@ -60,8 +64,8 @@ const Home = ({
 export default Home
 
 Home.propTypes = {
-  neo: PropTypes.number,
-  gas: PropTypes.number,
+  neo: PropTypes.string,
+  gas: PropTypes.string,
   label: PropTypes.string,
   address: PropTypes.string,
   transactionHistory: PropTypes.array,
@@ -69,9 +73,11 @@ Home.propTypes = {
   onClickHandler: PropTypes.func,
   onSubmitHandler: PropTypes.func,
   showInputField: PropTypes.bool.isRequired,
-  amountsError: PropTypes.bool,
-  transactionHistoryError: PropTypes.bool,
+  amountsError: PropTypes.string,
+  transactionHistoryError: PropTypes.string,
   getBalance: PropTypes.func.isRequired,
   getTransactions: PropTypes.func.isRequired,
   labelError: PropTypes.string,
+  showDropDown: PropTypes.bool,
+  toggleDropDownMenu: PropTypes.func,
 }
