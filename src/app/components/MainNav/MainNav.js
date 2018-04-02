@@ -25,7 +25,7 @@ class MainNav extends Component {
   }
 
   closeDropdownMenu = event => {
-    if (!event.target.className.includes('MainNav')) {
+    if (event.target && !event.target.className.includes('MainNav')) {
       this.setState({ menuIsOpen: false })
     }
   }

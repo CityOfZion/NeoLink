@@ -98,7 +98,7 @@ class HomeContainer extends Component {
   }
 
   _closeDropDownMenu = event => {
-    if (!event.target.className.includes('DropDown')) {
+    if (event.target && !event.target.className.includes('DropDown')) {
       this.setState({ showDropDown: false })
     }
   }

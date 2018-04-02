@@ -27,7 +27,7 @@ class NetworkSwitcher extends Component {
 
     if (dataset) {
       setNetwork(dataset)
-      this.closeDropdownMenu()
+      this.setState({ networkMenuOpen: false })
     }
   }
 
@@ -36,7 +36,7 @@ class NetworkSwitcher extends Component {
   }
 
   closeDropdownMenu = event => {
-    if (!event.target.className.includes('NetworkSwitcher')) {
+    if (event.target && !event.target.className.includes('NetworkSwitcher')) {
       this.setState({ networkMenuOpen: false })
     }
   }
