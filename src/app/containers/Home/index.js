@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { getAccountName } from '../../utils/helpers'
+import { getAccountName, validateLength } from '../../utils/helpers'
 
 import Neon from '@cityofzion/neon-js'
 import withLoginCheck from '../../components/Login/withLoginCheck'
@@ -34,12 +34,13 @@ class HomeContainer extends Component {
       showInputField: false,
       label: getAccountName(account, accounts),
       transactionHistory: [],
-      transactionHistoryError: '',
+      transactionHistoryError: false,
+      labelError: '',
       amounts: {
         neo: '',
         gas: '',
       },
-      amountsError: '',
+      amountsError: false,
     }
   }
 
@@ -47,49 +48,73 @@ class HomeContainer extends Component {
     this.getAccountInfo()
   }
 
-  getAccountInfo = () => {
+  getBalance = () => {
     const { selectedNetworkId, account } = this.props
 
-    Neon.get
-      .balance(selectedNetworkId, account.address)
-      .then(results => {
-        const amounts = {
-          neo: Number(results.assets['NEO'].balance.c[0]),
-          gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
-        }
+    this.setState({ amountsError: false }, () => {
+      Neon.get
+        .balance(selectedNetworkId, account.address)
+        .then(results => {
+          const amounts = {
+            neo: Number(results.assets['NEO'].balance.c[0]),
+            gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
+          }
 
-        this.setState({ amounts })
-      })
-      .catch(() =>
-        this.setState({ amountsError: 'Could not retrieve account balance. Please check your internet connection.' })
-      )
-
-    Neon.get
-      .transactionHistory(selectedNetworkId, account.address)
-      .then(results => this.setState({ transactionHistory: results }))
-      .catch(() =>
-        this.setState({
-          transactionHistoryError: 'Could not retrieve transaction history. Please check your internet connection.',
+          this.setState({ amounts })
         })
-      )
+        .catch(() => this.setState({ amountsError: true }))
+    })
   }
 
-  handleRenameButtonFormSubmit = () => {
+  getTransactions = () => {
+    const { selectedNetworkId, account } = this.props
+
+    this.setState({ transactionHistoryError: false }, () => {
+      Neon.get
+        .transactionHistory(selectedNetworkId, account.address)
+        .then(results => this.setState({ transactionHistory: results }))
+        .catch(() =>
+          this.setState({
+            transactionHistoryError: true,
+          })
+        )
+    })
+  }
+
+  getAccountInfo = () => {
+    this.getBalance()
+    this.getTransactions()
+  }
+
+  handleRenameButtonFormSubmit = e => {
+    e.preventDefault()
     const { walletActions, account } = this.props
 
-    walletActions.changeLabel({ address: account.address, label: this.state.label })
-    this.setState({ showInputField: false })
+    if (validateLength(this.state.label, 3)) {
+      walletActions.changeLabel({ address: account.address, label: this.state.label })
+      this.setState({ showInputField: false })
+    } else {
+      this.setState({ labelError: 'Label must be longer than 3 characters.' })
+    }
   }
 
   handleInputChange = e => {
+    this.setState({ labelError: '' })
     this.setState({ label: e.target.value })
   }
 
   render() {
     const { account } = this.props
-    const { amounts, showInputField, label, transactionHistory } = this.state
+    const {
+      amounts,
+      showInputField,
+      label,
+      transactionHistory,
+      amountsError,
+      transactionHistoryError,
+      labelError,
+    } = this.state
     const { neo, gas } = amounts
-    const myAccount = Neon.create.account(account.wif)
 
     return (
       <Home
@@ -100,10 +125,15 @@ class HomeContainer extends Component {
         transactionHistory={ transactionHistory }
         neo={ neo }
         gas={ gas }
-        myAccount={ myAccount }
+        address={ account.address }
         onClickHandler={ () => this.setState({ showInputField: true }) }
         onSubmitHandler={ this.handleRenameButtonFormSubmit }
         onChangeHandler={ this.handleInputChange }
+        amountsError={ amountsError }
+        transactionHistoryError={ transactionHistoryError }
+        getTransactions={ this.getTransactions }
+        getBalance={ this.getBalance }
+        labelError={ labelError }
       />
     )
   }

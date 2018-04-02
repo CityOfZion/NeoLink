@@ -9,3 +9,8 @@ export const getAccountName = (account, accounts) => {
 
   return result
 }
+
+export const validateLength = (input, minLength) => {
+  if (!input || input.length < minLength) return false
+  return true
+}

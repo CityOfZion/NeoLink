@@ -7,6 +7,8 @@ import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
 import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
+import { validateLength } from '../../utils/helpers'
+
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
 
@@ -52,7 +54,7 @@ export default class CreateWallet extends Component {
   _validateLabel = () => {
     const { label } = this.state
 
-    if (!label || label.length < 1) {
+    if (!validateLength(label, 1)) {
       this._setErrorState('label', 'Account name must be longer than 1.')
       return false
     } else {
@@ -64,7 +66,7 @@ export default class CreateWallet extends Component {
   _validatePassPhrase = () => {
     const { passPhrase } = this.state
 
-    if (!passPhrase || passPhrase.length < 10) {
+    if (!validateLength(passPhrase, 10)) {
       this._setErrorState('passPhrase', 'Passphrase must be longer than 10 characters.')
       return false
     } else {

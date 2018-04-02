@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import FlashMessage from '../FlashMessage'
+import PrimaryButton from '../common/buttons/PrimaryButton'
 
 import neonPNG from '../../../img/icon-34.png'
 
 import style from './AccountInfo.css'
 
-const AccountInfo = ({ label, onClickHandler, neo, gas, address }) => (
+const AccountInfo = ({ label, onClickHandler, neo, gas, address, amountsError, getBalance }) => (
   <Fragment>
     <div className={ style.accountInfo }>
       <div className={ style.accountInfoImageContainer }>
@@ -25,16 +27,23 @@ const AccountInfo = ({ label, onClickHandler, neo, gas, address }) => (
       </button>
     </div>
 
-    <div className={ style.accountInfoAmounts }>
-      <div className={ style.accountInfoNeoAmount }>
-        <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
-        <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
+    {amountsError ? (
+      <div>
+        <FlashMessage flashMessage='Could not retrieve account balance' />
+        <PrimaryButton buttonText='Retry' classNames={ style.accountInfoErrorButton } onClickHandler={ getBalance } />
       </div>
-      <div className={ style.accountInfoGasAmount }>
-        <i className='fas fa-tint' />
-        <p className={ style.accountInfoAmountParagraph }>{gas > 0 ? gas : 0} GAS</p>
+    ) : (
+      <div className={ style.accountInfoAmounts }>
+        <div className={ style.accountInfoNeoAmount }>
+          <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
+          <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
+        </div>
+        <div className={ style.accountInfoGasAmount }>
+          <i className='fas fa-tint' />
+          <p className={ style.accountInfoAmountParagraph }>{gas > 0 ? gas : 0} GAS</p>
+        </div>
       </div>
-    </div>
+    )}
   </Fragment>
 )
 
@@ -44,6 +53,8 @@ AccountInfo.propTypes = {
   neo: PropTypes.number,
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
+  amountsError: PropTypes.bool,
+  getBalance: PropTypes.func.isRequired,
 }
 
 export default AccountInfo

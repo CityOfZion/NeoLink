@@ -14,6 +14,7 @@
   color: #585858;
   font-size: 0.8rem;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .accountInfoImageContainer svg {
@@ -74,4 +75,18 @@
 
 .accountInfoAmountParagraph {
   font-size: 1rem;
+  border: 1px solid #36b149;
+  color: #36b149;
+  padding: 4px 10px;
+  border-radius: 50px;
+}
+
+.accountInfoErrorButton {
+  margin: 0 auto;
+  height: 35px;
+  font-size: 0.9rem;
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid #36b148;
+  color: #36b149;
 }

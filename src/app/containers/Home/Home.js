@@ -11,26 +11,48 @@ const Home = ({
   neo,
   gas,
   label,
-  myAccount,
+  address,
   transactionHistory,
   onClickHandler,
   onSubmitHandler,
   onChangeHandler,
   showInputField,
+  amountsError,
+  transactionHistoryError,
+  getBalance,
+  getTransactions,
+  labelError,
 }) => (
   <Fragment>
     <section className={ style.accountInfoWrapper }>
       <section className={ style.accountInfoContainer }>
         {showInputField ? (
-          <RenameAccount accountName={ label } onSubmitHandler={ onSubmitHandler } onChangeHandler={ onChangeHandler } />
+          <RenameAccount
+            accountName={ label }
+            onSubmitHandler={ onSubmitHandler }
+            onChangeHandler={ onChangeHandler }
+            labelError={ labelError }
+          />
         ) : (
-          <AccountInfo onClickHandler={ onClickHandler } neo={ neo } gas={ gas } label={ label } address={ myAccount.address } />
+          <AccountInfo
+            onClickHandler={ onClickHandler }
+            neo={ neo }
+            gas={ gas }
+            label={ label }
+            address={ address }
+            amountsError={ amountsError }
+            getBalance={ getBalance }
+          />
         )}
       </section>
     </section>
     <section className={ style.transactionInfo }>
       <h2 className={ style.transactionInfoHeader }>Transactions</h2>
-      {transactionHistory && <TransactionList transactions={ transactionHistory } />}
+      <TransactionList
+        transactions={ transactionHistory }
+        transactionHistoryError={ transactionHistoryError }
+        getTransactions={ getTransactions }
+      />
     </section>
   </Fragment>
 )
@@ -41,10 +63,15 @@ Home.propTypes = {
   neo: PropTypes.number,
   gas: PropTypes.number,
   label: PropTypes.string,
-  myAccount: PropTypes.object,
+  address: PropTypes.string,
   transactionHistory: PropTypes.array,
   onChangeHandler: PropTypes.func,
   onClickHandler: PropTypes.func,
   onSubmitHandler: PropTypes.func,
   showInputField: PropTypes.bool.isRequired,
+  amountsError: PropTypes.bool,
+  transactionHistoryError: PropTypes.bool,
+  getBalance: PropTypes.func.isRequired,
+  getTransactions: PropTypes.func.isRequired,
+  labelError: PropTypes.string,
 }
