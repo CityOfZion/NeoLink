@@ -60,7 +60,7 @@ class HomeContainer extends Component {
 
     this.setState({ amountsError: '' }, () => {
       Neon.get
-        .balance('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+        .balance(selectedNetworkId, account.address)
         .then(results => {
           const amounts = {
             neo: Number(results.assets['NEO'].balance.c[0]),
@@ -78,7 +78,7 @@ class HomeContainer extends Component {
 
     this.setState({ transactionHistoryError: '' }, () => {
       Neon.get
-        .transactionHistory('MainNet', 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
+        .transactionHistory(selectedNetworkId, account.address)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
