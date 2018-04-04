@@ -10,7 +10,7 @@ jest.useFakeTimers()
 
 describe('CreateWallet', () => {
   test('shows loading', () => {
-    const wrapper = shallow(<CreateWallet addAccount={ jest.fn } />)
+    const wrapper = shallow(<CreateWallet addAccount={ jest.fn } history={ {} } />)
     wrapper.setState({ loading: true })
     expect(wrapper.find(Loader).length).toEqual(1)
   })
@@ -21,7 +21,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ addAccount } />)
+    const wrapper = mount(<CreateWallet addAccount={ addAccount } history={ {} } />)
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -47,7 +47,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } />)
+    const wrapper = mount(<CreateWallet addAccount={ jest.fn } history={ {} } />)
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -67,7 +67,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } />)
+    const wrapper = mount(<CreateWallet addAccount={ jest.fn } history={ {} } />)
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -88,7 +88,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ addAccount } manualWIF />)
+    const wrapper = mount(<CreateWallet addAccount={ addAccount } manualWIF history={ {} } />)
 
     wrapper
       .find('input#wif')
@@ -120,7 +120,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } manualWIF />)
+    const wrapper = mount(<CreateWallet addAccount={ jest.fn } manualWIF history={ {} } />)
 
     wrapper
       .find('input#wif')

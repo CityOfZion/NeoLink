@@ -1,4 +1,5 @@
-const manifest = require('../src/manifest.json')
+const envInfo = require('./env')
+const manifest = require(`../src/manifest.${envInfo.NODE_ENV}.json`)
 const fileSystem = require('fs')
 const path = require('path')
 

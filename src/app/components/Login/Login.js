@@ -49,21 +49,28 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    // Make wallet.decrypt() async.
-    setTimeout(() => {
-      try {
-        const { setAccount } = this.props
-        const wif = wallet.decrypt(encryptedWif, passPhrase)
-        const account = new wallet.Account(wif)
+    const { setAccount } = this.props
 
-        this.setState({ loading: false })
-        reset()
-        setAccount(wif, account.address)
-        history.push('/home')
-      } catch (e) {
-        this.setState({ loading: false, errorMsg: e.message })
-      }
-    }, 500)
+    console.log('going to decrypt')
+    try {
+      wallet.decryptAsync(encryptedWif, passPhrase)
+        .then(wif => {
+          console.log('wooooo')
+          const account = new wallet.Account(wif)
+
+          this.setState({ loading: false })
+          reset()
+          setAccount(wif, account.address)
+        })
+        .catch(e => {
+          console.log('----')
+          this.setState({ loading: false, errorMsg: e.message })
+        })
+    } catch (e) {
+      console.log('!!!!')
+      console.log(e.message)
+      this.setState({ loading: false, errorMsg: e.message })
+    }
   }
 
   getAccountOptions(accounts) {

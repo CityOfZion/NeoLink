@@ -119,16 +119,10 @@ export default class CreateWallet extends Component {
     const validated = this._validate()
 
     if (validated) {
-      this.setState({
-        loading: true,
-      })
-
       // Make wallet.decrypt() async.
-      setTimeout(() => {
-        try {
-          const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
-          const encryptedWif = wallet.encrypt(account.WIF, passPhrase)
-
+      const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
+      wallet.encryptAsync(account.WIF, passPhrase)
+        .then(encryptedWif => {
           const accountObject = {
             key: encryptedWif,
             address: account.address,
@@ -143,10 +137,10 @@ export default class CreateWallet extends Component {
             encryptedWif: encryptedWif,
             address: account.address,
           })
-        } catch (e) {
+        })
+        .catch(e => {
           this.setState({ loading: false, errorMsg: e.message })
-        }
-      }, 500)
+        })
     }
   }
 
