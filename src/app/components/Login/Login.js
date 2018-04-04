@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
+import SelectBox from '../common/form/SelectBox'
+import InputField from '../common/form/InputField'
+import PrimaryButton from '../common/buttons/PrimaryButton'
+import Box from '../common/Box'
 
-import CreateOrImportWallet from '../CreateOrImportWallet'
 import Loader from '../Loader'
+import StartPage from '../StartPage'
+
+import style from './Login.css'
 
 export class Login extends Component {
   state = {
@@ -21,29 +21,25 @@ export class Login extends Component {
     passPhrase: '',
   }
 
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
+  _renderTextField = ({ input, ...rest }) => (
+    <InputField
       { ...input }
       { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
+      error={ this.state.errorMsg }
+      label='Password'
+      onChangeHandler={ event => {
+        this.setState(prevState => ({ errorMsg: '' }))
+        input.onChange(event.target.value)
+      } }
     />
   )
 
-  _renderSelectField = ({
-    input,
-    ...rest
-  }) => (
-    <Select
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderSelectField = ({ input, ...rest }) => (
+    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
   handleSubmit = (values, dispatch, formProps) => {
+    const { history } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
@@ -63,6 +59,7 @@ export class Login extends Component {
         this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
+        history.push('/home')
       } catch (e) {
         this.setState({ loading: false, errorMsg: e.message })
       }
@@ -70,9 +67,9 @@ export class Login extends Component {
   }
 
   getAccountOptions(accounts) {
-    const options = [ { label: 'Select', value: '' } ]
+    const options = [{ label: 'Select Account', value: '' }]
 
-    Object.keys(accounts).forEach((index) => {
+    Object.keys(accounts).forEach(index => {
       const account = accounts[index]
       options.push({ label: account.label, value: account.key })
     })
@@ -81,48 +78,39 @@ export class Login extends Component {
   }
 
   render() {
-    const { loading, errorMsg } = this.state
+    const { loading } = this.state
     const { accounts, account, handleSubmit } = this.props
 
     if (loading) {
-      return (
-        <Loader />
-      )
+      return <Loader />
     }
     if (account.wif !== '') {
       return null
     }
 
     if (Object.keys(accounts).length === 0) {
-      return (
-        <CreateOrImportWallet />
-      )
+      return <StartPage />
     }
 
     return (
-      <div>
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field label='Account'
-            component={ this._renderSelectField }
-            cssOnly
-            name='encryptedWif'
-            options={ this.getAccountOptions(accounts) }
-          />
-          <Field
-            component={ this._renderTextField }
-            type='password'
-            placeholder='Passphrase'
-            name='passPhrase'
-            id='passPhrase'
-          />
-          <div>
-            <Button raised ripple onClick={ handleSubmit(this.handleSubmit) }>Login</Button>
-          </div>
-        </form>
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
-      </div>
+      <section className={ style.loginWrapper }>
+        <Box>
+          <h1 className={ style.loginHeading }>Login</h1>
+          <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.loginForm }>
+            <Field
+              label='Account'
+              component={ this._renderSelectField }
+              cssOnly
+              name='encryptedWif'
+              options={ this.getAccountOptions(accounts) }
+            />
+            <Field component={ this._renderTextField } type='password' name='passPhrase' id='passPhrase' />
+            <div>
+              <PrimaryButton classNames={ style.loginButton } buttonText={ 'Login' } />
+            </div>
+          </form>
+        </Box>
+      </section>
     )
   }
 }
@@ -133,6 +121,7 @@ Login.propTypes = {
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  history: PropTypes.object,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)

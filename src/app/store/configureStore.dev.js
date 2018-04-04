@@ -19,7 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 /* eslint-enable no-underscore-dangle */
 
 const enhancer = composeEnhancers(
-  applyMiddleware(...[ thunk, routerMiddleware(history) ]),
+  applyMiddleware(...[thunk, routerMiddleware(history)]),
   storage(),
   DevTools.instrument(),
   persistState(getDebugSessionKey())
@@ -28,10 +28,10 @@ const enhancer = composeEnhancers(
 function getDebugSessionKey() {
   // By default we try to read the key from ?debug_session=<key> in the address bar
   const matches = window.location.href.match(/[?&]debug_session=([^&#]+)\b/)
-  return (matches && matches.length > 0) ? matches[1] : null
+  return matches && matches.length > 0 ? matches[1] : null
 }
 
-export default function (initialState) {
+export default function(initialState) {
   if (initialState.router && initialState.router.location) {
     history.location = initialState.router.location
   }

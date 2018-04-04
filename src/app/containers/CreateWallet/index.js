@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router'
 
 import { addAccount } from '../../actions/wallet'
 
@@ -11,4 +12,4 @@ const actionCreators = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(null, mapDispatchToProps)(CreateWallet)
+export default withRouter(connect(null, mapDispatchToProps)(CreateWallet))

@@ -1,0 +1,22 @@
+.textArea {
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  border: none;
+  min-height: 50px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  padding: 8px;
+}
+
+.textFieldLabelStyles {
+  margin-top: 8px;
+}
+
+.textAreaLabel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #585858;
+  font-size: 0.9rem;
+  position: relative;
+}

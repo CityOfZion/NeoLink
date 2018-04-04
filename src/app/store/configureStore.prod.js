@@ -7,12 +7,9 @@ import { routerMiddleware } from 'react-router-redux'
 
 export const history = createHistory()
 
-const enhancer = compose(
-  applyMiddleware(...[ thunk, routerMiddleware(history) ]),
-  storage()
-)
+const enhancer = compose(applyMiddleware(...[thunk, routerMiddleware(history)]), storage())
 
-export default function (initialState) {
+export default function(initialState) {
   if (initialState.router && initialState.router.location) {
     history.location = initialState.router.location
   }

@@ -8,14 +8,12 @@ import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
 import style from './Transactions.css'
+import tempStyle from '../App/App.css'
 
-@connect(
-  state => ({
-    selectedNetworkId: state.config.selectedNetworkId,
-    networks: state.config.networks,
-  })
-)
-
+@connect(state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+}))
 export default class Transactions extends Component {
   state = {
     errorMsg: '',
@@ -25,14 +23,14 @@ export default class Transactions extends Component {
     enteredAddress: '',
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleTextFieldChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks } = this.props
     this.setState({
@@ -41,26 +39,31 @@ export default class Transactions extends Component {
       errorMsg: '',
       address: '',
     })
-    api.neonDB.getTransactionHistory(networks[selectedNetworkId].url, this.state.enteredAddress)
-      .then((result) => {
+    api.neonDB
+      .getTransactionHistory(networks[selectedNetworkId].url, this.state.enteredAddress)
+      .then(result => {
         this.setState({
           loading: false,
           transactions: result,
           address: this.state.enteredAddress,
         })
       })
-      .catch((e) => {
+      .catch(e => {
         this.setState({ loading: false, errorMsg: 'Could not retrieve the transactions for this address.' })
       })
   }
 
   renderTransactions(transactions) {
-    const listItems = transactions.map((transaction) =>
-      'Id: ' + transaction.txid +
+    const listItems = transactions.map(
+      transaction =>
+        'Id: ' +
+        transaction.txid +
         '\n NEO transferred: ' +
-        transaction.NEO + '\n' +
+        transaction.NEO +
+        '\n' +
         ' GAS transferred: ' +
-        transaction.GAS + '\n\n'
+        transaction.GAS +
+        '\n\n'
     )
     return (
       <textarea
@@ -79,7 +82,7 @@ export default class Transactions extends Component {
 
     return (
       <div className='content'>
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ this.handleSubmit } className={ tempStyle.tempFormStyle }>
           <TextField
             autoFocus
             type='text'
@@ -88,31 +91,30 @@ export default class Transactions extends Component {
             id='enteredAddress'
             onChange={ this._handleTextFieldChange }
           />
-          <Button raised ripple>List</Button>
+          <Button raised ripple>
+            List
+          </Button>
         </form>
-        {address && transactions.length > 0 &&
-          (
+        {address &&
+          transactions.length > 0 && (
             <div>
-              <div>Results for: <br />{address}</div>
+              <div>
+                Results for: <br />
+                {address}
+              </div>
               <br />
               {this.renderTransactions(transactions)}
             </div>
-          )
-        }
-        {address && !transactions.length &&
-          (
+          )}
+        {address &&
+          !transactions.length && (
             <div>
               <div>Results for: {address}</div>
               None
             </div>
-          )
-        }
-        {loading === true &&
-          <div>loading...</div>
-        }
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
+          )}
+        {loading === true && <div>loading...</div>}
+        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
       </div>
     )
   }

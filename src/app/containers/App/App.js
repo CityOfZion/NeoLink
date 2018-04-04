@@ -12,9 +12,10 @@ import CreateWallet from '../CreateWallet'
 import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
-
-import Header from '../../components/Header'
 import ContentWrapper from '../../components/ContentWrapper'
+import StartPage from '../../components/StartPage'
+import Login from '../../components/Login'
+import Header from '../../components/Header'
 
 import style from './App.css'
 
@@ -23,12 +24,14 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch)
 
 export default class App extends Component {
-  render () {
+  render() {
     return (
       <div className={ style.popup }>
-        <Header />
+        <Header showMenu />
         <ContentWrapper>
           <ConnectedSwitch>
+            <Route path='/login' component={ Login } />
+            <Route path='/home' component={ Home } />
             <Route path='/send' component={ Send } />
             <Route path='/testInvoke' component={ TestInvoke } />
             <Route path='/sendInvoke' component={ SendInvoke } />
@@ -39,7 +42,7 @@ export default class App extends Component {
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />
-            <Route path='/' component={ Home } />
+            <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>
       </div>

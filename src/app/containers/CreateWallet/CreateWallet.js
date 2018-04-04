@@ -2,159 +2,209 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import InputField from '../../components/common/form/InputField'
+import Box from '../../components/common/Box'
+import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
-import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
+import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
 
 export default class CreateWallet extends Component {
   state = {
-    errorMsg: '',
+    errors: {
+      wif: '',
+      label: '',
+      passPhrase: '',
+      passPhraseConfirm: '',
+    },
     loading: false,
     encryptedWif: '',
     passPhrase: '',
     passPhraseConfirm: '',
+    label: '',
     address: '',
     wif: '',
   }
 
-  _handleTextFieldChange = (e) => {
+  _clearErrors(key) {
+    this._setErrorState(key, '')
+  }
+
+  _setErrorState = (key, value) => {
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [key]: value,
+      },
+    }))
+  }
+
+  _handleTextFieldChange = e => {
     const key = e.target.id
+
+    this._clearErrors(key)
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault()
+  _validateLabel = () => {
+    const { label } = this.state
 
-    const { label, passPhrase, wif, passPhraseConfirm } = this.state
-    const { addAccount, manualWIF } = this.props
+    if (!label || label.length < 1) {
+      this._setErrorState('label', 'Account name must be longer than 1.')
+      return false
+    } else {
+      this._setErrorState('label', '')
+      return true
+    }
+  }
+
+  _validatePassPhrase = () => {
+    const { passPhrase } = this.state
+
+    if (!passPhrase || passPhrase.length < 10) {
+      this._setErrorState('passPhrase', 'Passphrase must be longer than 10 characters.')
+      return false
+    } else {
+      this._setErrorState('passPhrase', '')
+      return true
+    }
+  }
+
+  _validatePasswordMatch = () => {
+    const { passPhrase, passPhraseConfirm } = this.state
+
+    if (!passPhrase || !passPhraseConfirm || passPhrase !== passPhraseConfirm) {
+      this._setErrorState('passPhraseConfirm', 'Passphrases do not match.')
+      return false
+    } else {
+      this._setErrorState('passPhraseConfirm', '')
+      return true
+    }
+  }
+
+  _validateWIF = () => {
+    const { wif } = this.state
+    const { manualWIF } = this.props
 
     if (manualWIF && !wallet.isWIF(wif)) {
+      this._setErrorState('wif', 'Invalid WIF')
+      return false
+    } else {
+      this._setErrorState('wif', '')
+      return true
+    }
+  }
+
+  _validate = () => {
+    const labelValidated = this._validateLabel()
+    const passPhraseValidated = this._validatePassPhrase()
+    const passPhraseMatchValidated = this._validatePasswordMatch()
+    const wifValidated = this._validateWIF()
+
+    if (labelValidated && passPhraseValidated && passPhraseMatchValidated && wifValidated) {
+      return true
+    }
+    return false
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+
+    const { label, passPhrase, wif } = this.state
+    const { addAccount, manualWIF } = this.props
+
+    const validated = this._validate()
+
+    if (validated) {
       this.setState({
-        loading: false,
-        errorMsg: 'Invalid WIF',
+        loading: true,
       })
 
-      return
-    }
+      // Make wallet.decrypt() async.
+      setTimeout(() => {
+        try {
+          const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
+          const encryptedWif = wallet.encrypt(account.WIF, passPhrase)
 
-    if (passPhrase !== passPhraseConfirm) {
-      this.setState({
-        loading: false,
-        errorMsg: 'Passphrases do not match.',
-      })
+          const accountObject = {
+            key: encryptedWif,
+            address: account.address,
+            label: label,
+            isDefault: false,
+          }
 
-      return
-    }
+          addAccount(new wallet.Account(accountObject))
 
-    if (passPhrase.length < 10) {
-      this.setState({
-        loading: false,
-        errorMsg: 'Passphrases must be at least 10 characters',
-      })
-
-      return
-    }
-
-    this.setState({
-      loading: true,
-      errorMsg: '',
-    })
-
-    // Make wallet.decrypt() async.
-    setTimeout(() => {
-      try {
-        const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
-        const encryptedWif = wallet.encrypt(account.WIF, passPhrase)
-
-        const accountObject = {
-          key: encryptedWif,
-          address: account.address,
-          label: label,
-          isDefault: false,
+          this.setState({
+            loading: false,
+            encryptedWif: encryptedWif,
+            address: account.address,
+          })
+        } catch (e) {
+          this.setState({ loading: false, errorMsg: e.message })
         }
-
-        addAccount(new wallet.Account(accountObject))
-
-        this.setState({
-          loading: false,
-          encryptedWif: encryptedWif,
-          address: account.address,
-        })
-      } catch (e) {
-        this.setState({ loading: false, errorMsg: e.message })
-      }
-    }, 500)
+      }, 500)
+    }
   }
 
   render() {
-    const { loading, errorMsg, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
-    const { manualWIF } = this.props
+    const { loading, errors, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
+    const { manualWIF, history } = this.props
 
     if (loading) {
       return <Loader />
     } else if (encryptedWif) {
       // handle success
-      return (
-        <div className='content'>
-          <div>Wallet created!</div>
-          <div>Encrypted WIF:</div>
-          <div className={ globalStyle.breakWord }>${encryptedWif}</div>
-          <div>Address:</div>
-          <div className={ globalStyle.breakWord }>${address}</div>
-        </div>
-      )
+      return <CreateWalletSucessPage encryptedWif={ encryptedWif } address={ address } history={ history } />
     }
 
     return (
-      <div>
-        <form onSubmit={ this.handleSubmit }>
-          { manualWIF &&
-            <TextField
-              type='password'
-              placeholder='WIF'
-              value={ wif }
-              id='wif'
-              onChange={ this._handleTextFieldChange }
+      <section className={ style.createWalletWrapper }>
+        <Box>
+          <h1 className={ style.createWalletHeading }>Create Wallet</h1>
+          <form onSubmit={ this.handleSubmit } className={ style.createWalletForm }>
+            {manualWIF && (
+              <InputField
+                type='password'
+                value={ wif }
+                id='wif'
+                onChangeHandler={ this._handleTextFieldChange }
+                label='Wif'
+                error={ errors.wif }
+              />
+            )}
+            <InputField
+              type='input'
+              value={ label }
+              id='label'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Account Name'
+              error={ errors.label }
             />
-          }
-          <TextField
-            type='input'
-            placeholder='Label'
-            value={ label }
-            id='label'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='password'
-            placeholder='Passphrase'
-            value={ passPhrase }
-            id='passPhrase'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='password'
-            placeholder='Confirm Passphrase'
-            value={ passPhraseConfirm }
-            id='passPhraseConfirm'
-            onChange={ this._handleTextFieldChange }
-          />
-          <div>
-            <Button raised ripple>Create Wallet</Button>
-          </div>
-        </form>
+            <InputField
+              type='password'
+              value={ passPhrase }
+              id='passPhrase'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Password'
+              error={ errors.passPhrase }
+            />
+            <InputField
+              type='password'
+              value={ passPhraseConfirm }
+              id='passPhraseConfirm'
+              onChangeHandler={ this._handleTextFieldChange }
+              label='Confirm Password'
+              error={ errors.passPhraseConfirm }
+            />
 
-        <div className='content'>
-          {this.state.errorMsg !== '' &&
-            <div>ERROR: {errorMsg}</div>
-          }
-        </div>
-      </div>
+            <PrimaryButton buttonText={ 'Create' } classNames={ style.createWalletButton } />
+          </form>
+        </Box>
+      </section>
     )
   }
 }
@@ -162,4 +212,5 @@ export default class CreateWallet extends Component {
 CreateWallet.propTypes = {
   addAccount: PropTypes.func.isRequired,
   manualWIF: PropTypes.bool,
+  history: PropTypes.object.isRequired,
 }

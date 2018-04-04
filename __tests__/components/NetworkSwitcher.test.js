@@ -22,7 +22,7 @@ const setup = () => {
 }
 
 describe('NetworkSwitch', () => {
-  test('renders without crashing', (done) => {
+  test('renders without crashing', done => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
     done()
@@ -31,21 +31,22 @@ describe('NetworkSwitch', () => {
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
 
-    const networkSelectorElement = wrapper.find('select').getElement()
+    const networkSelectorElement = wrapper.find('button[data-value="MainNet"]')
 
-    expect(networkSelectorElement.props.defaultValue).toEqual('MainNet')
+    expect(networkSelectorElement.children().length).toBe(3)
   })
 
   test('switches to the correct network when chosen from the dropdown', async () => {
     const { wrapper } = setup()
 
     const instance = wrapper.instance()
-    const networkSelector = wrapper.find('select')
-    networkSelector.simulate('change', { target: { value: 'TestNet' } })
+    const networkSelector = wrapper.find('.networkNavigationDropdown')
+
+    networkSelector.simulate('click', { target: { dataset: { value: 'TestNet' } } })
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
 
-    networkSelector.simulate('change', { target: { value: 'MainNet' } })
+    networkSelector.simulate('click', { target: { dataset: { value: 'MainNet' } } })
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
   })
