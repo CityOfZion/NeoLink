@@ -95,12 +95,13 @@
   width: 155px;
   border-radius: 3px;
   left: -141px;
-  display: flex;
+  display: none;
   flex-direction: column;
   opacity: 0;
 }
 
 .accountInfoDropDownActive {
+  display: flex;
   opacity: 1;
 }
 
