@@ -49,7 +49,7 @@ const AccountInfo = ({
                 </Link>
               </li>
               <li className={ style.accountInfoDropDownListItem }>
-                <button className={ style.dropDownLinks } onClick={ onClickHandler }>
+                <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
                   <i className='fas fa-pencil-alt' />Rename
                 </button>
               </li>
@@ -82,8 +82,8 @@ const AccountInfo = ({
 AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func,
-  neo: PropTypes.number,
-  gas: PropTypes.number,
+  neo: PropTypes.string,
+  gas: PropTypes.string,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
   getBalance: PropTypes.func.isRequired,

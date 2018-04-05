@@ -116,7 +116,8 @@
   padding: 3px 0;
 }
 
-.dropDownLinks {
+.dropDownLinks,
+.dropDownLinksButton {
   color: #585858;
   text-decoration: none;
   border: none;

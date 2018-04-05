@@ -32,7 +32,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this._getAccountInfo()
+    this._getAccountInfo(this.props.selectedNetworkId)
 
     window.addEventListener('click', this._closeDropDownMenu)
   }
@@ -41,17 +41,25 @@ class Home extends Component {
     window.removeEventListener('click', this._closeDropDownMenu)
   }
 
-  getBalance = () => {
-    const { selectedNetworkId, account } = this.props
+  componentWillReceiveProps(props, newProps) {
+    this._getAccountInfo(props.selectedNetworkId)
+  }
+
+  getBalance = network => {
+    const { account } = this.props
 
     this.setState({ amountsError: '' }, () => {
       Neon.get
-        .balance(selectedNetworkId, account.address)
+        .balance(network, account.address)
         .then(results => {
-          console.log(results.assets['GAS'].balance)
+          const gas =
+            results.assets['GAS'].balance.c[1] > 0
+              ? Number(results.assets['GAS'].balance.c.join('.')).toFixed(5)
+              : Number(results.assets['GAS'].balance.c.join('.'))
+
           const amounts = {
             neo: Number(results.assets['NEO'].balance.c[0]),
-            gas: Number(results.assets['GAS'].balance.c.join('.')).toFixed(5),
+            gas,
           }
 
           this.setState({ amounts })
@@ -60,12 +68,12 @@ class Home extends Component {
     })
   }
 
-  getTransactions = () => {
-    const { selectedNetworkId, account } = this.props
+  getTransactions = network => {
+    const { account } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
       Neon.get
-        .transactionHistory(selectedNetworkId, account.address)
+        .transactionHistory(network, account.address)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
@@ -79,9 +87,9 @@ class Home extends Component {
     this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
   }
 
-  _getAccountInfo = () => {
-    this.getBalance()
-    this.getTransactions()
+  _getAccountInfo = network => {
+    this.getBalance(network)
+    this.getTransactions(network)
   }
 
   _closeDropDownMenu = event => {
@@ -124,8 +132,6 @@ class Home extends Component {
       showDropDown,
     } = this.state
     const { neo, gas } = amounts
-
-    console.log(this.state)
 
     return (
       <Fragment>
