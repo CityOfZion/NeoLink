@@ -96,6 +96,7 @@
   border-radius: 3px;
   left: -141px;
   display: none;
+  z-index: 999;
   flex-direction: column;
   opacity: 0;
 }
