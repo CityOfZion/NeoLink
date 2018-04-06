@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Neon from '@cityofzion/neon-js'
 
-import { getAccountName, validateLength } from '../../utils/helpers'
+import { getAccountName, validateLength, getBalance, getTransactions } from '../../utils/helpers'
 
 import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'
@@ -45,35 +45,23 @@ class Home extends Component {
     this._getAccountInfo(props.selectedNetworkId)
   }
 
-  getBalance = network => {
+  getHomeScreenBalance = network => {
     const { account } = this.props
 
     this.setState({ amountsError: '' }, () => {
-      Neon.get
-        .balance(network, account.address)
-        .then(results => {
-          const gas =
-            results.assets['GAS'].balance.c[1] > 0
-              ? Number(results.assets['GAS'].balance.c.join('.')).toFixed(5)
-              : Number(results.assets['GAS'].balance.c.join('.'))
-
-          const amounts = {
-            neo: Number(results.assets['NEO'].balance.c[0]),
-            gas,
-          }
-
-          this.setState({ amounts })
+      getBalance(network, account)
+        .then(amounts => this.setState({ amounts }))
+        .catch(() => {
+          this.setState({ amountsError: 'Could not retrieve amounts.' })
         })
-        .catch(() => this.setState({ amountsError: 'Could not retrieve amounts.' }))
     })
   }
 
-  getTransactions = network => {
+  getHomeScreenTransactions = network => {
     const { account } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
-      Neon.get
-        .transactionHistory(network, account.address)
+      getTransactions(network, account)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
@@ -88,8 +76,8 @@ class Home extends Component {
   }
 
   _getAccountInfo = network => {
-    this.getBalance(network)
-    this.getTransactions(network)
+    this.getHomeScreenBalance(network)
+    this.getHomeScreenTransactions(network)
   }
 
   _closeDropDownMenu = event => {
@@ -147,12 +135,12 @@ class Home extends Component {
             ) : (
               <AccountInfo
                 onClickHandler={ this.showInputField }
-                neo={ neo }
-                gas={ gas }
+                neo={ Number(neo) }
+                gas={ Number(gas) }
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
-                getBalance={ this.getBalance }
+                getBalance={ this.getHomeScreenBalance }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
               />
@@ -164,7 +152,7 @@ class Home extends Component {
           <TransactionList
             transactions={ transactionHistory }
             transactionHistoryError={ transactionHistoryError }
-            getTransactions={ this.getTransactions }
+            getTransactions={ this.getHomeScreenTransactions }
           />
         </section>
       </Fragment>

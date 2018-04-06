@@ -82,8 +82,8 @@ const AccountInfo = ({
 AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func,
-  neo: PropTypes.string,
-  gas: PropTypes.string,
+  neo: PropTypes.number,
+  gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
   getBalance: PropTypes.func.isRequired,
