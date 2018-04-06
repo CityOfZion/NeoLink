@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import MockStore from '../../__mocks__/store'
 import { StaticRouter } from 'react-router'
 
@@ -27,19 +27,15 @@ describe('Home', () => {
     },
   }
 
-  let wrapper
-
-  beforeEach(() => {
-    wrapper = mount(
+  test('changes account label', () => {
+    const wrapper = mount(
       <Provider store={ store }>
-        <StaticRouter>
+        <StaticRouter context={ {} }>
           <Home { ...props } />
         </StaticRouter>
       </Provider>
     )
-  })
 
-  test('changes account label', () => {
     wrapper.find('.accountDropDownButton').simulate('click')
     wrapper.find('.dropDownLinksButton').simulate('click')
 
@@ -48,5 +44,17 @@ describe('Home', () => {
 
     const accountName = wrapper.find('.accountInfoDetailsHeading').text()
     expect(accountName).toBe('new account name')
+  })
+
+  test('Changes account balance when switching networks', () => {
+    const wrapper = shallow(<Home { ...props } />)
+
+    wrapper.instance()._getAccountInfo = jest.fn()
+    wrapper.update()
+
+    wrapper.instance().componentWillReceiveProps({ selectedNetworkId: 'MainNet' })
+
+    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledWith('MainNet')
   })
 })

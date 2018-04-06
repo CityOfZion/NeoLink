@@ -20,14 +20,14 @@ class Home extends Component {
       showInputField: false,
       label: getAccountName(account, accounts),
       transactionHistory: [],
-      transactionHistoryError: false,
+      transactionHistoryError: '',
       showDropDown: false,
       labelError: '',
       amounts: {
         neo: '',
         gas: '',
       },
-      amountsError: false,
+      amountsError: '',
     }
   }
 
