@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import Neon from '@cityofzion/neon-js'
 
 import { getAccountName, validateLength, getBalance, getTransactions } from '../../utils/helpers'
 
