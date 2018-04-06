@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { mount, shallow } from 'enzyme'
-import MockStore from '../../__mocks__/store'
+import MockStore from '../../__mocks__/MockStore'
 import { StaticRouter } from 'react-router'
 
 import Home from '../../src/app/containers/Home/Home'
