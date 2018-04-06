@@ -131,7 +131,8 @@
   display: block;
 }
 
-.dropDownLinks svg {
+.dropDownLinks svg,
+.dropDownLinksButton svg {
   margin-right: 5px;
   color: #585858;
   font-size: 0.8rem;
