@@ -41,7 +41,7 @@
 }
 
 .accountInfoAmounts {
-  margin-top: 30px;
+  margin-top: 40px;
   display: flex;
   justify-content: space-around;
   color: #585858;
@@ -142,4 +142,5 @@
   font-size: 1.2rem;
   border: none;
   color: #585858;
+  position: absolute;
 }
