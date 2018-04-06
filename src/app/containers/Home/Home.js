@@ -107,7 +107,7 @@ class Home extends Component {
   }
 
   render() {
-    const { account } = this.props
+    const { account, selectedNetworkId } = this.props
     const {
       amounts,
       showInputField,
@@ -142,6 +142,8 @@ class Home extends Component {
                 getBalance={ this.getHomeScreenBalance }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
+                network={ selectedNetworkId }
+                updateBalance={ this._getAccountInfo }
               />
             )}
           </section>

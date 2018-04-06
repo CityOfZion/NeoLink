@@ -137,3 +137,9 @@
   color: #585858;
   font-size: 0.8rem;
 }
+
+.accountInfoRefreshButton {
+  font-size: 1.2rem;
+  border: none;
+  color: #585858;
+}
