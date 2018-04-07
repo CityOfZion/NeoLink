@@ -44,7 +44,6 @@ export default class Transactions extends Component {
     api[networks[selectedNetworkId].apiType]
       .getTransactionHistory(networks[selectedNetworkId].url, this.state.enteredAddress)
       .then(result => {
-        console.log('neo res', result)
         this.setState({
           loading: false,
           transactions: result,
@@ -57,7 +56,6 @@ export default class Transactions extends Component {
   }
 
   renderTransactions(transactions) {
-    console.log('trans', transactions)
     const listItems = transactions.map(
       transaction =>
         'Id: ' +
