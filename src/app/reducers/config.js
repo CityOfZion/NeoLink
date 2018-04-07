@@ -4,9 +4,9 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
   networks: {
-    'MainNet': { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
+    'MainNet': { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
     'TestNet': { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
-    'CoZTestNet': { name: 'CoZ TestNet', url: 'http://coz-privatenet.herokuapp.com/', canDelete: false, apiType: 'neoscan' },
+    'CoZTestNet': { name: 'CoZ TestNet', url: 'https://coz.neoscan-testnet.io/api/main_net', canDelete: false, apiType: 'neoscan' },
   },
   selectedNetworkId: 'MainNet',
 }

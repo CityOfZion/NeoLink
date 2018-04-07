@@ -42,7 +42,7 @@ function upgradeToStateVersion1(initialState) {
           initialState.config.networks[key].url = 'https://neoscan-testnet.io/api/test_net'
         } else if (key === 'CoZTestNet') {
           initialState.config.networks[key].apiType = 'neoscan'
-          initialState.config.networks[key].url = 'https://coz.neoscan-testnet.io/'
+          initialState.config.networks[key].url = 'https://coz.neoscan-testnet.io/api/main_net'
         } else {
           initialState.config.networks[key].apiType = 'neonDB'
         }
