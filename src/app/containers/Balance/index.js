@@ -16,6 +16,7 @@ import tempStyle from '../App/App.css'
   selectedNetworkId: state.config.selectedNetworkId,
   networks: state.config.networks,
 }))
+
 export default class Balance extends Component {
   state = {
     errorMsg: '',
@@ -55,7 +56,7 @@ export default class Balance extends Component {
       address: '',
     })
 
-    api.neonDB
+    api.networks[selectedNetworkId].apiType
       .getBalance(networks[selectedNetworkId]['url'], this.state.balanceAddress)
       .then(result => {
         this.setState({

@@ -112,7 +112,7 @@ export class Send extends Component {
 
     let amounts = {}
     amounts[assetType] = toNumber(amount)
-    api.neonDB
+    api[networks[selectedNetworkId].apiType]
       .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
       .then(result => {
         console.log(result)

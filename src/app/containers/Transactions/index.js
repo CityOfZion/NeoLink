@@ -7,6 +7,8 @@ import { TextField } from 'rmwc/TextField'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
+import { toBigNumber } from '../../utils/math'
+
 import style from './Transactions.css'
 import tempStyle from '../App/App.css'
 
@@ -39,9 +41,10 @@ export default class Transactions extends Component {
       errorMsg: '',
       address: '',
     })
-    api.neonDB
+    api[networks[selectedNetworkId].apiType]
       .getTransactionHistory(networks[selectedNetworkId].url, this.state.enteredAddress)
       .then(result => {
+        console.log('neo res', result)
         this.setState({
           loading: false,
           transactions: result,
@@ -54,15 +57,16 @@ export default class Transactions extends Component {
   }
 
   renderTransactions(transactions) {
+    console.log('trans', transactions)
     const listItems = transactions.map(
       transaction =>
         'Id: ' +
         transaction.txid +
         '\n NEO transferred: ' +
-        transaction.NEO +
+        toBigNumber(!transaction.change.NEO ? 0 : transaction.change.NEO).toString() +
         '\n' +
         ' GAS transferred: ' +
-        transaction.GAS +
+        toBigNumber(!transaction.change.GAS ? 0 : transaction.change.GAS).round(8).toString() +
         '\n\n'
     )
     return (

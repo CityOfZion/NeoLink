@@ -75,14 +75,12 @@ export default class TestInvoke extends Component {
       if (arg !== '') args.push({ type: 7, value: arg })
     })
 
-    args.push({ type: 7, value: 'arg' })
-
     const query = Neon.create.query({
       method: 'invokefunction',
       params: [this.state.scriptHash, this.state.operation, args],
     })
 
-    api.neonDB
+    api[networks[selectedNetworkId].apiType]
       .getRPCEndpoint(networks[selectedNetworkId].url)
       .then(endpoint => {
         query.execute(endpoint).then(response => {

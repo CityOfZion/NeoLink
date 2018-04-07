@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
+import { Select } from 'rmwc/Select'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
@@ -12,7 +13,12 @@ class AddCustomNetwork extends Component {
     name: '',
     url: '',
     statusMsg: '',
+    apiType: 'neoscan',
   }
+
+  _renderSelectField = ({ input, ...rest }) => (
+    <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
+  )
 
   _renderTextField = ({
     input,
@@ -27,14 +33,15 @@ class AddCustomNetwork extends Component {
 
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
-    const { name, url } = values
+    const { name, url, apiType } = values
     const { addCustomNetwork } = this.props
 
-    if (name && url) {
-      addCustomNetwork(name, url)
+    if (name && url && apiType) {
+      addCustomNetwork(name, url, apiType)
       this.setState({
         name: '',
         url: '',
+        apiType: '',
         statusMsg: 'Success. Your custom network has been added.',
       })
       reset()
@@ -61,8 +68,24 @@ class AddCustomNetwork extends Component {
           <Field
             component={ this._renderTextField }
             type='text'
-            placeholder='NeonDB URL'
+            placeholder='Network API URL'
             name='url'
+          />
+          <Field
+            label='API Type'
+            component={ this._renderSelectField }
+            cssOnly
+            name='apiType'
+            options={ [
+              {
+                label: 'neoscan',
+                value: 'neoscan',
+              },
+              {
+                label: 'neonDB',
+                value: 'neonDB',
+              },
+            ] }
           />
           <Button raised ripple>Add Custom Network</Button>
         </form>

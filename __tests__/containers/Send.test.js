@@ -12,7 +12,7 @@ const setup = () => {
   const props = {
     selectedNetworkId: 'MainNet',
     networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
+      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
     },
     account: {
       wif: testKeys.t1.wif,
@@ -35,7 +35,7 @@ describe('Send', () => {
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '2.00000001' } })
     wrapper.find('select').simulate('change', { target: { value: 'GAS' } })
 
-    api.neonDB.doSendAsset = jest.fn((net, address, wif, amounts) => {
+    api.neoscan.doSendAsset = jest.fn((net, address, wif, amounts) => {
       return new Promise((resolve, reject) => {
         expect(amounts['GAS']).toEqual(2.00000001)
         done()

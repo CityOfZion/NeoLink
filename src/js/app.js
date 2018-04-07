@@ -3,14 +3,52 @@ import ReactDOM from 'react-dom'
 import Root from '../app/Root'
 import '../../vendor/fontawesome-all.min'
 
-chrome.storage.local.get('state', obj => {
-  const { state } = obj
+chrome.storage.local.get('stateVersion', stateVersion => {
+  chrome.storage.local.get('state', obj => {
+    const { state } = obj
 
-  const initialState = JSON.parse(state || '{}')
-  const createStore = require('../app/store/configureStore').default
+    let initialState = JSON.parse(state || '{}')
 
-  const container = document.querySelector('#container')
-  const isPopupWindow = container.classList.contains('popup')
+    if (stateVersion < 1) {
+      initialState = upgradeToStateVersion1(initialState)
+      stateVersion = 1
+    }
+    console.log(initialState)
 
-  ReactDOM.render(<Root store={ createStore(initialState) } isPopupWindow={ isPopupWindow } />, container)
+    const createStore = require('../app/store/configureStore').default
+
+    const container = document.querySelector('#container')
+    const isPopupWindow = container.classList.contains('popup')
+
+    ReactDOM.render(<Root store={ createStore(initialState) } isPopupWindow={ isPopupWindow } />, container)
+  })
 })
+
+// Moving defaults from neondb to neoscan.
+function upgradeToStateVersion1(initialState) {
+  if (initialState && initialState.config && initialState.config.networks) {
+    Object.keys(initialState.config.networks).forEach(function (key) {
+      console.log(key)
+      if (initialState.config.networks[key].apiType === 'neonDB') {
+        initialState.config.networks[key].apiType = 'neondb'
+      }
+      if (initialState.config.networks[key].apiType === 'neondb') {
+        if (key === 'MainNet') {
+          console.log('upgrading mainnet')
+          initialState.config.networks[key].apiType = 'neoscan'
+          initialState.config.networks[key].url = 'https://api.neoscan.io/api/main_net'
+        } else if (key === 'TestNet') {
+          initialState.config.networks[key].apiType = 'neoscan'
+          initialState.config.networks[key].url = 'https://neoscan-testnet.io/api/test_net'
+        } else if (key === 'CoZTestNet') {
+          initialState.config.networks[key].apiType = 'neoscan'
+          initialState.config.networks[key].url = 'https://coz.neoscan-testnet.io/'
+        } else {
+          initialState.config.networks[key].apiType = 'neonDB'
+        }
+      }
+    })
+  }
+
+  return initialState
+}
