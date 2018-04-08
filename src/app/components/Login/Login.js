@@ -39,7 +39,6 @@ export class Login extends Component {
   )
 
   handleSubmit = (values, dispatch, formProps) => {
-    const { history } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
@@ -50,8 +49,6 @@ export class Login extends Component {
     })
 
     const { setAccount } = this.props
-
-    console.log('going to decrypt')
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
