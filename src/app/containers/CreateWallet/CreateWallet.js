@@ -121,7 +121,9 @@ export default class CreateWallet extends Component {
     if (validated) {
       // Make wallet.decrypt() async.
       const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
-      wallet.encryptAsync(account.WIF, passPhrase)
+
+      wallet
+        .encryptAsync(account.WIF, passPhrase)
         .then(encryptedWif => {
           const accountObject = {
             key: encryptedWif,

@@ -85,7 +85,7 @@ describe('Login', () => {
     loginForm.find('form').simulate('submit')
   })
 
-  test('Shows error with invalid credentials', () => {
+  test('Shows error with invalid credentials', done => {
     jest.useFakeTimers()
 
     const loginForm = mount(
@@ -94,13 +94,17 @@ describe('Login', () => {
       </Provider>
     )
     loginForm.find('input[name="passPhrase"]').simulate('change', { target: { id: 'passPhrase', value: 'wrong' } })
+
     loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
     loginForm.find('form').simulate('submit')
 
     jest.runAllTimers()
 
-    const loginState = loginForm.find(Login).instance().state
-    expect(loginState.errorMsg).not.toEqual('')
-    expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+    process.nextTick(() => {
+      const loginState = loginForm.find(Login).instance().state
+      expect(loginState.errorMsg).not.toEqual('')
+      expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+      done()
+    })
   })
 })

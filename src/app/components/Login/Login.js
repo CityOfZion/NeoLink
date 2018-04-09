@@ -39,7 +39,6 @@ export class Login extends Component {
   )
 
   handleSubmit = (values, dispatch, formProps) => {
-    const { history } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
@@ -51,26 +50,18 @@ export class Login extends Component {
 
     const { setAccount } = this.props
 
-    console.log('going to decrypt')
-    try {
-      wallet.decryptAsync(encryptedWif, passPhrase)
-        .then(wif => {
-          console.log('wooooo')
-          const account = new wallet.Account(wif)
+    wallet
+      .decryptAsync(encryptedWif, passPhrase)
+      .then(wif => {
+        const account = new wallet.Account(wif)
 
-          this.setState({ loading: false })
-          reset()
-          setAccount(wif, account.address)
-        })
-        .catch(e => {
-          console.log('----')
-          this.setState({ loading: false, errorMsg: e.message })
-        })
-    } catch (e) {
-      console.log('!!!!')
-      console.log(e.message)
-      this.setState({ loading: false, errorMsg: e.message })
-    }
+        this.setState({ loading: false })
+        reset()
+        setAccount(wif, account.address)
+      })
+      .catch(e => {
+        this.setState({ loading: false, errorMsg: e.message })
+      })
   }
 
   getAccountOptions(accounts) {
