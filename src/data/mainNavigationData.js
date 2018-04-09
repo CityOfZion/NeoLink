@@ -38,7 +38,7 @@ export default [
     title: 'Log Out',
     img: powerOffSVG,
     alt: 'Power off icon',
-    path: '/logout',
+    path: '/',
     id: 5,
   },
   {

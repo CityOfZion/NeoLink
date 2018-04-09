@@ -17,11 +17,12 @@ const InputField = ({
   error = '',
   disabled = false,
   labelClassNames = '',
+  errorClassNames = '',
   children,
 }) => {
   const inputFieldLabelStyles = label ? style.inputFieldLabelStyles : ''
   const errorStyles = error ? style.inputFieldErrorStyles : ''
-  const errorElement = error ? <div className={ style.inputFieldErrorMessage }>{error}</div> : ''
+  const errorElement = error ? <div className={ `${style.inputFieldErrorMessage} ${errorClassNames}` }>{error}</div> : ''
 
   let input
 
@@ -79,6 +80,7 @@ InputField.propTypes = {
   disabled: PropTypes.bool,
   labelClassNames: PropTypes.string,
   children: PropTypes.node,
+  errorClassNames: PropTypes.string,
 }
 
 export default InputField

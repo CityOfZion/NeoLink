@@ -1,0 +1,13 @@
+.flashMessage {
+  padding: 8px;
+  border-radius: 3px;
+  background-color: rgba(152, 143, 143, 0.4);
+  font-size: 0.9rem;
+  text-align: center;
+  color: #585858;
+}
+
+.flashMessage svg {
+  color: #585858;
+  margin-right: 5px;
+}

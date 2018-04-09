@@ -1,0 +1,25 @@
+{
+  "name": "NeoLink",
+  "options_page": "options.html",
+  "background": {
+    "page": "background.html"
+  },
+  "content_scripts": [
+  {
+    "matches": ["*://*/*"],
+    "js": ["content.bundle.js"]
+  }
+],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "50": "icon-50.png"
+  },
+  "manifest_version": 2,
+  "content_security_policy": "default-src 'self'; font-src 'self' https://fonts.gstatic.com; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;",
+  "permissions": [
+    "storage"
+  ]
+}

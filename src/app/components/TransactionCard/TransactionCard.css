@@ -1,0 +1,43 @@
+.transactionCard {
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 15px 0;
+  box-shadow: 2px 2px 2px 2px rgba(193, 193, 193, 0.5);
+}
+
+.transactionCardHeading {
+  font-size: 0.7rem;
+  text-align: left;
+  word-break: break-all;
+  margin: 5px 0;
+  color: #659bff;
+}
+
+.transactionCardParagraph {
+  margin: 0;
+  display: flex;
+}
+
+.transactionCardParagraph img {
+  height: 15px;
+  margin-left: auto;
+  color: #36b049;
+  margin-right: 5px;
+}
+
+.transactionCardParagraph svg {
+  font-size: 0.9rem;
+  margin-left: auto;
+  margin-right: 10px;
+  color: #36b049;
+}
+
+.transactionCardAmount {
+  margin-right: 25px;
+  color: #585858;
+}
+
+.transactionCardLink {
+  text-decoration: none;
+}
