@@ -48,18 +48,17 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    const { setAccount } = this.props
+    const { setAccount, history } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
       .then(wif => {
         const account = new wallet.Account(wif)
 
-        console.log(wif, account.address)
-
         this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
+        history.push('/home')
       })
       .catch(e => {
         this.setState({ loading: false, errorMsg: e.message })
