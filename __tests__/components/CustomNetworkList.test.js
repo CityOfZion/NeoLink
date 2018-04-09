@@ -22,7 +22,7 @@ const setup = (selectedNetworkId = 'MainNet') => {
 }
 
 describe('CustomNetworkList', () => {
-  test('renders without crashing', (done) => {
+  test('renders without crashing', done => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
     done()

@@ -1,0 +1,147 @@
+.accountInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accountInfoDetails {
+  width: 70%;
+}
+
+.accountInfoImageContainer svg {
+  height: 30px;
+}
+
+.accountInfoDetailsHeading,
+.accountInfoDetailsParagraph {
+  width: 100%;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.accountInfoDetailsHeading {
+  font-size: 1rem;
+  color: #000;
+}
+
+.accountInfoDetailsParagraph {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #585858;
+}
+
+.accountDropDownButton {
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  color: #585858;
+  font-size: 1.1rem;
+}
+
+.accountInfoAmounts {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+  color: #585858;
+}
+
+.accountInfoNeoAmount,
+.accountInfoGasAmount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accountInfoNeoAmountImg {
+  width: 25px;
+}
+
+.accountInfoGasAmount svg {
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+  color: #36b049;
+}
+
+.accountInfoAmountParagraph {
+  font-size: 1rem;
+  border: 1px solid #36b149;
+  color: #36b149;
+  padding: 4px 10px;
+  border-radius: 50px;
+}
+
+.accountInfoErrorButton {
+  margin: 0 auto;
+  height: 35px;
+  font-size: 0.9rem;
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid #36b148;
+  color: #36b149;
+}
+
+.accountInfoDropDownContainer {
+  position: relative;
+}
+
+.accountInfoDropDown {
+  background-color: #f5f5f5;
+  position: absolute;
+  box-shadow: 2px 2px 2px #bababa;
+  top: 24px;
+  padding: 10px;
+  width: 155px;
+  border-radius: 3px;
+  left: -141px;
+  display: none;
+  z-index: 999;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.accountInfoDropDownActive {
+  display: flex;
+  opacity: 1;
+}
+
+.accountInfoDropDownList {
+  margin: 0;
+  padding: 0;
+  color: #585858;
+  list-style-type: none;
+}
+
+.accountInfoDropDownListItem {
+  padding: 3px 0;
+}
+
+.dropDownLinks,
+.dropDownLinksButton {
+  color: #585858;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  padding-left: 0;
+  font-family: Roboto;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+}
+
+.dropDownLinks svg,
+.dropDownLinksButton svg {
+  margin-right: 5px;
+  color: #585858;
+  font-size: 0.8rem;
+}
+
+.accountInfoRefreshButton {
+  font-size: 1.2rem;
+  border: none;
+  color: #585858;
+  position: absolute;
+}

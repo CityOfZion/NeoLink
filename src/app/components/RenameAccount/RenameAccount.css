@@ -1,0 +1,21 @@
+.renameAccountHeading {
+  margin-top: 0;
+}
+
+.renameAccountForm {
+  position: relative;
+}
+
+.renameAccountContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.renameAccountButton {
+  margin: 10px auto 0 auto;
+}
+
+.renameAccountError {
+  top: 40px;
+}

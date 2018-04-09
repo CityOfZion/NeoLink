@@ -1,0 +1,14 @@
+.transactionListNoTransactions {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #585858;
+}
+
+.retryTransactionHistoryButton {
+  background-color: transparent;
+  border: 1px solid #585858;
+  color: #585858;
+  margin: 30px auto;
+  height: 35px;
+  font-size: 0.9rem;
+}
