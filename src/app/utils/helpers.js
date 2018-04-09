@@ -22,17 +22,8 @@ export const getBalance = (network, account) => {
     Neon.get
       .balance(network, account.address)
       .then(results => {
-        let gas
         const gasAmount = results.assets['GAS'].balance.c
-
-        if (gasAmount.length === 1) {
-          gas = results.assets['GAS'].balance.c[0] / 100000000000000
-        } else {
-          gas =
-            results.assets['GAS'].balance.c[1] > 0
-              ? Number(results.assets['GAS'].balance.c.join('.')).toFixed(5)
-              : Number(results.assets['GAS'].balance.c.join('.'))
-        }
+        const gas = formatGas(gasAmount)
 
         const amounts = {
           neo: Number(results.assets['NEO'].balance.c[0]),
@@ -52,4 +43,16 @@ export const getTransactions = (network, account) => {
       .then(results => resolve(results))
       .catch(error => reject(error))
   })
+}
+
+export const formatGas = gasArray => {
+  let gas
+
+  if (gasArray.length === 1) {
+    gas = gasArray[0] / 100000000000000
+  } else {
+    gas = gasArray[1] > 0 ? Number(gasArray.join('.')).toFixed(5) : Number(gasArray.join('.'))
+  }
+
+  return gas
 }

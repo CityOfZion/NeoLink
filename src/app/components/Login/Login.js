@@ -55,6 +55,8 @@ export class Login extends Component {
       .then(wif => {
         const account = new wallet.Account(wif)
 
+        console.log(wif, account.address)
+
         this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
