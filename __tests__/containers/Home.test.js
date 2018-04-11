@@ -12,7 +12,7 @@ describe('Home', () => {
     walletActions: {
       changeLabel: () => {},
     },
-    selectedNetworkId: 'TestNet',
+    currentNetwork: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet-api.wallet.cityofzion.io' },
     account: {
       address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
       wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
@@ -52,9 +52,9 @@ describe('Home', () => {
     wrapper.instance()._getAccountInfo = jest.fn()
     wrapper.update()
 
-    wrapper.instance().componentWillReceiveProps({ selectedNetworkId: 'MainNet' })
+    const currentNetwork = { name: 'MainNet', apiType: 'neoscan', url: 'http://api.wallet.cityofzion.io' }
+    wrapper.instance().componentWillReceiveProps({ currentNetwork: currentNetwork })
 
     expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledTimes(1)
-    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledWith('MainNet')
   })
 })

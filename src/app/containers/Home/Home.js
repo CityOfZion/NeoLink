@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { getAccountName, validateLength, getBalance, getTransactions } from '../../utils/helpers'
+import { api } from '@cityofzion/neon-js'
+import { getAccountName, validateLength, getTransactions } from '../../utils/helpers'
+import { toBigNumber } from '../../utils/math'
 
 import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'
@@ -31,7 +33,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this._getAccountInfo(this.props.selectedNetworkId)
+    this._getAccountInfo()
 
     window.addEventListener('click', this._closeDropDownMenu)
   }
@@ -41,26 +43,37 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(props, newProps) {
-    this._getAccountInfo(props.selectedNetworkId)
+    this._getAccountInfo()
   }
 
-  getHomeScreenBalance = network => {
-    const { account } = this.props
+  getHomeScreenBalance = () => {
+    const { account, currentNetwork } = this.props
 
-    this.setState({ amountsError: '' }, () => {
-      getBalance(network, account)
-        .then(amounts => this.setState({ amounts }))
-        .catch(() => {
-          this.setState({ amountsError: 'Could not retrieve amounts.' })
+    this.setState({ amountsError: '' })
+
+    api[currentNetwork.apiType]
+      .getBalance(currentNetwork.url, account.address)
+      .then(result => {
+        console.log('getBalance: ', result)
+
+        this.setState({
+          amounts: {
+            neo: toBigNumber(result.assets.NEO.balance).toString(),
+            gas: toBigNumber(result.assets.GAS.balance).round(8).toString(),
+          },
         })
-    })
+      })
+      .catch(e => {
+        console.log('error: ', e)
+        this.setState({ amountsError: 'Could not retrieve amounts.' })
+      })
   }
 
-  getHomeScreenTransactions = network => {
-    const { account } = this.props
+  getHomeScreenTransactions = () => {
+    const { account, currentNetwork } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
-      getTransactions(network, account)
+      getTransactions(currentNetwork, account)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
@@ -74,9 +87,9 @@ class Home extends Component {
     this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
   }
 
-  _getAccountInfo = network => {
-    this.getHomeScreenBalance(network)
-    this.getHomeScreenTransactions(network)
+  _getAccountInfo = () => {
+    this.getHomeScreenBalance()
+    this.getHomeScreenTransactions()
   }
 
   _closeDropDownMenu = event => {
@@ -107,7 +120,7 @@ class Home extends Component {
   }
 
   render() {
-    const { account, selectedNetworkId } = this.props
+    const { account, currentNetwork } = this.props
     const {
       amounts,
       showInputField,
@@ -142,7 +155,7 @@ class Home extends Component {
                 getBalance={ this.getHomeScreenBalance }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
-                network={ selectedNetworkId }
+                network={ currentNetwork }
                 updateBalance={ this._getAccountInfo }
               />
             )}
@@ -165,7 +178,7 @@ export default Home
 
 Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
-  selectedNetworkId: PropTypes.string.isRequired,
+  currentNetwork: PropTypes.object.isRequired,
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
 }

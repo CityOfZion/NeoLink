@@ -12,7 +12,7 @@ import Home from './Home'
 const mapStateToProps = state => ({
   account: state.account,
   accounts: state.wallet.accounts,
-  selectedNetworkId: state.config.selectedNetworkId,
+  currentNetwork: state.config.networks[state.config.selectedNetworkId],
 })
 
 const mapDispatchToProps = dispatch => ({
