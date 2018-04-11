@@ -61,7 +61,7 @@ export class Login extends Component {
         this.setState({ loading: false })
         history.push('/home')
 
-        getBalance(selectedNetworkId, account).then(amount => setBalance(amount.neo, amount.gas))
+        getBalance(selectedNetworkId, account)
       })
 
       .catch(e => {

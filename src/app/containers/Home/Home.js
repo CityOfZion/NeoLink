@@ -40,6 +40,14 @@ class Home extends Component {
     this._getAccountInfo(props.selectedNetworkId)
   }
 
+  getHomeScreenBalance = network => {
+    const { account, accountActions } = this.props
+
+    this.setState({ amountsError: '' }, () => {
+      getBalance(network, account).then(results => accountActions.setBalance(results.neo, results.gas))
+    })
+  }
+
   getHomeScreenTransactions = network => {
     const { account } = this.props
 
@@ -59,6 +67,7 @@ class Home extends Component {
   }
 
   _getAccountInfo = network => {
+    // this.getHomeScreenBalance(network)
     this.getHomeScreenTransactions(network)
   }
 
@@ -92,7 +101,6 @@ class Home extends Component {
   render() {
     const { account, selectedNetworkId } = this.props
     const {
-      amounts,
       showInputField,
       label,
       transactionHistory,
@@ -121,6 +129,7 @@ class Home extends Component {
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
+                getBalance={ this.getHomeScreenBalance }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }

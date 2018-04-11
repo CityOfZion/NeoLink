@@ -8,6 +8,8 @@ import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
+import { getBalance } from '../../utils/helpers'
+
 class NetworkSwitcher extends Component {
   state = {
     networkMenuOpen: false,
@@ -22,11 +24,13 @@ class NetworkSwitcher extends Component {
   }
 
   changeNetwork = event => {
-    const { setNetwork } = this.props
+    const { setNetwork, account, setBalance } = this.props
+    console.log(this.props)
     let dataset = event.target.dataset.value || event.target.parentNode.dataset.value
 
     if (dataset) {
       setNetwork(dataset)
+      getBalance(dataset, account).then(results => setBalance(results.neo, results.gas))
       this.setState({ networkMenuOpen: false })
     }
   }

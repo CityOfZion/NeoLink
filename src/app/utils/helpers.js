@@ -1,4 +1,5 @@
 import Neon from '@cityofzion/neon-js'
+import { setBalance } from '../actions/account'
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -29,7 +30,6 @@ export const getBalance = (network, account) => {
           neo: Number(results.assets['NEO'].balance.c[0]),
           gas,
         }
-
         resolve(amounts)
       })
       .catch(error => reject(error))

@@ -16,6 +16,7 @@ const actionsMap = {
     }
   },
   [ActionTypes.SET_BALANCE](state, action) {
+    console.log(action)
     return {
       ...state,
       neo: action.neo,
@@ -34,6 +35,7 @@ const actionsMap = {
 }
 
 export default function network(state = initialState, action) {
+  console.log('reducing', action)
   const reduceFn = actionsMap[action.type]
   if (!reduceFn) return state
   return reduceFn(state, action)
