@@ -4,16 +4,22 @@ import PropTypes from 'prop-types'
 import TransactionCard from '../TransactionCard'
 import SecondaryButton from '../common/buttons/SecondaryButton'
 import FlashMessage from '../FlashMessage'
+
+import { formatGas } from '../../utils/helpers'
+
 import style from './TransactionList.css'
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
   const transactionCards = transactions.map(transaction => {
-    const amounts = { neo: transaction.NEO, gas: transaction.GAS }
+    const gasArray = transaction.change.GAS.c
+    const gas = formatGas(gasArray)
+    const amounts = { neo: transaction.change.NEO.c, gas }
+
     return (
       <TransactionCard
         key={ transaction.txid }
         transactionId={ transaction.txid }
-        neoSent={ transaction.neo_sent }
+        neoSent={ amounts.neo > 0 }
         amounts={ amounts }
       />
     )
