@@ -56,20 +56,6 @@ export default [
     id: 7,
   },
   {
-    title: 'Transactions',
-    img: testSVG,
-    alt: 'test',
-    path: '/transactions',
-    id: 8,
-  },
-  {
-    title: 'Balance',
-    img: testSVG,
-    alt: 'test',
-    path: '/balance',
-    id: 9,
-  },
-  {
     title: 'Create Wallet',
     img: testSVG,
     alt: 'test',
