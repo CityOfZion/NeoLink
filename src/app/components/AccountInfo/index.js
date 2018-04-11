@@ -63,7 +63,7 @@ const AccountInfo = ({
       {amountsError ? (
         <div>
           <FlashMessage flashMessage={ amountsError } />
-          <PrimaryButton buttonText='Retry' classNames={ style.accountInfoErrorButton } onClickHandler={ getBalance } />
+          <PrimaryButton buttonText='Retry' classNames={ style.accountInfoErrorButton } onClickHandler={ () => {} } />
         </div>
       ) : (
         <div className={ style.accountInfoAmounts }>
@@ -91,7 +91,6 @@ AccountInfo.propTypes = {
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  getBalance: PropTypes.func.isRequired,
   showDropDown: PropTypes.bool.isRequired,
   toggleDropDownMenu: PropTypes.func.isRequired,
   network: PropTypes.string.isRequired,

@@ -69,10 +69,10 @@ class MainNav extends Component {
   }
 
   handleLogOut = e => {
-    const { setAccount } = this.props
+    const { logOut } = this.props
 
     e.preventDefault()
-    setAccount('', '')
+    logOut()
   }
 
   render() {
@@ -96,5 +96,5 @@ export default withRouter(MainNav)
 
 MainNav.propTypes = {
   history: PropTypes.object,
-  setAccount: PropTypes.func,
+  logOut: PropTypes.func,
 }

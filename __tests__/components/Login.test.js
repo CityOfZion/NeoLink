@@ -65,7 +65,7 @@ describe('Login', () => {
     const expectedAddress = 'AQg2xUAPpA21FZMw44cpErGWekx3Hw8neA'
     const expectedWif = 'L3moZFQgcpyznreRqbR1uVcvrkARvRqJS4ttGfMdXGaQQR5DeYcZ'
 
-    const setAccount = jest.fn((wif, address) => {
+    const setAccount = jest.fn((wif, address, gas, neo) => {
       expect(wif).toEqual(expectedWif)
       expect(address).toEqual(expectedAddress)
       done()

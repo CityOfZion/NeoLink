@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(accountActions, dispatch),
+  accountActions: bindActionCreators(accountActions, dispatch),
   walletActions: bindActionCreators(walletActions, dispatch),
 })
 

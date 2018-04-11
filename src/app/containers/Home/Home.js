@@ -22,10 +22,6 @@ class Home extends Component {
       transactionHistoryError: '',
       showDropDown: false,
       labelError: '',
-      amounts: {
-        neo: '',
-        gas: '',
-      },
       amountsError: '',
     }
   }
@@ -42,18 +38,6 @@ class Home extends Component {
 
   componentWillReceiveProps(props, newProps) {
     this._getAccountInfo(props.selectedNetworkId)
-  }
-
-  getHomeScreenBalance = network => {
-    const { account } = this.props
-
-    this.setState({ amountsError: '' }, () => {
-      getBalance(network, account)
-        .then(amounts => this.setState({ amounts }))
-        .catch(() => {
-          this.setState({ amountsError: 'Could not retrieve amounts.' })
-        })
-    })
   }
 
   getHomeScreenTransactions = network => {
@@ -75,7 +59,6 @@ class Home extends Component {
   }
 
   _getAccountInfo = network => {
-    this.getHomeScreenBalance(network)
     this.getHomeScreenTransactions(network)
   }
 
@@ -118,7 +101,6 @@ class Home extends Component {
       labelError,
       showDropDown,
     } = this.state
-    const { neo, gas } = amounts
 
     return (
       <Fragment>
@@ -134,12 +116,11 @@ class Home extends Component {
             ) : (
               <AccountInfo
                 onClickHandler={ this.showInputField }
-                neo={ Number(neo) }
-                gas={ Number(gas) }
+                neo={ Number(account.neo) }
+                gas={ Number(account.gas) }
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
-                getBalance={ this.getHomeScreenBalance }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }

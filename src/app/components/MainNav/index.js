@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { setAccount } from '../../actions/account'
+import { logOut } from '../../actions/account'
 
 import MainNav from './MainNav'
 
 const actionCreators = {
-  setAccount,
+  logOut,
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

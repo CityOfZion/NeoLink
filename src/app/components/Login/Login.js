@@ -12,6 +12,7 @@ import Loader from '../Loader'
 import StartPage from '../StartPage'
 
 import style from './Login.css'
+import { getBalance } from '../../utils/helpers'
 
 export class Login extends Component {
   state = {
@@ -48,18 +49,21 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    const { setAccount, history } = this.props
+    const { setAccount, history, selectedNetworkId, setBalance } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
       .then(wif => {
         const account = new wallet.Account(wif)
 
-        this.setState({ loading: false })
         reset()
         setAccount(wif, account.address)
+        this.setState({ loading: false })
         history.push('/home')
+
+        getBalance(selectedNetworkId, account).then(amount => setBalance(amount.neo, amount.gas))
       })
+
       .catch(e => {
         this.setState({ loading: false, errorMsg: e.message })
       })
@@ -116,11 +120,13 @@ export class Login extends Component {
 
 Login.propTypes = {
   setAccount: PropTypes.func.isRequired,
+  setBalance: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   history: PropTypes.object,
+  selectedNetworkId: PropTypes.string,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
