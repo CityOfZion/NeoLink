@@ -49,7 +49,7 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    const { setAccount, history, selectedNetworkId, setBalance } = this.props
+    const { setAccount, history, selectedNetworkId } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)

@@ -27,7 +27,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this._getAccountInfo(this.props.selectedNetworkId)
+    const { selectedNetworkId } = this.props
+
+    this.getHomeScreenTransactions(selectedNetworkId)
+    this.getHomeScreenBalance(selectedNetworkId)
 
     window.addEventListener('click', this._closeDropDownMenu)
   }
@@ -37,7 +40,7 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(props, newProps) {
-    this._getAccountInfo(props.selectedNetworkId)
+    this.getHomeScreenTransactions(props.selectedNetworkId)
   }
 
   getHomeScreenBalance = network => {
@@ -64,11 +67,6 @@ class Home extends Component {
 
   toggleDropDownMenu = () => {
     this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
-  }
-
-  _getAccountInfo = network => {
-    // this.getHomeScreenBalance(network)
-    this.getHomeScreenTransactions(network)
   }
 
   _closeDropDownMenu = event => {
@@ -157,5 +155,6 @@ Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
   selectedNetworkId: PropTypes.string.isRequired,
   account: PropTypes.object.isRequired,
+  accountActions: PropTypes.object,
   accounts: PropTypes.object.isRequired,
 }

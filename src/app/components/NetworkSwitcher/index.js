@@ -124,6 +124,8 @@ class NetworkSwitcher extends Component {
 NetworkSwitcher.propTypes = {
   selectedNetworkId: PropTypes.string,
   setNetwork: PropTypes.func,
+  setBalance: PropTypes.func,
+  account: PropTypes.object,
   networks: PropTypes.object,
 }
 
