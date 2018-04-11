@@ -9,9 +9,10 @@ chrome.storage.local.get('stateVersion', stateVersion => {
 
     let initialState = JSON.parse(state || '{}')
 
-    if (stateVersion < 1) {
+    let initialStateVersion = JSON.parse('{}')
+    if (!initialStateVersion.version || initialStateVersion.version < 1) {
       initialState = upgradeToStateVersion1(initialState)
-      stateVersion = 1
+      chrome.storage.local.set({ stateVersion: JSON.stringify({ version: 1 }) })
     }
 
     const createStore = require('../app/store/configureStore').default

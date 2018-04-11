@@ -73,7 +73,7 @@ class NetworkSwitcher extends Component {
     Object.keys(networks).forEach(index => {
       const indicator = this.getIndicator(networks, index)
 
-      const selected = selectedNetworkId === networks[index].name
+      const selected = selectedNetworkId === index
 
       networkOptions.push(
         <button key={ `option-key-${index}` } data-value={ index } className={ style.networkOptionButton }>
