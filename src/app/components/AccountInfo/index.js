@@ -63,7 +63,7 @@ const AccountInfo = ({
       {amountsError ? (
         <div>
           <FlashMessage flashMessage={ amountsError } />
-          <PrimaryButton buttonText='Retry' classNames={ style.accountInfoErrorButton } onClickHandler={ () => {} } />
+          <PrimaryButton buttonText='Retry' classNames={ style.accountInfoErrorButton } onClickHandler={ getBalance } />
         </div>
       ) : (
         <div className={ style.accountInfoAmounts }>
@@ -87,6 +87,7 @@ const AccountInfo = ({
 AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func,
+  getBalance: PropTypes.func,
   neo: PropTypes.number,
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,

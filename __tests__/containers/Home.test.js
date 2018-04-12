@@ -49,12 +49,12 @@ describe('Home', () => {
   test('Changes account balance when switching networks', () => {
     const wrapper = shallow(<Home { ...props } />)
 
-    wrapper.instance()._getAccountInfo = jest.fn()
+    wrapper.instance().getHomeScreenBalance = jest.fn()
     wrapper.update()
 
     wrapper.instance().componentWillReceiveProps({ selectedNetworkId: 'MainNet' })
 
-    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledTimes(1)
-    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledWith('MainNet')
+    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenCalledWith('MainNet')
   })
 })
