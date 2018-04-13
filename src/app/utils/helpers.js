@@ -20,7 +20,7 @@ export const validateLength = (input, minLength) => {
 export const getBalance = (networks, network, account) => {
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
-      .getBalance(networks[network]['url'], account.address)
+      .getBalance(networks[network]['url'], 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
       .then(results => {
         let amounts
         if (results.address === 'not found') {
@@ -46,7 +46,7 @@ export const getBalance = (networks, network, account) => {
 export const getTransactions = (networks, network, account) => {
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
-      .getTransactionHistory(networks[network]['url'], account.address)
+      .getTransactionHistory(networks[network]['url'], 'AShpr7rnJ4VDksuakReTJ4cutTnAX6JN41')
       .then(results => {
         resolve(results)
       })

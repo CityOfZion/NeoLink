@@ -11,8 +11,9 @@ import style from './TransactionList.css'
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
   const transactionCards = transactions.map(transaction => {
+    console.log(transaction)
     const amounts = {
-      neo: transaction.change.NEO.c ? transaction.change.NEO.c : 0,
+      neo: transaction.change.NEO ? transaction.change.NEO.c : 0,
       gas: transaction.change.GAS ? formatGas(transaction.change.GAS.c) : 0,
     }
 
