@@ -27,7 +27,7 @@ describe('Login', () => {
   test('shows loading', done => {
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
       </Provider>
     )
     loginForm
@@ -42,7 +42,14 @@ describe('Login', () => {
 
   test('shows create options if no wallet accounts found', () => {
     const loginForm = shallow(
-      <Login setAccount={ jest.fn } handleSubmit={ jest.fn } reset={ jest.fn } account={ { wif: '' } } accounts={ {} } />
+      <Login
+        setAccount={ jest.fn }
+        handleSubmit={ jest.fn }
+        reset={ jest.fn }
+        account={ { wif: '' } }
+        accounts={ {} }
+        setBalance={ jest.fn }
+      />
     )
     expect(loginForm.contains('CreateOrImportWallet'))
   })
@@ -55,7 +62,7 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ preLoggedIn } accounts={ validAccount } />
+        <LoginForm setAccount={ jest.fn } account={ preLoggedIn } accounts={ validAccount } setBalance={ jest.fn } />
       </Provider>
     )
     expect(loginForm.html()).toEqual(null)
@@ -73,7 +80,7 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ setAccount } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm setAccount={ setAccount } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
       </Provider>
     )
 
@@ -90,7 +97,7 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
       </Provider>
     )
     loginForm.find('input[name="passPhrase"]').simulate('change', { target: { id: 'passPhrase', value: 'wrong' } })

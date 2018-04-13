@@ -13,6 +13,7 @@ const setup = () => {
       CoZTestNet: { name: 'CoZ TestNet', url: 'http://coz-privatenet.herokuapp.com/', canDelete: false },
     },
     setNetwork: jest.fn(),
+    getBalance: jest.fn(),
   }
   const wrapper = shallow(<NetworkSwitcher { ...props } />)
 

@@ -12,6 +12,7 @@ describe('Home', () => {
     walletActions: {
       changeLabel: () => {},
     },
+    accountActions: { setBalance: () => {} },
     selectedNetworkId: 'TestNet',
     account: {
       address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',

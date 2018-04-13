@@ -2,16 +2,26 @@ import { getBalance, getTransactions, formatGas } from '../../src/app/utils/help
 
 const account = { address: 'AbRWqwMFgf4P8zXZPdfNnWJ7aoEggKgnNf' }
 const network = 'TestNet'
+const networks = {
+  CoZTestNet: {
+    name: 'CoZ TestNet',
+    url: 'https://coz.neoscan-testnet.io/api/main_net',
+    canDelete: false,
+    apiType: 'neoscan',
+  },
+  MainNet: { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
+  TestNet: { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
+}
 
 test('getBalance gets the correct balance', () => {
-  return getBalance(network, account).then(data => {
+  return getBalance(networks, network, account).then(data => {
     expect(data.neo).toBe(1)
     expect(data.gas).toBe(0.2)
   })
 })
 
 test('getTransactions gets the correct number of transactions', () => {
-  return getTransactions(network, account).then(data => {
+  return getTransactions(networks, network, account).then(data => {
     expect(data.length).toBe(2)
   })
 })

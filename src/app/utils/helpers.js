@@ -1,4 +1,4 @@
-import Neon, { api } from '@cityofzion/neon-js'
+import { api } from '@cityofzion/neon-js'
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -18,18 +18,24 @@ export const validateLength = (input, minLength) => {
 }
 
 export const getBalance = (networks, network, account) => {
-  console.log(networks[network], networks[network]['url'])
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
       .getBalance(networks[network]['url'], account.address)
       .then(results => {
-        console.log(results)
-        const gasAmount = results.assets['GAS'].balance.c
-        const gas = formatGas(gasAmount)
+        let amounts
+        if (results.address === 'not found') {
+          amounts = {
+            neo: 0,
+            gas: 0,
+          }
+        } else {
+          const gasAmount = results.assets['GAS'].balance.c
+          const gas = formatGas(gasAmount)
 
-        const amounts = {
-          neo: Number(results.assets['NEO'].balance.c[0]),
-          gas,
+          amounts = {
+            neo: Number(results.assets['NEO'].balance.c[0]),
+            gas,
+          }
         }
         resolve(amounts)
       })
@@ -41,8 +47,15 @@ export const getTransactions = (networks, network, account) => {
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
       .getTransactionHistory(networks[network]['url'], account.address)
-      .then(results => resolve(results))
-      .catch(error => reject(error))
+      .then(results => {
+        resolve(results)
+      })
+      .catch(error => {
+        if (error.message === 'Cannot read property \'length\' of null') {
+          return
+        }
+        reject(error)
+      })
   })
 }
 

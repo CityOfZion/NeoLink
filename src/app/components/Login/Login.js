@@ -49,7 +49,7 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    const { setAccount, history, selectedNetworkId, networks } = this.props
+    const { setAccount, history, selectedNetworkId, networks, setBalance } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
@@ -61,7 +61,7 @@ export class Login extends Component {
         this.setState({ loading: false })
         history.push('/home')
 
-        getBalance(networks, selectedNetworkId, account)
+        getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
       })
 
       .catch(e => {

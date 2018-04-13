@@ -132,7 +132,7 @@ class Home extends Component {
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }
-                updateBalance={ this._getAccountInfo }
+                updateBalance={ this.getHomeScreenBalance }
               />
             )}
           </section>
