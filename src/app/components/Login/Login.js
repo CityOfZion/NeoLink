@@ -62,7 +62,7 @@ export class Login extends Component {
         history.push('/home')
 
         getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
-        getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transaction))
+        getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
       })
 
       .catch(e => {

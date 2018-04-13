@@ -5,8 +5,6 @@ import TransactionCard from '../TransactionCard'
 import SecondaryButton from '../common/buttons/SecondaryButton'
 import FlashMessage from '../FlashMessage'
 
-import { formatGas } from '../../utils/helpers'
-
 import style from './TransactionList.css'
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
