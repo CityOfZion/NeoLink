@@ -18,10 +18,12 @@ export const validateLength = (input, minLength) => {
 }
 
 export const getBalance = (networks, network, account) => {
+  console.log(networks[network], networks[network]['url'])
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
       .getBalance(networks[network]['url'], account.address)
       .then(results => {
+        console.log(results)
         const gasAmount = results.assets['GAS'].balance.c
         const gas = formatGas(gasAmount)
 

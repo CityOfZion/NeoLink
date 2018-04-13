@@ -127,6 +127,7 @@ Login.propTypes = {
   reset: PropTypes.func.isRequired,
   history: PropTypes.object,
   selectedNetworkId: PropTypes.string,
+  networks: PropTypes.object,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
