@@ -48,11 +48,12 @@ export const getTransactions = (networks, network, account) => {
     api[networks[network].apiType]
       .getTransactionHistory(networks[network]['url'], account.address)
       .then(results => {
+        console.log(results)
         resolve(results)
       })
       .catch(error => {
         if (error.message === 'Cannot read property \'length\' of null') {
-          return
+          resolve([])
         }
         reject(error)
       })
@@ -61,7 +62,6 @@ export const getTransactions = (networks, network, account) => {
 
 export const formatGas = gasArray => {
   let gas
-
   if (gasArray.length === 1) {
     gas = gasArray[0] / 100000000000000
   } else {

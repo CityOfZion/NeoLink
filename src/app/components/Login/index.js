@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { setAccount, setBalance } from '../../actions/account'
+import { setAccount, setBalance, setTransactions } from '../../actions/account'
 
 import Login from './Login'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state: Object) => ({
 const actionCreators = {
   setAccount,
   setBalance,
+  setTransactions,
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)

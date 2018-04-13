@@ -7,7 +7,7 @@ import NetworkSwitcher from '../NetworkSwitcher'
 import style from './Header.css'
 
 const Header = props => {
-  const { setNetwork, selectedNetworkId, networks, account, setBalance } = props
+  const { setNetwork, selectedNetworkId, networks, account, setBalance, setTransactions } = props
   const navigation = getNavigation(props)
 
   return (
@@ -22,6 +22,7 @@ const Header = props => {
         networks={ networks }
         account={ account }
         setBalance={ setBalance }
+        setTransactions={ setTransactions }
       />
     </div>
   )
@@ -31,6 +32,7 @@ Header.propTypes = {
   selectedNetworkId: PropTypes.string,
   setNetwork: PropTypes.func,
   setBalance: PropTypes.func,
+  setTransactions: PropTypes.func,
   networks: PropTypes.object,
   account: PropTypes.object,
 }

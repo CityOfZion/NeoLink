@@ -31,6 +31,12 @@ const actionsMap = {
       gas: '',
     }
   },
+  [ActionTypes.SET_TRANSACTIONS](state, action) {
+    return {
+      ...state,
+      transactions: action.transactions,
+    }
+  },
 }
 
 export default function network(state = initialState, action) {

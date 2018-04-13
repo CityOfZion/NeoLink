@@ -8,7 +8,7 @@ import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
-import { getBalance } from '../../utils/helpers'
+import { getBalance, getTransactions } from '../../utils/helpers'
 
 class NetworkSwitcher extends Component {
   state = {
@@ -24,12 +24,13 @@ class NetworkSwitcher extends Component {
   }
 
   changeNetwork = event => {
-    const { setNetwork, account, setBalance, networks } = this.props
-    let dataset = event.target.dataset.value || event.target.parentNode.dataset.value
+    const { setNetwork, setTransactions, account, setBalance, networks } = this.props
+    let selectedNetworkId = event.target.dataset.value || event.target.parentNode.dataset.value
 
-    if (dataset) {
-      setNetwork(dataset)
-      getBalance(networks, dataset, account).then(results => setBalance(results.neo, results.gas))
+    if (selectedNetworkId) {
+      setNetwork(selectedNetworkId)
+      getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
+      getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
       this.setState({ networkMenuOpen: false })
     }
   }
@@ -122,6 +123,7 @@ class NetworkSwitcher extends Component {
 
 NetworkSwitcher.propTypes = {
   selectedNetworkId: PropTypes.string,
+  setTransactions: PropTypes.func,
   setNetwork: PropTypes.func,
   setBalance: PropTypes.func,
   account: PropTypes.object,

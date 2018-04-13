@@ -18,7 +18,6 @@ class Home extends Component {
     this.state = {
       showInputField: false,
       label: getAccountName(account, accounts),
-      transactionHistory: [],
       transactionHistoryError: '',
       showDropDown: false,
       labelError: '',
@@ -39,25 +38,21 @@ class Home extends Component {
     window.removeEventListener('click', this._closeDropDownMenu)
   }
 
-  componentWillReceiveProps(props, newProps) {
-    this.getHomeScreenTransactions(props.selectedNetworkId)
-  }
-
   getHomeScreenBalance = network => {
     const { account, accountActions, networks } = this.props
     this.setState({ amountsError: '' }, () => {
       getBalance(networks, network, account)
         .then(results => accountActions.setBalance(results.neo, results.gas))
-        .catch(e => console.log(e))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amount' }))
     })
   }
 
   getHomeScreenTransactions = network => {
-    const { account, networks } = this.props
+    const { account, networks, accountActions } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
       getTransactions(networks, network, account)
-        .then(results => this.setState({ transactionHistory: results }))
+        .then(results => accountActions.setTransactions(results))
         .catch(() =>
           this.setState({
             transactionHistoryError: 'Could not retrieve transactions.',
@@ -99,15 +94,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId } = this.props
-    const {
-      showInputField,
-      label,
-      transactionHistory,
-      amountsError,
-      transactionHistoryError,
-      labelError,
-      showDropDown,
-    } = this.state
+    const { showInputField, label, amountsError, transactionHistoryError, labelError, showDropDown } = this.state
 
     return (
       <Fragment>
@@ -140,7 +127,7 @@ class Home extends Component {
         <section className={ style.transactionInfo }>
           <h2 className={ style.transactionInfoHeader }>Transactions</h2>
           <TransactionList
-            transactions={ transactionHistory }
+            transactions={ account.transactions || [] }
             transactionHistoryError={ transactionHistoryError }
             getTransactions={ this.getHomeScreenTransactions }
           />

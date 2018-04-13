@@ -12,7 +12,7 @@ import Loader from '../Loader'
 import StartPage from '../StartPage'
 
 import style from './Login.css'
-import { getBalance } from '../../utils/helpers'
+import { getBalance, getTransactions } from '../../utils/helpers'
 
 export class Login extends Component {
   state = {
@@ -49,7 +49,7 @@ export class Login extends Component {
       errorMsg: '',
     })
 
-    const { setAccount, history, selectedNetworkId, networks, setBalance } = this.props
+    const { setAccount, history, selectedNetworkId, networks, setBalance, setTransactions } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
@@ -62,6 +62,7 @@ export class Login extends Component {
         history.push('/home')
 
         getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
+        getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transaction))
       })
 
       .catch(e => {
@@ -121,6 +122,7 @@ export class Login extends Component {
 Login.propTypes = {
   setAccount: PropTypes.func.isRequired,
   setBalance: PropTypes.func.isRequired,
+  setTransactions: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router'
 
 import { setNetwork } from '../../actions/config'
-import { setBalance } from '../../actions/account'
+import { setBalance, setTransactions } from '../../actions/account'
 
 import Header from './Header'
 
@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
 const actionCreators = {
   setNetwork,
   setBalance,
+  setTransactions,
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
