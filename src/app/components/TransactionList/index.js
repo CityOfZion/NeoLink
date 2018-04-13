@@ -11,9 +11,10 @@ import style from './TransactionList.css'
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
   const transactionCards = transactions.map(transaction => {
-    const gasArray = transaction.change.GAS.c
-    const gas = formatGas(gasArray)
-    const amounts = { neo: transaction.change.NEO.c, gas }
+    const amounts = {
+      neo: transaction.change.NEO.c ? transaction.change.NEO.c : 0,
+      gas: transaction.change.GAS ? formatGas(transaction.change.GAS.c) : 0,
+    }
 
     return (
       <TransactionCard

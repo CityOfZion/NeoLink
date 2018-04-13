@@ -35,10 +35,10 @@ export const getBalance = (networks, network, account) => {
   }).catch(error => console.log(error))
 }
 
-export const getTransactions = (network, account) => {
+export const getTransactions = (networks, network, account) => {
   return new Promise((resolve, reject) => {
-    Neon.get
-      .transactionHistory(network, account.address)
+    api[networks[network].apiType]
+      .getTransactionHistory(networks[network]['url'], account.address)
       .then(results => resolve(results))
       .catch(error => reject(error))
   })

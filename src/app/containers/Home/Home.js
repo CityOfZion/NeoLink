@@ -53,10 +53,10 @@ class Home extends Component {
   }
 
   getHomeScreenTransactions = network => {
-    const { account } = this.props
+    const { account, networks } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
-      getTransactions(network, account)
+      getTransactions(networks, network, account)
         .then(results => this.setState({ transactionHistory: results }))
         .catch(() =>
           this.setState({
