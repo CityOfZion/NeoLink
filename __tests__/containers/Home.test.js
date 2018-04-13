@@ -45,16 +45,4 @@ describe('Home', () => {
     const accountName = wrapper.find('.accountInfoDetailsHeading').text()
     expect(accountName).toBe('new account name')
   })
-
-  test('Changes account balance when switching networks', () => {
-    const wrapper = shallow(<Home { ...props } />)
-
-    wrapper.instance().getHomeScreenBalance = jest.fn()
-    wrapper.update()
-
-    wrapper.instance().componentWillReceiveProps({ selectedNetworkId: 'MainNet' })
-
-    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenCalledTimes(1)
-    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenCalledWith('MainNet')
-  })
 })

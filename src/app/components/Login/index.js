@@ -9,6 +9,7 @@ const mapStateToProps = (state: Object) => ({
   account: state.account,
   accounts: state.wallet.accounts,
   selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
 })
 
 const actionCreators = {

@@ -1,5 +1,4 @@
-import Neon from '@cityofzion/neon-js'
-import { setBalance } from '../actions/account'
+import Neon, { api } from '@cityofzion/neon-js'
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -18,10 +17,10 @@ export const validateLength = (input, minLength) => {
   return true
 }
 
-export const getBalance = (network, account) => {
+export const getBalance = (networks, network, account) => {
   return new Promise((resolve, reject) => {
-    Neon.get
-      .balance(network, account.address)
+    api[networks[network].apiType]
+      .getBalance(networks[network]['url'], account.address)
       .then(results => {
         const gasAmount = results.assets['GAS'].balance.c
         const gas = formatGas(gasAmount)
@@ -33,7 +32,7 @@ export const getBalance = (network, account) => {
         resolve(amounts)
       })
       .catch(error => reject(error))
-  })
+  }).catch(error => console.log(error))
 }
 
 export const getTransactions = (network, account) => {

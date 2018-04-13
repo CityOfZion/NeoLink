@@ -44,10 +44,11 @@ class Home extends Component {
   }
 
   getHomeScreenBalance = network => {
-    const { account, accountActions } = this.props
-
+    const { account, accountActions, networks } = this.props
     this.setState({ amountsError: '' }, () => {
-      getBalance(network, account).then(results => accountActions.setBalance(results.neo, results.gas))
+      getBalance(networks, network, account)
+        .then(results => accountActions.setBalance(results.neo, results.gas))
+        .catch(e => console.log(e))
     })
   }
 
@@ -153,6 +154,7 @@ export default Home
 
 Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
+  networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   account: PropTypes.object.isRequired,
   accountActions: PropTypes.object,

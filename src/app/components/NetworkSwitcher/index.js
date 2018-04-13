@@ -24,13 +24,12 @@ class NetworkSwitcher extends Component {
   }
 
   changeNetwork = event => {
-    const { setNetwork, account, setBalance } = this.props
-    console.log(this.props)
+    const { setNetwork, account, setBalance, networks } = this.props
     let dataset = event.target.dataset.value || event.target.parentNode.dataset.value
 
     if (dataset) {
       setNetwork(dataset)
-      getBalance(dataset, account).then(results => setBalance(results.neo, results.gas))
+      getBalance(networks, dataset, account).then(results => setBalance(results.neo, results.gas))
       this.setState({ networkMenuOpen: false })
     }
   }
@@ -77,7 +76,7 @@ class NetworkSwitcher extends Component {
     Object.keys(networks).forEach(index => {
       const indicator = this.getIndicator(networks, index)
 
-      const selected = selectedNetworkId === networks[index].name
+      const selected = selectedNetworkId === index
 
       networkOptions.push(
         <button key={ `option-key-${index}` } data-value={ index } className={ style.networkOptionButton }>
