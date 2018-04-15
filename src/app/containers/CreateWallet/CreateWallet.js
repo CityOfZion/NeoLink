@@ -51,11 +51,26 @@ export default class CreateWallet extends Component {
     })
   }
 
+  _labelExists = label => {
+    const { accounts } = this.props
+    const labelExists = Object.keys(accounts)
+      .map(account => {
+        return accounts[account].label
+      })
+      .find(accountLabel => accountLabel === label)
+
+    return !!labelExists
+  }
+
   _validateLabel = () => {
     const { label } = this.state
+    const labelExists = this._labelExists(label)
 
     if (!validateLength(label, 1)) {
       this._setErrorState('label', 'Account name must be longer than 1.')
+      return false
+    } else if (labelExists) {
+      this._setErrorState('label', 'You already have an account with that label')
       return false
     } else {
       this._setErrorState('label', '')
@@ -119,9 +134,9 @@ export default class CreateWallet extends Component {
     const { addAccount, manualWIF, setAccount } = this.props
 
     const validated = this._validate()
-
     if (validated) {
-      // Make wallet.decrypt() async.
+      this.setState({ loading: true })
+
       const account = new wallet.Account(manualWIF ? wif : wallet.generatePrivateKey())
 
       wallet
@@ -142,9 +157,10 @@ export default class CreateWallet extends Component {
               encryptedWif: encryptedWif,
               address: account.address,
             },
-            () => setAccount(account.WIF, account.address)
+            () => setAccount(encryptedWif, account.address)
           )
-        }).catch(e => {
+        })
+        .catch(e => {
           this.setState({ loading: false, errorMsg: e.message })
         })
     }
@@ -157,7 +173,6 @@ export default class CreateWallet extends Component {
     if (loading) {
       return <Loader />
     } else if (encryptedWif) {
-      // handle success
       return <CreateWalletSucessPage encryptedWif={ encryptedWif } address={ address } history={ history } />
     }
 
@@ -214,4 +229,5 @@ CreateWallet.propTypes = {
   setAccount: PropTypes.func.isRequired,
   manualWIF: PropTypes.bool,
   history: PropTypes.object.isRequired,
+  accounts: PropTypes.object.isRequired,
 }

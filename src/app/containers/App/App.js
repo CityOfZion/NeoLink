@@ -7,6 +7,7 @@ import Send from '../Send'
 import TestInvoke from '../TestInvoke'
 import SendInvoke from '../SendInvoke'
 import CreateWallet from '../CreateWallet'
+import CreateWalletWithWif from '../CreateWalletWithWif'
 import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
 import Config from '../Config'
@@ -34,7 +35,7 @@ export default class App extends Component {
             <Route path='/testInvoke' component={ TestInvoke } />
             <Route path='/sendInvoke' component={ SendInvoke } />
             <Route path='/createWallet' component={ CreateWallet } />
-            <Route path='/newAccountFromWIF' render={ props => <CreateWallet manualWIF { ...props } /> } />
+            <Route path='/newAccountFromWIF' component={ CreateWalletWithWif } />
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />
