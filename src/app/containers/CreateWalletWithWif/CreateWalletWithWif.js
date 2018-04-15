@@ -14,6 +14,7 @@ class CreateWalletWithWif extends Component {
   state = {
     encryptedWif: '',
     passPhrase: '',
+    address: '',
     label: '',
     errors: {
       wif: '',
@@ -78,7 +79,7 @@ class CreateWalletWithWif extends Component {
     const { setAccount, addAccount, history } = this.props
 
     const validated = this._validateLabel(label)
-    console.log(validated)
+
     if (validated) {
       wallet
         .decryptAsync(encryptedWif, passPhrase)
@@ -92,9 +93,11 @@ class CreateWalletWithWif extends Component {
             isDefault: false,
           }
 
-          addAccount(new wallet.Account(accountObject))
-          setAccount(encryptedWif, account.address)
-          history.push('/home')
+          this.setState({ address: account.address, encryptedWif: wif }, () => {
+            addAccount(new wallet.Account(accountObject))
+            setAccount(encryptedWif, account.address)
+            history.push('/home')
+          })
         })
         .catch(() => this._setErrorState('passPhrase', 'Wrong password or encrypted key'))
     }
@@ -105,7 +108,7 @@ class CreateWalletWithWif extends Component {
     return (
       <section className={ style.createWalletWithWifWrapper }>
         <Box>
-          <h1 className={ style.createWalletWithWifHeading }>Log in with encrypted key</h1>
+          <h1 className={ style.createWalletWithWifHeading }>Create wallet with encrypted key</h1>
           <form className={ style.createWalletWithWifForm } onSubmit={ this.handleSubmit }>
             <InputField
               type='input'
@@ -120,7 +123,7 @@ class CreateWalletWithWif extends Component {
               value={ encryptedWif }
               id='encryptedWif'
               onChangeHandler={ this._handleTextFieldChange }
-              label='Wif'
+              label='Encrypted key'
               error={ '' }
             />
             <InputField
@@ -131,7 +134,7 @@ class CreateWalletWithWif extends Component {
               label='Password'
               error={ errors.passPhrase }
             />
-            <PrimaryButton buttonText={ 'Login' } classNames={ style.createWalletWithWifButton } />
+            <PrimaryButton buttonText={ 'Create' } classNames={ style.createWalletWithWifButton } />
           </form>
         </Box>
       </section>
