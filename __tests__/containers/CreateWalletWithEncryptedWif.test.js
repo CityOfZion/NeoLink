@@ -3,7 +3,7 @@ import { wallet } from '@cityofzion/neon-js'
 
 import { mount } from 'enzyme'
 
-import CreateWalletWithWif from '../../src/app/containers/CreateWalletWithWif/CreateWalletWithWif'
+import CreateWalletWithEncryptedWif from '../../src/app/containers/CreateWalletWithEncryptedWif/CreateWalletWithEncryptedWif'
 
 jest.useFakeTimers()
 
@@ -24,7 +24,7 @@ describe('CreateWallet', () => {
     const addAccount = jest.fn()
 
     const wrapper = mount(
-      <CreateWalletWithWif
+      <CreateWalletWithEncryptedWif
         addAccount={ addAccount }
         manualWIF
         setAccount={ jest.fn }
@@ -62,7 +62,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
 
     const wrapper = mount(
-      <CreateWalletWithWif
+      <CreateWalletWithEncryptedWif
         addAccount={ jest.fn }
         manualWIF
         setAccount={ jest.fn }
@@ -82,8 +82,6 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      console.log(wrapper.state())
-
       expect(wrapper.state().errors.passPhrase).not.toEqual('')
       done()
     })
