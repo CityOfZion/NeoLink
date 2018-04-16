@@ -7,7 +7,7 @@ import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
 import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
-import { validateLength } from '../../utils/helpers'
+import { validateLength, labelExists } from '../../utils/helpers'
 
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
@@ -51,25 +51,15 @@ export default class CreateWallet extends Component {
     })
   }
 
-  _labelExists = label => {
-    const { accounts } = this.props
-    const labelExists = Object.keys(accounts)
-      .map(account => {
-        return accounts[account].label
-      })
-      .find(accountLabel => accountLabel === label)
-
-    return !!labelExists
-  }
-
   _validateLabel = () => {
     const { label } = this.state
-    const labelExists = this._labelExists(label)
+    const { accounts } = this.props
+    const labelDeclared = labelExists(label, accounts)
 
     if (!validateLength(label, 1)) {
       this._setErrorState('label', 'Account name must be longer than 1.')
       return false
-    } else if (labelExists) {
+    } else if (labelDeclared) {
       this._setErrorState('label', 'You already have an account with that label')
       return false
     } else {

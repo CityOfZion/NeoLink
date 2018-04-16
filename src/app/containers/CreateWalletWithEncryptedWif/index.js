@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import { addAccount } from '../../actions/wallet'
 import { setAccount } from '../../actions/account'
 
-import CreateWalletWithWif from './CreateWalletWithWif'
+import CreateWalletWithEncryptedWif from './CreateWalletWithEncryptedWif'
 
 const actionCreators = {
   setAccount,
@@ -18,4 +18,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateWalletWithWif))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateWalletWithEncryptedWif))

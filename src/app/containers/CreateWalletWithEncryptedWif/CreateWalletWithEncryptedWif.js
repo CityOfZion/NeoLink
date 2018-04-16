@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { wallet } from '@cityofzion/neon-js'
-import { validateLength } from '../../utils/helpers'
+import { validateLength, labelExists } from '../../utils/helpers'
 
 import Box from '../../components/common/Box'
 import InputField from '../../components/common/form/InputField'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import Loader from '../../components/Loader'
 
 import style from './CreateWalletWithWif.css'
 
-class CreateWalletWithWif extends Component {
+class CreateWalletWitEncryptedWif extends Component {
   state = {
+    loading: false,
     encryptedWif: '',
     passPhrase: '',
     address: '',
@@ -36,25 +38,15 @@ class CreateWalletWithWif extends Component {
     }))
   }
 
-  _labelExists = label => {
-    const { accounts } = this.props
-    const labelExists = Object.keys(accounts)
-      .map(account => {
-        return accounts[account].label
-      })
-      .find(accountLabel => accountLabel === label)
-
-    return !!labelExists
-  }
-
   _validateLabel = () => {
     const { label } = this.state
-    const labelExists = this._labelExists(label)
+    const { accounts } = this.props
+    const labelDeclared = labelExists(label, accounts)
 
     if (!validateLength(label, 1)) {
       this._setErrorState('label', 'Account name must be longer than 1.')
       return false
-    } else if (labelExists) {
+    } else if (labelDeclared) {
       this._setErrorState('label', 'You already have an account with that label')
       return false
     } else {
@@ -81,6 +73,7 @@ class CreateWalletWithWif extends Component {
     const validated = this._validateLabel(label)
 
     if (validated) {
+      this.setState({ loading: true })
       wallet
         .decryptAsync(encryptedWif, passPhrase)
         .then(wif => {
@@ -93,19 +86,25 @@ class CreateWalletWithWif extends Component {
             isDefault: false,
           }
 
-          this.setState({ address: account.address, encryptedWif: wif }, () => {
+          this.setState({ address: account.address, encryptedWif: wif, loading: false }, () => {
             addAccount(new wallet.Account(accountObject))
             setAccount(encryptedWif, account.address)
             history.push('/home')
           })
         })
-        .catch(() => this._setErrorState('passPhrase', 'Wrong password or encrypted key'))
+        .catch(() => {
+          this.setState({ loading: false })
+          this._setErrorState('passPhrase', 'Wrong password or encrypted key')
+        })
     }
   }
 
   render() {
-    const { encryptedWif, passPhrase, label, errors } = this.state
-    return (
+    const { encryptedWif, passPhrase, label, errors, loading } = this.state
+
+    const content = loading ? (
+      <Loader />
+    ) : (
       <section className={ style.createWalletWithWifWrapper }>
         <Box>
           <h1 className={ style.createWalletWithWifHeading }>Create wallet with encrypted key</h1>
@@ -139,14 +138,16 @@ class CreateWalletWithWif extends Component {
         </Box>
       </section>
     )
+
+    return content
   }
 }
 
-CreateWalletWithWif.propTypes = {
+CreateWalletWitEncryptedWif.propTypes = {
   addAccount: PropTypes.func.isRequired,
   setAccount: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
 }
 
-export default CreateWalletWithWif
+export default CreateWalletWitEncryptedWif

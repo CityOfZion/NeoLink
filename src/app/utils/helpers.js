@@ -17,6 +17,16 @@ export const validateLength = (input, minLength) => {
   return true
 }
 
+export const labelExists = (label, accounts) => {
+  const labelExists = Object.keys(accounts)
+    .map(account => {
+      return accounts[account].label
+    })
+    .find(accountLabel => accountLabel.toLowerCase() === label.toLowerCase())
+
+  return !!labelExists
+}
+
 export const getBalance = (networks, network, account) => {
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
