@@ -9,7 +9,7 @@ const CreateAccountStartPage = ({ history }) => {
     <section className={ `${style.startPage} ${style.startPageCreateAccount}` }>
       <button className={ style.startPageButton } onClick={ () => history.push('/createWallet') }>
         <i className={ `${style.startPageIcon} fas fa-plus` } />
-        Crete New Wallet
+        Create New Wallet
       </button>
       <button className={ style.startPageButton } onClick={ () => history.push('/newAccountFromEncryptedKey') }>
         <i className={ `${style.startPageIcon} fas fa-plus` } />

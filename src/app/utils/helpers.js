@@ -58,7 +58,6 @@ export const getTransactions = (networks, network, account) => {
     api[networks[network].apiType]
       .getTransactionHistory(networks[network]['url'], account.address)
       .then(results => {
-        console.log(results)
         resolve(results)
       })
       .catch(error => {
