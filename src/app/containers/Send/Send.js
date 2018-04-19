@@ -10,6 +10,10 @@ import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
+import { getBalance, getAccountName } from '../../utils/helpers'
+
+import AccountInfo from '../../components/AccountInfo'
+
 import { toNumber, toBigNumber } from '../../utils/math'
 
 import tempStyle from '../App/App.css'
@@ -74,6 +78,15 @@ export class Send extends Component {
     }
   }
 
+  getHomeScreenBalance = network => {
+    const { account, setBalance, networks } = this.props
+    this.setState({ amountsError: '' }, () => {
+      getBalance(networks, network, account)
+        .then(results => setBalance(results.neo, results.gas))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amount' }))
+    })
+  }
+
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
     const { selectedNetworkId, networks, account } = this.props
@@ -133,10 +146,18 @@ export class Send extends Component {
 
   render() {
     const { txid, loading, errorMsg } = this.state
-    const { handleSubmit } = this.props
+    const { handleSubmit, account, accounts } = this.props
 
     return (
       <div className={ tempStyle.tempWrapper }>
+        <AccountInfo
+          neo={ Number(account.neo) }
+          gas={ Number(account.gas) }
+          address={ account.address }
+          getBalance={ this.getHomeScreenBalance }
+          showOptions={ false }
+          label={ getAccountName(account, accounts) }
+        />
         <form onSubmit={ handleSubmit(this.handleSubmit) } className={ tempStyle.tempFormStyle }>
           <Field component={ this._renderTextField } type='text' placeholder='Address' name='address' />
           <Field component={ this._renderTextField } type='text' placeholder='Amount' name='amount' />
@@ -180,6 +201,8 @@ export class Send extends Component {
 
 Send.propTypes = {
   account: PropTypes.object.isRequired,
+  setBalance: PropTypes.func.isRequired,
+  accounts: PropTypes.object.isRequired,
   selectedNetworkId: PropTypes.string.isRequired,
   networks: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
