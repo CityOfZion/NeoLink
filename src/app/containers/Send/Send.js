@@ -45,9 +45,19 @@ export class Send extends Component {
     }))
   }
 
-  _renderTextField = ({ input, ...rest }) => (
-    <InputField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
-  )
+  _renderTextField = ({ input, ...rest }) => {
+    console.log(input)
+    return (
+      <InputField
+        { ...input }
+        { ...rest }
+        onChangeHandler={ event => {
+          input.onChange(event.target.value)
+          this._clearErrors(event.target.name)
+        } }
+      />
+    )
+  }
 
   _renderSelectField = ({ input, ...rest }) => (
     <SelectBox
@@ -122,16 +132,12 @@ export class Send extends Component {
 
     const addressErrorMessage = this.validateAddress(address)
     if (addressErrorMessage) {
-      const errors = { ...this.state.errors }
-      errors.address = addressErrorMessage
-      this.setState({ errors })
+      this._setErrorState('address', addressErrorMessage)
     }
 
     const amountErrorMessage = this.validateAmount(amount, assetType)
     if (amountErrorMessage) {
-      const errors = { ...this.state.errors }
-      errors.amount = amount
-      this.setState({ errors })
+      this._setErrorState('amount', amountErrorMessage)
     }
 
     if ((assetType !== 'NEO' && assetType !== 'GAS') || amountErrorMessage || addressErrorMessage) {
@@ -209,7 +215,7 @@ export class Send extends Component {
               <Field
                 component={ this._renderTextField }
                 type='text'
-                placeholder='Amount'
+                placeholder='Eg: 1'
                 error={ errors.amount }
                 name='amount'
                 label='Amount'
