@@ -1,0 +1,46 @@
+.sendWrapper {
+  height: 100%;
+  background-color: #fff;
+}
+
+.sendContainer {
+  padding: 40px 20px 30px 20px;
+  width: 100%;
+  background-color: #fff;
+  height: 100%;
+}
+
+.sendSelectAsset {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.sendSelectAssetText {
+  margin-right: 15px;
+  font-size: 1rem;
+  color: #585858;
+}
+
+.sendAssetSelectBox {
+  width: 100px;
+  margin-bottom: 0;
+}
+
+.sendAmountsInputField {
+  width: 100px;
+}
+
+.sendButton {
+  transform: translateY(22px);
+}
+
+.sendForm {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.sendAmount {
+  display: flex;
+}

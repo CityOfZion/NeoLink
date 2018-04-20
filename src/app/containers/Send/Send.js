@@ -13,10 +13,14 @@ import '@material/select/dist/mdc.select.min.css'
 import { getBalance, getAccountName } from '../../utils/helpers'
 
 import AccountInfo from '../../components/AccountInfo'
+import InputField from '../../components/common/form/InputField'
+import SelectBox from '../../components/common/form/SelectBox'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 
 import { toNumber, toBigNumber } from '../../utils/math'
 
-import tempStyle from '../App/App.css'
+import style from './Send.css'
 
 export class Send extends Component {
   state = {
@@ -26,11 +30,16 @@ export class Send extends Component {
   }
 
   _renderTextField = ({ input, ...rest }) => (
-    <TextField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
+    <InputField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
   _renderSelectField = ({ input, ...rest }) => (
-    <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
+    <SelectBox
+      classNames={ style.sendAssetSelectBox }
+      { ...input }
+      { ...rest }
+      onChange={ event => input.onChange(event.target.value) }
+    />
   )
 
   resetState = () => {
@@ -149,52 +158,70 @@ export class Send extends Component {
     const { handleSubmit, account, accounts } = this.props
 
     return (
-      <div className={ tempStyle.tempWrapper }>
-        <AccountInfo
-          neo={ Number(account.neo) }
-          gas={ Number(account.gas) }
-          address={ account.address }
-          getBalance={ this.getHomeScreenBalance }
-          showOptions={ false }
-          label={ getAccountName(account, accounts) }
-        />
-        <form onSubmit={ handleSubmit(this.handleSubmit) } className={ tempStyle.tempFormStyle }>
-          <Field component={ this._renderTextField } type='text' placeholder='Address' name='address' />
-          <Field component={ this._renderTextField } type='text' placeholder='Amount' name='amount' />
-
-          <Field
-            label='Asset'
-            component={ this._renderSelectField }
-            cssOnly
-            name='assetType'
-            options={ [
-              {
-                label: 'NEO',
-                value: 'NEO',
-              },
-              {
-                label: 'GAS',
-                value: 'GAS',
-              },
-            ] }
+      <section className={ style.sendWrapper }>
+        <section className={ style.sendContainer }>
+          <AccountInfo
+            neo={ Number(account.neo) }
+            gas={ Number(account.gas) }
+            address={ account.address }
+            getBalance={ this.getHomeScreenBalance }
+            showOptions={ false }
+            label={ getAccountName(account, accounts) }
           />
-          <Button raised ripple>
-            Send
-          </Button>
-        </form>
-        <br />
-        {txid && (
-          <div>
-            <div>Success!</div>
-            <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
-              <div>Transaction ID:</div>
-              <div>{txid}</div>
+          <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
+            <section className={ style.sendSelectAsset }>
+              <p className={ style.sendSelectAssetText }>Send</p>
+              <Field
+                component={ this._renderSelectField }
+                cssOnly
+                name='assetType'
+                options={ [
+                  {
+                    label: 'NEO',
+                    value: 'NEO',
+                  },
+                  {
+                    label: 'GAS',
+                    value: 'GAS',
+                  },
+                ] }
+              />
+            </section>
+            <section className={ style.sendAddress }>
+              <Field
+                component={ this._renderTextField }
+                type='text'
+                placeholder='Address'
+                name='address'
+                label='Recipient'
+              />
+            </section>
+            <section className={ style.sendAmount }>
+              <Field
+                component={ this._renderTextField }
+                type='text'
+                placeholder='Amount'
+                name='amount'
+                label='Amount'
+                classNames={ style.sendAmountsInputField }
+              />
+              <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
+            </section>
+          </form>
+          <br />
+          {txid && (
+            <div>
+              <div>Success!</div>
+              <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
+                <div>Transaction ID:</div>
+                <div>{txid}</div>
+              </div>
             </div>
-          </div>
-        )}
-        {loading && <div>Loading...</div>}
-        {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
-      </div>
+          )}
+          {loading && <div>Loading...</div>}
+          {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
+        </section>
+      </section>
     )
   }
 }
