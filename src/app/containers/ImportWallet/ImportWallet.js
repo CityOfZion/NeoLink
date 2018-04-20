@@ -47,6 +47,7 @@ export default class ImportWallet extends Component {
   }
 
   handleFileUpload = (e) => {
+    // eslint-disable-next-line no-undef
     const reader = new FileReader()
     reader.onload = this.readerOnload
     reader.readAsText(e.target.files[0])
