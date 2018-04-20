@@ -18,5 +18,5 @@
     "50": "icon-50.png"
   },
   "manifest_version": 2,
-  "permissions": ["storage"]
+  "permissions": ["storage", "downloads"]
 }

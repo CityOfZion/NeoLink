@@ -18,7 +18,7 @@ export default class ExportWallet extends Component {
       const walletObject = new wallet.Wallet({ name: 'neoLinkWallet', accounts: Object.values(accounts) })
 
       // eslint-disable-next-line no-undef
-      const blob = new Blob([ walletObject.export() ], { type: 'text/plain' })
+      const blob = new Blob([ JSON.stringify(walletObject.export()) ], { type: 'text/plain' })
       // eslint-disable-next-line no-undef
       const url = URL.createObjectURL(blob)
 

@@ -15,6 +15,10 @@ const StartPage = ({ history }) => {
         <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
         Use Saved Wallet
       </button>
+      <button className={ style.startPageButton } onClick={ () => history.push('/importWallet') }>
+        <i className={ `${style.startPageIcon} fas fa-upload` } />
+        Import Wallet
+      </button>
       <button className={ style.startPageButton } onClick={ () => history.push('/newAccountFromWIF') }>
         <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
         Use WIF
