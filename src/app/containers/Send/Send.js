@@ -24,9 +24,25 @@ import style from './Send.css'
 
 export class Send extends Component {
   state = {
-    errorMsg: '',
+    errors: {
+      address: '',
+      amount: '',
+    },
     loading: false,
     txid: '',
+  }
+
+  _clearErrors(key) {
+    this._setErrorState(key, '')
+  }
+
+  _setErrorState = (key, value) => {
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [key]: value,
+      },
+    }))
   }
 
   _renderTextField = ({ input, ...rest }) => (
@@ -44,7 +60,6 @@ export class Send extends Component {
 
   resetState = () => {
     this.setState({
-      errorMsg: '',
       loading: false,
       txid: '',
       assetType: 1,
@@ -102,59 +117,52 @@ export class Send extends Component {
     const { assetType, address, amount } = values
 
     this.setState({
-      loading: true,
-      errorMsg: '',
       txid: '',
     })
 
-    const errorMessages = []
     const addressErrorMessage = this.validateAddress(address)
     if (addressErrorMessage) {
-      errorMessages.push(addressErrorMessage)
+      const errors = { ...this.state.errors }
+      errors.address = addressErrorMessage
+      this.setState({ errors })
     }
 
     const amountErrorMessage = this.validateAmount(amount, assetType)
     if (amountErrorMessage) {
-      errorMessages.push(amountErrorMessage)
+      const errors = { ...this.state.errors }
+      errors.amount = amount
+      this.setState({ errors })
     }
 
-    // Validate Asset Type
-    if (assetType !== 'NEO' && assetType !== 'GAS') {
-      errorMessages.push('Asset Type invalid.')
+    if ((assetType !== 'NEO' && assetType !== 'GAS') || amountErrorMessage || addressErrorMessage) {
+      return undefined
     }
 
-    if (errorMessages.length > 0) {
-      this.setState({
-        loading: false,
-        errorMsg: errorMessages.join(' '),
-      })
+    console.log('valid')
 
-      return
-    }
-
-    let amounts = {}
-    amounts[assetType] = toNumber(amount)
-    api[networks[selectedNetworkId].apiType]
-      .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
-      .then(result => {
-        console.log(result)
-        this.setState({
-          loading: false,
-          txid: result.txid,
-        })
-        reset()
-      })
-      .catch(e => {
-        console.log(e)
-        this.setState({
-          loading: false,
-          errorMsg: e.message,
-        })
-      })
+    // let amounts = {}
+    // amounts[assetType] = toNumber(amount)
+    // api[networks[selectedNetworkId].apiType]
+    //   .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
+    //   .then(result => {
+    //     console.log(result)
+    //     this.setState({
+    //       loading: false,
+    //       txid: result.txid,
+    //     })
+    //     reset()
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //     this.setState({
+    //       loading: false,
+    //       errorMsg: e.message,
+    //     })
+    //   })
   }
 
   render() {
-    const { txid, loading, errorMsg } = this.state
+    const { txid, loading, errors } = this.state
     const { handleSubmit, account, accounts } = this.props
 
     return (
@@ -192,6 +200,7 @@ export class Send extends Component {
                 component={ this._renderTextField }
                 type='text'
                 placeholder='Address'
+                error={ errors.address }
                 name='address'
                 label='Recipient'
               />
@@ -201,6 +210,7 @@ export class Send extends Component {
                 component={ this._renderTextField }
                 type='text'
                 placeholder='Amount'
+                error={ errors.amount }
                 name='amount'
                 label='Amount'
                 classNames={ style.sendAmountsInputField }
@@ -219,7 +229,6 @@ export class Send extends Component {
             </div>
           )}
           {loading && <div>Loading...</div>}
-          {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
         </section>
       </section>
     )
