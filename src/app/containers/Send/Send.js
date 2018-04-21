@@ -1,14 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 
 import { api, wallet } from '@cityofzion/neon-js'
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
 
 import { getBalance, getAccountName } from '../../utils/helpers'
 
@@ -16,6 +10,7 @@ import AccountInfo from '../../components/AccountInfo'
 import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import SendConfirmCard from '../../components/confirmPages/SendConfirmCard'
 import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 
 import { toNumber, toBigNumber } from '../../utils/math'
@@ -30,6 +25,10 @@ export class Send extends Component {
     },
     loading: false,
     txid: '',
+    assetType: '',
+    address: '',
+    amount: '',
+    showConfirmation: false,
   }
 
   _clearErrors(key) {
@@ -46,7 +45,6 @@ export class Send extends Component {
   }
 
   _renderTextField = ({ input, ...rest }) => {
-    console.log(input)
     return (
       <InputField
         { ...input }
@@ -122,8 +120,6 @@ export class Send extends Component {
   }
 
   handleSubmit = (values, dispatch, formProps) => {
-    const { reset } = formProps
-    const { selectedNetworkId, networks, account } = this.props
     const { assetType, address, amount } = values
 
     this.setState({
@@ -140,103 +136,126 @@ export class Send extends Component {
       this._setErrorState('amount', amountErrorMessage)
     }
 
-    if ((assetType !== 'NEO' && assetType !== 'GAS') || amountErrorMessage || addressErrorMessage) {
-      return undefined
+    const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
+
+    if (validationPassed) {
+      this.setState({ assetType, address, amount, showConfirmation: true })
     }
+  }
 
-    console.log('valid')
+  send = () => {
+    const { selectedNetworkId, networks, account, reset } = this.props
+    const { assetType, address, amount } = this.state
+    console.log(networks, selectedNetworkId)
 
-    // let amounts = {}
-    // amounts[assetType] = toNumber(amount)
-    // api[networks[selectedNetworkId].apiType]
-    //   .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
-    //   .then(result => {
-    //     console.log(result)
-    //     this.setState({
-    //       loading: false,
-    //       txid: result.txid,
-    //     })
-    //     reset()
-    //   })
-    //   .catch(e => {
-    //     console.log(e)
-    //     this.setState({
-    //       loading: false,
-    //       errorMsg: e.message,
-    //     })
-    //   })
+    let amounts = {}
+    console.log(api['neoscan'])
+    amounts[assetType] = toNumber(amount)
+    api[networks[selectedNetworkId].apiType]
+      .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
+      .then(result => {
+        console.log(result)
+        this.setState({
+          loading: false,
+          txid: result.txid,
+        })
+        reset()
+      })
+      .catch(e => {
+        this.setState({
+          loading: false,
+        })
+        // Handle error here
+      })
+  }
+
+  rejectSend = () => {
+    this.setState({ showConfirmation: false })
   }
 
   render() {
-    const { txid, loading, errors } = this.state
+    const { txid, loading, errors, showConfirmation, address, amount, assetType } = this.state
     const { handleSubmit, account, accounts } = this.props
 
     return (
-      <section className={ style.sendWrapper }>
-        <section className={ style.sendContainer }>
-          <AccountInfo
-            neo={ Number(account.neo) }
-            gas={ Number(account.gas) }
-            address={ account.address }
-            getBalance={ this.getHomeScreenBalance }
-            showOptions={ false }
-            label={ getAccountName(account, accounts) }
+      <Fragment>
+        {showConfirmation ? (
+          <SendConfirmCard
+            address={ address }
+            amount={ amount }
+            assetType={ assetType }
+            succesClickHandler={ this.send }
+            rejectClickHandler={ this.rejectSend }
           />
-          <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
-            <section className={ style.sendSelectAsset }>
-              <p className={ style.sendSelectAssetText }>Send</p>
-              <Field
-                component={ this._renderSelectField }
-                cssOnly
-                name='assetType'
-                options={ [
-                  {
-                    label: 'NEO',
-                    value: 'NEO',
-                  },
-                  {
-                    label: 'GAS',
-                    value: 'GAS',
-                  },
-                ] }
+        ) : (
+          <section className={ style.sendWrapper }>
+            <section className={ style.sendContainer }>
+              <AccountInfo
+                neo={ Number(account.neo) }
+                gas={ Number(account.gas) }
+                address={ account.address }
+                getBalance={ this.getHomeScreenBalance }
+                showOptions={ false }
+                label={ getAccountName(account, accounts) }
               />
+              <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
+                <section className={ style.sendSelectAsset }>
+                  <p className={ style.sendSelectAssetText }>Send</p>
+                  <Field
+                    component={ this._renderSelectField }
+                    cssOnly
+                    name='assetType'
+                    options={ [
+                      {
+                        label: 'NEO',
+                        value: 'NEO',
+                      },
+                      {
+                        label: 'GAS',
+                        value: 'GAS',
+                      },
+                    ] }
+                  />
+                </section>
+                <section className={ style.sendAddress }>
+                  <Field
+                    component={ this._renderTextField }
+                    type='text'
+                    placeholder='Address'
+                    error={ errors.address }
+                    name='address'
+                    label='Recipient'
+                  />
+                </section>
+                <section className={ style.sendAmount }>
+                  <Field
+                    component={ this._renderTextField }
+                    type='text'
+                    placeholder='Eg: 1'
+                    error={ errors.amount }
+                    name='amount'
+                    label='Amount'
+                    classNames={ style.sendAmountsInputField }
+                  />
+                  <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
+                </section>
+              </form>
+              <br />
+              {txid && (
+                <div>
+                  <div>Success!</div>
+                  <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
+                    <div>Transaction ID:</div>
+                    <div>{txid}</div>
+                  </div>
+                </div>
+              )}
+              {loading && <div>Loading...</div>}
             </section>
-            <section className={ style.sendAddress }>
-              <Field
-                component={ this._renderTextField }
-                type='text'
-                placeholder='Address'
-                error={ errors.address }
-                name='address'
-                label='Recipient'
-              />
-            </section>
-            <section className={ style.sendAmount }>
-              <Field
-                component={ this._renderTextField }
-                type='text'
-                placeholder='Eg: 1'
-                error={ errors.amount }
-                name='amount'
-                label='Amount'
-                classNames={ style.sendAmountsInputField }
-              />
-              <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
-            </section>
-          </form>
-          <br />
-          {txid && (
-            <div>
-              <div>Success!</div>
-              <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
-                <div>Transaction ID:</div>
-                <div>{txid}</div>
-              </div>
-            </div>
-          )}
-          {loading && <div>Loading...</div>}
-        </section>
-      </section>
+            )}
+          </section>
+        )}
+      </Fragment>
     )
   }
 }
