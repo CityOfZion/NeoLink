@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import { withRouter } from 'react-router'
 
 import Neon, { wallet } from '@cityofzion/neon-js'
 
