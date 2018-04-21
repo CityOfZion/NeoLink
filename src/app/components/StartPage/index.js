@@ -7,7 +7,7 @@ import style from './StartPage.css'
 const StartPage = ({ history }) => {
   return (
     <section className={ style.startPage }>
-      <button className={ style.startPageButton } onClick={ () => history.push('/createWallet') }>
+      <button className={ style.startPageButton } onClick={ () => history.push('/newWallet') }>
         <i className={ `${style.startPageIcon} fas fa-plus` } />
         New Wallet
       </button>
@@ -18,10 +18,6 @@ const StartPage = ({ history }) => {
       <button className={ style.startPageButton } onClick={ () => history.push('/importWallet') }>
         <i className={ `${style.startPageIcon} fas fa-upload` } />
         Import Wallet
-      </button>
-      <button className={ style.startPageButton } onClick={ () => history.push('/newAccountFromWIF') }>
-        <i className={ `${style.startPageIcon} fas fa-sign-in-alt` } />
-        Use WIF
       </button>
     </section>
   )

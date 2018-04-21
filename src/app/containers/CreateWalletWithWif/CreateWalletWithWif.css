@@ -1,0 +1,19 @@
+.createWalletWithWifWrapper {
+  background-color: #f1f1f1;
+  padding: 20px;
+  height: 100%;
+}
+
+.createWalletWithWifHeading {
+  margin-bottom: 30px;
+  width: 80%;
+  text-align: center;
+}
+
+.createWalletWithWifButton {
+  margin: 15px auto 0 auto;
+}
+
+.createWalletWithWifForm {
+  width: 100%;
+}
