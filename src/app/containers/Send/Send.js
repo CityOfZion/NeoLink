@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 
-import { api, wallet } from '@cityofzion/neon-js'
+import Neon, { wallet } from '@cityofzion/neon-js'
 
 import { getBalance, getAccountName } from '../../utils/helpers'
 
@@ -12,6 +12,8 @@ import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import SendConfirmCard from '../../components/confirmPages/SendConfirmCard'
 import sendSVG from '../../../img/paper-planeSolidWhite.svg'
+import Loader from '../../components/Loader'
+import ErrorCard from '../../components/errors/ErrorCard'
 
 import { toNumber, toBigNumber } from '../../utils/math'
 
@@ -22,6 +24,7 @@ export class Send extends Component {
     errors: {
       address: '',
       amount: '',
+      send: '',
     },
     loading: false,
     txid: '',
@@ -62,7 +65,7 @@ export class Send extends Component {
       classNames={ style.sendAssetSelectBox }
       { ...input }
       { ...rest }
-      onChange={ event => input.onChange(event.target.value) }
+      onChangeHandler={ event => input.onChange(event.target.value) }
     />
   )
 
@@ -121,6 +124,7 @@ export class Send extends Component {
 
   handleSubmit = (values, dispatch, formProps) => {
     const { assetType, address, amount } = values
+    console.log(assetType)
 
     this.setState({
       txid: '',
@@ -146,13 +150,13 @@ export class Send extends Component {
   send = () => {
     const { selectedNetworkId, networks, account, reset } = this.props
     const { assetType, address, amount } = this.state
-    console.log(networks, selectedNetworkId)
+
+    this.setState({ loading: true })
 
     let amounts = {}
-    console.log(api['neoscan'])
     amounts[assetType] = toNumber(amount)
-    api[networks[selectedNetworkId].apiType]
-      .doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
+    Neon.do
+      .sendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
       .then(result => {
         console.log(result)
         this.setState({
@@ -162,14 +166,18 @@ export class Send extends Component {
         reset()
       })
       .catch(e => {
+        reset()
         this.setState({
           loading: false,
+          showConfirmation: false,
         })
-        // Handle error here
+        this._setErrorState('send', e.message)
       })
   }
 
   rejectSend = () => {
+    const { reset } = this.props
+    reset()
     this.setState({ showConfirmation: false })
   }
 
@@ -177,86 +185,92 @@ export class Send extends Component {
     const { txid, loading, errors, showConfirmation, address, amount, assetType } = this.state
     const { handleSubmit, account, accounts } = this.props
 
-    return (
-      <Fragment>
-        {showConfirmation ? (
-          <SendConfirmCard
-            address={ address }
-            amount={ amount }
-            assetType={ assetType }
-            succesClickHandler={ this.send }
-            rejectClickHandler={ this.rejectSend }
-          />
-        ) : (
-          <section className={ style.sendWrapper }>
-            <section className={ style.sendContainer }>
-              <AccountInfo
-                neo={ Number(account.neo) }
-                gas={ Number(account.gas) }
-                address={ account.address }
-                getBalance={ this.getHomeScreenBalance }
-                showOptions={ false }
-                label={ getAccountName(account, accounts) }
-              />
-              <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
-                <section className={ style.sendSelectAsset }>
-                  <p className={ style.sendSelectAssetText }>Send</p>
-                  <Field
-                    component={ this._renderSelectField }
-                    cssOnly
-                    name='assetType'
-                    options={ [
-                      {
-                        label: 'NEO',
-                        value: 'NEO',
-                      },
-                      {
-                        label: 'GAS',
-                        value: 'GAS',
-                      },
-                    ] }
-                  />
-                </section>
-                <section className={ style.sendAddress }>
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    placeholder='Address'
-                    error={ errors.address }
-                    name='address'
-                    label='Recipient'
-                  />
-                </section>
-                <section className={ style.sendAmount }>
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    placeholder='Eg: 1'
-                    error={ errors.amount }
-                    name='amount'
-                    label='Amount'
-                    classNames={ style.sendAmountsInputField }
-                  />
-                  <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
-                </section>
-              </form>
-              <br />
-              {txid && (
-                <div>
-                  <div>Success!</div>
-                  <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
-                    <div>Transaction ID:</div>
-                    <div>{txid}</div>
-                  </div>
+    let content
+
+    if (loading) {
+      content = <Loader />
+    } else if (showConfirmation) {
+      content = (
+        <SendConfirmCard
+          address={ address }
+          amount={ amount }
+          assetType={ assetType }
+          succesClickHandler={ this.send }
+          rejectClickHandler={ this.rejectSend }
+        />
+      )
+    } else {
+      content = (
+        <section className={ style.sendWrapper }>
+          <section className={ style.sendContainer }>
+            {errors.send ? <ErrorCard onClickHandler={ () => this._clearErrors('send') } message={ errors.send } /> : null}
+            <AccountInfo
+              neo={ Number(account.neo) }
+              gas={ Number(account.gas) }
+              address={ account.address }
+              getBalance={ this.getHomeScreenBalance }
+              showOptions={ false }
+              label={ getAccountName(account, accounts) }
+            />
+            <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
+              <section className={ style.sendSelectAsset }>
+                <p className={ style.sendSelectAssetText }>Send</p>
+                <Field
+                  component={ this._renderSelectField }
+                  cssOnly
+                  name='assetType'
+                  options={ [
+                    {
+                      label: 'NEO',
+                      value: 'NEO',
+                    },
+                    {
+                      label: 'GAS',
+                      value: 'GAS',
+                    },
+                  ] }
+                />
+              </section>
+              <section className={ style.sendAddress }>
+                <Field
+                  component={ this._renderTextField }
+                  type='text'
+                  placeholder='Address'
+                  error={ errors.address }
+                  name='address'
+                  label='Recipient'
+                />
+              </section>
+              <section className={ style.sendAmount }>
+                <Field
+                  component={ this._renderTextField }
+                  type='text'
+                  placeholder='Eg: 1'
+                  error={ errors.amount }
+                  name='amount'
+                  label='Amount'
+                  classNames={ style.sendAmountsInputField }
+                />
+                <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
+              </section>
+            </form>
+            <br />
+            {txid && (
+              <div>
+                <div>Success!</div>
+                <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
+                  <div>Transaction ID:</div>
+                  <div>{txid}</div>
                 </div>
-              )}
-              {loading && <div>Loading...</div>}
-            </section>
+              </div>
             )}
           </section>
-        )}
-      </Fragment>
-    )
+          )}
+        </section>
+      )
+    }
+
+    return <Fragment>{content}</Fragment>
   }
 }
 

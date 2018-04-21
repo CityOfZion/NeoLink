@@ -1,0 +1,38 @@
+.errorCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 0 0 20px;
+  align-items: center;
+  background-color: #f14d4d;
+  width: 100%;
+  transform: translateY(65px);
+}
+
+.errorCardIcon {
+  font-size: 1.4rem;
+  margin-right: 10px;
+  color: #7f0303;
+}
+
+.errorCardText {
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.errorCardCloseButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  height: 100%;
+  width: 40px;
+  font-size: 0.8rem;
+}
