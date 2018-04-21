@@ -1,17 +1,17 @@
-import { getBalance, getTransactions, formatGas } from '../../src/app/utils/helpers'
+import { formatGas } from '../../src/app/utils/helpers'
 
-const account = { address: 'AbRWqwMFgf4P8zXZPdfNnWJ7aoEggKgnNf' }
-const network = 'TestNet'
-const networks = {
-  CoZTestNet: {
-    name: 'CoZ TestNet',
-    url: 'https://coz.neoscan-testnet.io/api/main_net',
-    canDelete: false,
-    apiType: 'neoscan',
-  },
-  MainNet: { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
-  TestNet: { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
-}
+// const account = { address: 'AbRWqwMFgf4P8zXZPdfNnWJ7aoEggKgnNf' }
+// const network = 'TestNet'
+// const networks = {
+//   CoZTestNet: {
+//     name: 'CoZ TestNet',
+//     url: 'https://coz.neoscan-testnet.io/api/main_net',
+//     canDelete: false,
+//     apiType: 'neoscan',
+//   },
+//   MainNet: { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
+//   TestNet: { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
+// }
 
 // test('getBalance gets the correct balance', () => {
 //   return getBalance(networks, network, account).then(data => {
