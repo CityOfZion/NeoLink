@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
+import { withRouter } from 'react-router'
 
 import Neon, { wallet } from '@cityofzion/neon-js'
 
@@ -183,7 +184,7 @@ export class Send extends Component {
 
   render() {
     const { txid, loading, errors, showConfirmation, address, amount, assetType } = this.state
-    const { handleSubmit, account, accounts } = this.props
+    const { handleSubmit, account, accounts, history } = this.props
 
     let content
 
@@ -200,7 +201,9 @@ export class Send extends Component {
         />
       )
     } else if (txid) {
-      content = <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } />
+      content = (
+        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } />
+      )
     } else {
       content = (
         <section className={ style.sendWrapper }>
@@ -273,6 +276,7 @@ Send.propTypes = {
   networks: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  history: PropTypes.object,
 }
 
 export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(Send)
