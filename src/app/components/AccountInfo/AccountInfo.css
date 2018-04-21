@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.accountInfoNoOptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .accountInfoDetails {
   width: 70%;
 }

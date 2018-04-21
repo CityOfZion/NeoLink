@@ -24,9 +24,11 @@ const AccountInfo = ({
   let dropDownClasses = showDropDown
     ? `${style.accountInfoDropDown} ${style.accountInfoDropDownActive}`
     : style.accountInfoDropDown
+
+  let accountDetailsClasses = showOptions ? style.accountInfo : style.accountInfoNoOptions
   return (
     <Fragment>
-      <div className={ style.accountInfo }>
+      <div className={ accountDetailsClasses }>
         <div className={ style.accountInfoImageContainer }>
           <img src={ neonPNG } alt='Neo' />
         </div>

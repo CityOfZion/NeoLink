@@ -93,7 +93,7 @@ class Home extends Component {
   }
 
   render() {
-    const { account, selectedNetworkId, accounts } = this.props
+    const { account, selectedNetworkId } = this.props
     const { showInputField, amountsError, label, transactionHistoryError, labelError, showDropDown } = this.state
 
     return (
