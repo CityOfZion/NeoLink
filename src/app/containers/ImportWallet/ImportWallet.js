@@ -14,18 +14,32 @@ export default class ImportWallet extends Component {
   importWallet = (event) => {
     const { importAccounts } = this.state
     const { addAccount } = this.props
+    const failedAccounts = []
 
     event.preventDefault()
 
     importAccounts.forEach(function(accountObject) {
-      addAccount(new wallet.Account(accountObject))
+      try {
+        addAccount(new wallet.Account(accountObject))
+      } catch (e) {
+        failedAccounts.push(accountObject.label)
+      }
     })
 
-    this.setState({
-      importAccounts: [],
-      errorMsg: '',
-      success: true,
-    })
+    console.log(failedAccounts)
+    if (failedAccounts.length === 0) {
+      this.setState({
+        importAccounts: [],
+        errorMsg: '',
+        success: true,
+      })
+    } else {
+      this.setState({
+        importAccounts: [],
+        errorMsg: 'The following accounts were not imported: "' + failedAccounts.map(act => `"${act}"`).join(', ') + '"',
+        success: false,
+      })
+    }
   }
 
   readerOnload = (fileContents) => {
