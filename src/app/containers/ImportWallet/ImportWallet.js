@@ -26,7 +26,6 @@ export default class ImportWallet extends Component {
       }
     })
 
-    console.log(failedAccounts)
     if (failedAccounts.length === 0) {
       this.setState({
         importAccounts: [],
