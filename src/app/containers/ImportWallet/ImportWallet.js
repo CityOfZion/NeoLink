@@ -28,20 +28,28 @@ export default class ImportWallet extends Component {
     })
   }
 
-  readerOnload = (e) => {
-    const importObject = JSON.parse(e.target.result)
+  readerOnload = (fileContents) => {
+    try {
+      const importObject = JSON.parse(fileContents)
 
-    if (importObject && importObject.accounts && importObject.accounts.length > 0) {
-      this.setState({
-        success: false,
-        errorMsg: '',
-        importAccounts: importObject.accounts,
-      })
-    } else {
+      if (importObject && importObject.accounts && importObject.accounts.length > 0) {
+        this.setState({
+          success: false,
+          errorMsg: '',
+          importAccounts: importObject.accounts,
+        })
+      } else {
+        this.setState({
+          importAccounts: [],
+          success: false,
+          errorMsg: 'Unable to read accounts in imported wallet',
+        })
+      }
+    } catch (e) {
       this.setState({
         importAccounts: [],
         success: false,
-        errorMsg: 'Unable to read imported wallet',
+        errorMsg: 'Unable to parse JSON',
       })
     }
   }
@@ -49,7 +57,10 @@ export default class ImportWallet extends Component {
   handleFileUpload = (e) => {
     // eslint-disable-next-line no-undef
     const reader = new FileReader()
-    reader.onload = this.readerOnload
+
+    reader.addEventListener('load', () => {
+      this.readerOnload(reader.result)
+    })
     reader.readAsText(e.target.files[0])
   }
 
