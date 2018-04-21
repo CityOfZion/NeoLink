@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import SuccessPage from '../SuccessPage'
 import SecondaryButton from '../../common/buttons/SecondaryButton'
@@ -14,5 +15,10 @@ const SendSuccessPage = ({ txid, title }) => (
     <SecondaryButton buttonText='Back to home' />
   </SuccessPage>
 )
+
+SendSuccessPage.propTypes = {
+  txid: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+}
 
 export default SendSuccessPage
