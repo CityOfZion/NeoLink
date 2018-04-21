@@ -115,7 +115,7 @@ class Home extends Component {
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
-                getBalance={ this.getHomeScreenBalance }
+                getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }

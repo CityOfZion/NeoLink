@@ -183,7 +183,7 @@ export class Send extends Component {
 
   render() {
     const { txid, loading, errors, showConfirmation, address, amount, assetType } = this.state
-    const { handleSubmit, account, accounts, history } = this.props
+    const { handleSubmit, account, accounts, history, selectedNetworkId } = this.props
 
     let content
 
@@ -212,7 +212,7 @@ export class Send extends Component {
               neo={ Number(account.neo) }
               gas={ Number(account.gas) }
               address={ account.address }
-              getBalance={ this.getHomeScreenBalance }
+              getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
               showOptions={ false }
               label={ getAccountName(account, accounts) }
             />
