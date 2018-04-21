@@ -51,34 +51,15 @@ export default class CreateWallet extends Component {
     })
   }
 
-  _labelExists = label => {
-    const { accounts } = this.props
-    const labelExists = Object.keys(accounts)
-      .map(account => {
-        return accounts[account].label
-      })
-      .find(accountLabel => accountLabel === label)
-
-    return !!labelExists
-  }
-
   _validateLabel = () => {
     const { label } = this.state
-<<<<<<< HEAD
     const { accounts } = this.props
     const labelDeclared = labelExists(label, accounts)
-=======
-    const labelExists = this._labelExists(label)
->>>>>>> b709b3fa7e0c6c22347b4e41a8a603c43b661bd8
 
     if (!validateLength(label, 1)) {
       this._setErrorState('label', 'Account name must be longer than 1.')
       return false
-<<<<<<< HEAD
     } else if (labelDeclared) {
-=======
-    } else if (labelExists) {
->>>>>>> b709b3fa7e0c6c22347b4e41a8a603c43b661bd8
       this._setErrorState('label', 'You already have an account with that label')
       return false
     } else {
