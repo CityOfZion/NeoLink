@@ -125,7 +125,6 @@ export class Send extends Component {
 
   handleSubmit = (values, dispatch, formProps) => {
     const { assetType, address, amount } = values
-    console.log(assetType)
 
     this.setState({
       txid: '',

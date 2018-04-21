@@ -16,12 +16,17 @@ const setup = () => {
     },
     account: {
       wif: testKeys.t1.wif,
+      address: testKeys.t1.address,
     },
-    accounts: [
-      {
+    accounts: {
+      [testKeys['t1']['address']]: {
         address: testKeys.t1.address,
+        label: 'My account',
       },
-    ],
+    },
+    setBalance: () => {},
+    label: 'Somelabel',
+    address: testKeys.t1.address,
   }
 
   const store = createStore(combineReducers({ form: formReducer }))

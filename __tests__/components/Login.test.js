@@ -27,7 +27,13 @@ describe('Login', () => {
   test('shows loading', done => {
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     loginForm
@@ -49,6 +55,7 @@ describe('Login', () => {
         account={ { wif: '' } }
         accounts={ {} }
         setBalance={ jest.fn }
+        setTransactions={ jest.fn }
       />
     )
     expect(loginForm.contains('CreateOrImportWallet'))
@@ -62,7 +69,13 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ preLoggedIn } accounts={ validAccount } setBalance={ jest.fn } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ preLoggedIn }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     expect(loginForm.html()).toEqual(null)
@@ -80,7 +93,13 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ setAccount } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
+        <LoginForm
+          setAccount={ setAccount }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
 
@@ -97,7 +116,13 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } setBalance={ jest.fn } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     loginForm.find('input[name="passPhrase"]').simulate('change', { target: { id: 'passPhrase', value: 'wrong' } })

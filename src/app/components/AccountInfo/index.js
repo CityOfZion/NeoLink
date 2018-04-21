@@ -18,7 +18,6 @@ const AccountInfo = ({
   getBalance,
   showDropDown,
   toggleDropDownMenu,
-  network,
   showOptions,
 }) => {
   let dropDownClasses = showDropDown
@@ -97,9 +96,8 @@ AccountInfo.propTypes = {
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  showDropDown: PropTypes.bool.isRequired,
-  toggleDropDownMenu: PropTypes.func.isRequired,
-  network: PropTypes.string.isRequired,
+  showDropDown: PropTypes.bool,
+  toggleDropDownMenu: PropTypes.func,
 }
 
 export default AccountInfo
