@@ -254,7 +254,6 @@ export class Send extends Component {
                 <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
               </section>
             </form>
-            <br />
             {txid && (
               <div>
                 <div>Success!</div>
@@ -265,7 +264,6 @@ export class Send extends Component {
               </div>
             )}
           </section>
-          )}
         </section>
       )
     }
