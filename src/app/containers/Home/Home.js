@@ -13,10 +13,13 @@ class Home extends Component {
   constructor(props) {
     super(props)
 
+    const { account, accounts } = this.props
+
     this.state = {
       showInputField: false,
       transactionHistoryError: '',
       showDropDown: false,
+      label: getAccountName(account, accounts),
       labelError: '',
       amountsError: '',
     }
@@ -91,7 +94,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId, accounts } = this.props
-    const { showInputField, label, amountsError, transactionHistoryError, labelError, showDropDown } = this.state
+    const { showInputField, amountsError, label, transactionHistoryError, labelError, showDropDown } = this.state
 
     return (
       <Fragment>
@@ -109,7 +112,7 @@ class Home extends Component {
                 onClickHandler={ this.showInputField }
                 neo={ Number(account.neo) }
                 gas={ Number(account.gas) }
-                label={ getAccountName(account, accounts) }
+                label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
                 getBalance={ this.getHomeScreenBalance }

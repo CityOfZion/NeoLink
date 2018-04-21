@@ -19,7 +19,6 @@ const AccountInfo = ({
   showDropDown,
   toggleDropDownMenu,
   network,
-  updateBalance,
   showOptions,
 }) => {
   let dropDownClasses = showDropDown
@@ -74,7 +73,7 @@ const AccountInfo = ({
             <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
             <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
           </div>
-          <button className={ style.accountInfoRefreshButton } onClick={ () => updateBalance(network) }>
+          <button className={ style.accountInfoRefreshButton } onClick={ getBalance }>
             <i className='fas fa-sync' />
           </button>
           <div className={ style.accountInfoGasAmount }>
@@ -99,7 +98,6 @@ AccountInfo.propTypes = {
   showDropDown: PropTypes.bool.isRequired,
   toggleDropDownMenu: PropTypes.func.isRequired,
   network: PropTypes.string.isRequired,
-  updateBalance: PropTypes.func.isRequired,
 }
 
 export default AccountInfo

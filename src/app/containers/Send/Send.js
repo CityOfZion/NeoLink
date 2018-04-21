@@ -14,6 +14,7 @@ import SendConfirmCard from '../../components/confirmPages/SendConfirmCard'
 import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 import Loader from '../../components/Loader'
 import ErrorCard from '../../components/errors/ErrorCard'
+import SendSuccessPage from '../../components/successPages/SendSuccessPage'
 
 import { toNumber, toBigNumber } from '../../utils/math'
 
@@ -199,6 +200,8 @@ export class Send extends Component {
           rejectClickHandler={ this.rejectSend }
         />
       )
+    } else if (txid) {
+      content = <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } />
     } else {
       content = (
         <section className={ style.sendWrapper }>
@@ -254,15 +257,6 @@ export class Send extends Component {
                 <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
               </section>
             </form>
-            {txid && (
-              <div>
-                <div>Success!</div>
-                <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
-                  <div>Transaction ID:</div>
-                  <div>{txid}</div>
-                </div>
-              </div>
-            )}
           </section>
         </section>
       )

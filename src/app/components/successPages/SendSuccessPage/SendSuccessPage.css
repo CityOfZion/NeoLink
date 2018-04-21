@@ -1,0 +1,12 @@
+.sendSuccessPageText {
+  font-size: 1.1rem;
+  text-align: center;
+  font-weight: normal;
+}
+
+.transactionLink {
+  color: #fff;
+  word-break: break-all;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
