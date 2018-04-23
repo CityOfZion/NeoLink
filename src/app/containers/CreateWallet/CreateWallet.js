@@ -147,7 +147,7 @@ export default class CreateWallet extends Component {
               encryptedWif: encryptedWif,
               address: account.address,
             },
-            () => setAccount(encryptedWif, account.address)
+            () => setAccount(account.WIF, account.address)
           )
         })
         .catch(e => {

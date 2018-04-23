@@ -95,7 +95,7 @@ class CreateWalletWithWif extends Component {
 
           this.setState({ address: account.address, encryptedWif: wif }, () => {
             addAccount(new wallet.Account(accountObject))
-            setAccount(encryptedWif, account.address)
+            setAccount(wif, account.address)
             history.push('/home')
           })
         })
