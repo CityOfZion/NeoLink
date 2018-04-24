@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import MockStore from '../../__mocks__/MockStore'
 import { StaticRouter } from 'react-router'
 
@@ -45,5 +45,34 @@ describe('Home', () => {
 
     const accountName = wrapper.find('.accountInfoDetailsHeading').text()
     expect(accountName).toBe('new account name')
+  })
+
+  test('calls correct functions when mounted', () => {
+    const wrapper = shallow(<Home { ...props } />)
+
+    wrapper.instance().getHomeScreenBalance = jest.fn()
+    wrapper.instance().getHomeScreenTransactions = jest.fn()
+
+    wrapper.instance().componentDidMount()
+
+    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().getHomeScreenTransactions).toHaveBeenCalledTimes(1)
+    expect(wrapper.instance().getHomeScreenBalance).toHaveBeenLastCalledWith('TestNet')
+    expect(wrapper.instance().getHomeScreenTransactions).toHaveBeenLastCalledWith('TestNet')
+  })
+
+  test('calls getBalance and getTransactions correctly', () => {
+    const getBalance = jest.fn()
+    const getTransactions = jest.fn()
+
+    const wrapper = shallow(<Home { ...props } getBalance={ getBalance } getTransactions={ getTransactions } />)
+
+    wrapper.instance().getHomeScreenBalance = jest.fn()
+    wrapper.instance().getHomeScreenTransactions = jest.fn()
+
+    wrapper.instance().componentDidMount()
+
+    expect(getBalance).toHaveBeenCalledTimes(1)
+    expect(getTransactions).toHaveBeenCalledTimes(1)
   })
 })
