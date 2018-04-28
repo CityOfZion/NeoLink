@@ -24,7 +24,7 @@ export default [
     title: 'Settings',
     img: cogSVG,
     alt: 'Cog',
-    path: '/config',
+    path: '/settings',
     id: 3,
   },
   {
