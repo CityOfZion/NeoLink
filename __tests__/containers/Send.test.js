@@ -143,18 +143,20 @@ describe('Send', () => {
     expect(sendState.errors.amount).toEqual('You cannot send fractional amounts of NEO.')
   })
 
-  // test('Asset type must be valid', async () => {
-  //   const { wrapper } = setup()
+  test('Correctly displays confirm screen when all validation passes', () => {
+    const { wrapper } = setup()
 
-  //   wrapper
-  //     .find('input[name="address"]')
-  //     .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
-  //   wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '1' } })
-  //   wrapper.find('select').simulate('change', { target: { value: 'INVALID' } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '5' } })
+    wrapper.find('select').simulate('change', { target: { value: 'GAS' } })
 
-  //   wrapper.find('form').simulate('submit')
+    wrapper.find('form').simulate('submit')
 
-  //   const sendState = wrapper.find(Send).instance().state
-  //   expect(sendState.errorMsg).toEqual('Asset Type invalid.')
-  // })
+    const sendConfirm = wrapper.find('.confirmSendCard')
+    const sendConfirmButton = wrapper.find('.confirmSendCardAcceptButton')
+    expect(sendConfirm).toBeTruthy()
+    expect(sendConfirmButton.text()).toBe('Accept')
+  })
 })
