@@ -10,14 +10,26 @@ const Settings = props => (
     <div className={ style.settingsContainer }>
       <h1 className={ style.settingsHeader }>Settings</h1>
       <div className={ style.settingsButtonContainer }>
-        <SettingsButton icon='fas fa-upload' text='Import Wallet' onClickHandler={ () => props.history.push('/') } />
-        <SettingsButton icon='fas fa-download' text='Export Wallet' onClickHandler={ () => props.history.push('/') } />
+        <SettingsButton
+          icon='fas fa-upload'
+          text='Import Wallet'
+          onClickHandler={ () => props.history.push('/settings') }
+        />
+        <SettingsButton
+          icon='fas fa-download'
+          text='Export Wallet'
+          onClickHandler={ () => props.history.push('/settings') }
+        />
         <SettingsButton
           icon='fas fa-plus-circle'
           text='Add Network'
           onClickHandler={ () => props.history.push('/config') }
         />
-        <SettingsButton icon='fas fa-cogs' text='Manage Networks' onClickHandler={ () => props.history.push('/') } />
+        <SettingsButton
+          icon='fas fa-cogs'
+          text='Manage Networks'
+          onClickHandler={ () => props.history.push('/settings') }
+        />
       </div>
     </div>
   </section>
