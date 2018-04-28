@@ -39,7 +39,6 @@ describe('CreateWallet', () => {
     wrapper.find('input#passPhrase').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
     wrapper.find('input#label').simulate('change', { target: { id: 'label', value: 'somelabel' } })
 
-    console.log(wrapper.find('form'))
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
@@ -82,8 +81,6 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      console.log(wrapper.state())
-
       expect(wrapper.state().errors.passPhrase).not.toEqual('')
       done()
     })
