@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import style from './SettingsButton.css'
 
@@ -8,5 +9,11 @@ const SettingsButton = ({ icon, text, onClickHandler }) => (
     {text}
   </button>
 )
+
+SettingsButton.propTypes = {
+  icon: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
+}
 
 export default SettingsButton
