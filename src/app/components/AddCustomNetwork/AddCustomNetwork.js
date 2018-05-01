@@ -68,14 +68,16 @@ class AddCustomNetwork extends Component {
   }
 
   handleSubmit = (values, dispatch, formProps) => {
+    console.log('hi')
     const { reset } = formProps
     const { name, url, apiType } = values
     const { addCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
-
+    console.log(validatedName, validatedUrl, apiType)
     if (validatedName && validatedUrl && apiType) {
+      console.log('running', name, url, apiType)
       addCustomNetwork(name, url, apiType)
       this.setState({
         name: '',
@@ -94,7 +96,7 @@ class AddCustomNetwork extends Component {
     return (
       <Fragment>
         {showSuccess ? (
-          <AddNetworkSuccessPage />
+          <AddNetworkSuccessPage history={ history } />
         ) : (
           <section className={ style.addCustomNetwork }>
             <SettingsNavigation history={ history } />
@@ -149,4 +151,8 @@ AddCustomNetwork.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-export default reduxForm({ form: 'addCustomerNetwork', destroyOnUnmount: false })(AddCustomNetwork)
+export default reduxForm({
+  form: 'addCustomerNetwork',
+  initialValues: { apiType: 'neoscan' },
+  destroyOnUnmount: false,
+})(AddCustomNetwork)
