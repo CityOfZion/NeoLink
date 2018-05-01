@@ -68,16 +68,14 @@ class AddCustomNetwork extends Component {
   }
 
   handleSubmit = (values, dispatch, formProps) => {
-    console.log('hi')
     const { reset } = formProps
     const { name, url, apiType } = values
     const { addCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
-    console.log(validatedName, validatedUrl, apiType)
+
     if (validatedName && validatedUrl && apiType) {
-      console.log('running', name, url, apiType)
       addCustomNetwork(name, url, apiType)
       this.setState({
         name: '',
