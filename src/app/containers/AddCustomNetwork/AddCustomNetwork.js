@@ -12,7 +12,7 @@ import AddNetworkSuccessPage from '../../components/successPages/AddNetworkSucce
 
 import style from './AddCustomNetwork.css'
 
-class AddCustomNetwork extends Component {
+export class AddCustomNetwork extends Component {
   state = {
     name: '',
     url: '',
