@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-
 import Box from '../../components/common/Box'
+import SettingsNavigation from '../../components/SettingsNavigation'
+import InputField from '../../components/common/form/InputField'
+import SelectBox from '../../components/common/form/SelectBox'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+
 import style from './AddCustomNetwork.css'
 
 class AddCustomNetwork extends Component {
@@ -20,11 +19,11 @@ class AddCustomNetwork extends Component {
   }
 
   _renderSelectField = ({ input, ...rest }) => (
-    <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
+    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
   _renderTextField = ({ input, ...rest }) => (
-    <TextField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
+    <InputField { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
   handleSubmit = (values, dispatch, formProps) => {
@@ -50,36 +49,37 @@ class AddCustomNetwork extends Component {
 
   render() {
     const { statusMsg } = this.state
-    const { handleSubmit } = this.props
+    const { handleSubmit, history } = this.props
 
     return (
-      <section className={ style.addCustomNetworkContainer }>
-        <Box>
-          <form onSubmit={ handleSubmit(this.handleSubmit) }>
-            <Field component={ this._renderTextField } type='text' placeholder='Network Name' name='name' />
-            <Field component={ this._renderTextField } type='text' placeholder='Network API URL' name='url' />
-            <Field
-              label='API Type'
-              component={ this._renderSelectField }
-              cssOnly
-              name='apiType'
-              options={ [
-                {
-                  label: 'neoscan',
-                  value: 'neoscan',
-                },
-                {
-                  label: 'neonDB',
-                  value: 'neonDB',
-                },
-              ] }
-            />
-            <Button raised ripple>
-              Add Custom Network
-            </Button>
-          </form>
-          <div>{statusMsg}</div>
-        </Box>
+      <section className={ style.addCustomNetwork }>
+        <SettingsNavigation history={ history } />
+        <section className={ style.addCustomNetworkContainer }>
+          <Box classNames={ style.addCustomNetworkBox }>
+            <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
+            <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.addCustomNetworkForm }>
+              <Field component={ this._renderTextField } type='text' name='name' label='Network Name' />
+              <Field component={ this._renderTextField } type='text' name='url' label='Network URL' />
+              <Field
+                label='API Type'
+                component={ this._renderSelectField }
+                name='apiType'
+                options={ [
+                  {
+                    label: 'neoscan',
+                    value: 'neoscan',
+                  },
+                  {
+                    label: 'neonDB',
+                    value: 'neonDB',
+                  },
+                ] }
+              />
+              <PrimaryButton buttonText='Add Network' classNames={ style.addCustomNetworkButton } />
+            </form>
+            <div>{statusMsg}</div>
+          </Box>
+        </section>
       </section>
     )
   }
@@ -89,6 +89,7 @@ AddCustomNetwork.propTypes = {
   addCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default reduxForm({ form: 'addCustomerNetwork', destroyOnUnmount: false })(AddCustomNetwork)

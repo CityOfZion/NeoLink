@@ -6,7 +6,7 @@ import style from './SettingsNavigation.css'
 const SettingsNavigation = ({ history }) => (
   <section className={ style.settingsNavigation }>
     <button className={ style.settingsNavigationButton } onClick={ () => history.push('/settings') }>
-      <i className='fa fa-arrow-left' />
+      <i className='fa fa-arrow-left' />Back
     </button>
   </section>
 )
