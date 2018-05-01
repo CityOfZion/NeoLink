@@ -3,19 +3,20 @@ import PropTypes from 'prop-types'
 
 import style from './SuccessPage.css'
 
-const SuccessPage = props => (
-  <section className={ style.successPage }>
+const SuccessPage = ({ title, children, classNames }) => (
+  <section className={ `${style.successPage} ${classNames}` }>
     <div className={ style.successPageIconContainer }>
       <i className='fas fa-check' />
     </div>
-    <h2 className={ style.successPageHeading }>{props.title}</h2>
-    {props.children}
+    <h2 className={ style.successPageHeading }>{title}</h2>
+    {children}
   </section>
 )
 
 SuccessPage.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
+  classNames: PropTypes.string,
 }
 
 export default SuccessPage
