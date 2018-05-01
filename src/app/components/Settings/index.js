@@ -23,7 +23,7 @@ const Settings = props => (
         <SettingsButton
           icon='fas fa-plus-circle'
           text='Add Network'
-          onClickHandler={ () => props.history.push('/config') }
+          onClickHandler={ () => props.history.push('/addCustomNetwork') }
         />
         <SettingsButton
           icon='fas fa-cogs'

@@ -8,6 +8,9 @@ import { Select } from 'rmwc/Select'
 import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
+import Box from '../../components/common/Box'
+import style from './AddCustomNetwork.css'
+
 class AddCustomNetwork extends Component {
   state = {
     name: '',
@@ -20,15 +23,8 @@ class AddCustomNetwork extends Component {
     <Select { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
+  _renderTextField = ({ input, ...rest }) => (
+    <TextField { ...input } { ...rest } onChange={ event => input.onChange(event.target.value) } />
   )
 
   handleSubmit = (values, dispatch, formProps) => {
@@ -57,42 +53,34 @@ class AddCustomNetwork extends Component {
     const { handleSubmit } = this.props
 
     return (
-      <div>
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Network Name'
-            name='name'
-          />
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Network API URL'
-            name='url'
-          />
-          <Field
-            label='API Type'
-            component={ this._renderSelectField }
-            cssOnly
-            name='apiType'
-            options={ [
-              {
-                label: 'neoscan',
-                value: 'neoscan',
-              },
-              {
-                label: 'neonDB',
-                value: 'neonDB',
-              },
-            ] }
-          />
-          <Button raised ripple>Add Custom Network</Button>
-        </form>
-        <div>
-          { statusMsg }
-        </div>
-      </div>
+      <section className={ style.addCustomNetworkContainer }>
+        <Box>
+          <form onSubmit={ handleSubmit(this.handleSubmit) }>
+            <Field component={ this._renderTextField } type='text' placeholder='Network Name' name='name' />
+            <Field component={ this._renderTextField } type='text' placeholder='Network API URL' name='url' />
+            <Field
+              label='API Type'
+              component={ this._renderSelectField }
+              cssOnly
+              name='apiType'
+              options={ [
+                {
+                  label: 'neoscan',
+                  value: 'neoscan',
+                },
+                {
+                  label: 'neonDB',
+                  value: 'neonDB',
+                },
+              ] }
+            />
+            <Button raised ripple>
+              Add Custom Network
+            </Button>
+          </form>
+          <div>{statusMsg}</div>
+        </Box>
+      </section>
     )
   }
 }

@@ -17,6 +17,7 @@ import CreateAccountStartPage from '../../components/CreateAccountStartPage'
 import Login from '../../components/Login'
 import Header from '../../components/Header'
 import Settings from '../../components/Settings'
+import AddCustomNetwork from '../../components/AddCustomNetwork'
 
 import style from './App.css'
 
@@ -44,6 +45,7 @@ export default class App extends Component {
             <Route path='/exportWallet' component={ ExportWallet } />
             <Route path='/config' component={ Config } />
             <Route path='/settings' component={ Settings } />
+            <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
             <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>
