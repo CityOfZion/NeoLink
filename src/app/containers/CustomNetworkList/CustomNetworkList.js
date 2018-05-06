@@ -11,6 +11,7 @@ import style from './CustomNetworkList.css'
 class CustomNetworkList extends Component {
   state = {
     showConfirmDelete: false,
+    currentItem: '',
   }
 
   delete = index => {
@@ -26,10 +27,16 @@ class CustomNetworkList extends Component {
 
   _truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
 
-  _generateDropDownContent = () => (
+  _generateDropDownContent = index => (
     <ul className={ style.customNetworkDropdown }>
       <li>
-        <button className={ style.customNetworkDropDownButton } onClick={ this.showConfirmDelete }>
+        <button
+          className={ style.customNetworkDropDownButton }
+          onClick={ () => {
+            this.showConfirmDelete()
+            this.setCurrentItem(index)
+          } }
+        >
           <i className='fas fa-trash' /> Delete
         </button>
       </li>
@@ -37,6 +44,13 @@ class CustomNetworkList extends Component {
   )
 
   showConfirmDelete = () => this.setState({ showConfirmDelete: true })
+
+  setCurrentItem = index => this.setState({ currentItem: index })
+
+  handleDelete = index => {
+    this.delete(index)
+    this.setState({ showConfirmDelete: false })
+  }
 
   generateNetworkRows(networks) {
     const networkRows = []
@@ -49,8 +63,7 @@ class CustomNetworkList extends Component {
             name={ network.name }
             url={ this._truncateUrl(network.url) }
             key={ network.name }
-            dropDownContent={ this._generateDropDownContent() }
-            onDeleteClickHandler={ () => {} }
+            dropDownContent={ this._generateDropDownContent(index) }
           />
         )
       }
@@ -60,7 +73,7 @@ class CustomNetworkList extends Component {
   }
 
   render() {
-    const { showConfirmDelete } = this.state
+    const { showConfirmDelete, currentItem } = this.state
     const { networks, history } = this.props
 
     const networkRows = this.generateNetworkRows(networks)
@@ -69,9 +82,15 @@ class CustomNetworkList extends Component {
 
     return (
       <Fragment>
-        {showConfirmDelete && <Overlay>
-          <ConfirmDelete onClickAcceptHandler={() => {}} onRejectClickHandler={() => {}} item={'hello'}/>
-        </Overlay>}
+        {showConfirmDelete && (
+          <Overlay>
+            <ConfirmDelete
+              onClickAcceptHandler={ () => this.handleDelete(currentItem) }
+              onClickRejectHandler={ () => this.setState({ showConfirmDelete: false }) }
+              item={ currentItem }
+            />
+          </Overlay>
+        )}
         <SettingsNavigation history={ history } />
         <section className={ style.manageNetworksContainer }>
           <h1 className={ style.manageNetworksHeading }>Manage Networks</h1>
