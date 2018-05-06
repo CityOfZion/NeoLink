@@ -42,29 +42,15 @@ h3.customNetworkUrl {
   margin-top: 5px;
 }
 
-.tempButton {
+.customNetworkDropdownButton {
   margin-left: auto;
   border: none;
   color: #585858;
   background-color: transparent;
   font-size: 0.9rem;
-}
-
-.networkWrapper {
-  display: flex;
-  width: 100%;
-}
-
-.deleteIcon {
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  margin-left: auto;
   cursor: pointer;
 }
 
-.networkWrapper div.networkInfo {
-  display: block;
-  word-wrap: break-word;
-  font-size: 11px;
+.customNetworkDropDown {
+  margin-left: auto;
 }

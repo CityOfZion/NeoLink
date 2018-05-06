@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import SettingsNavigation from '../../components/SettingsNavigation'
+import DropDown from '../../components/DropDown'
 
 import style from './CustomNetworkList.css'
 
@@ -33,9 +34,13 @@ class CustomNetworkList extends Component {
               <h3>{network.name}</h3>
               <h3 className={ style.customNetworkUrl }>{this.truncateUrl(network.url)}</h3>
             </div>
-            <button onClick={ () => this.delete(index) } className={ style.tempButton }>
-              <i className='fas fa-ellipsis-v' />
-            </button>
+            <DropDown
+              buttonContent={ <i className='fas fa-ellipsis-v' /> }
+              buttonStyles={ style.customNetworkDropdownButton }
+              dropDownContent={ 'something' }
+              classNames={ style.customNetworkDropDown }
+            />
+            {/* <button onClick={ () => this.delete(index) } className={ style.tempButton } /> */}
           </section>
         )
       }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import style from './DropDown.css'
 
@@ -7,32 +8,43 @@ class DropDown extends Component {
     showDropDown: false,
   }
 
-  showDropDown = () => this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
+  componentDidMount() {
+    window.addEventListener('click', this._closeDropDownMenu)
+  }
 
-  generateDropDownLinks = data => {
-    const { dropdownData } = this.props
+  comoponentWillUnmount() {
+    window.removeEventListener('click', this._closeDropDownMenu)
+  }
 
-    return dropdownData.map(data => {
-      return (
-        <a className={ style.dropDownLink } href={ data.link } key={ data.link }>
-          {data.icon ? data.icon : ''} {data.name}
-        </a>
-      )
-    })
+  toggleDropDown = () => this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
+
+  _closeDropDownMenu = event => {
+    if (event.target && !event.target.className.includes('dropDown')) {
+      this.setState({ showDropDown: false })
+    }
   }
 
   render() {
-    const { buttonContent, buttonStyles } = this.props
+    const { buttonContent, buttonStyles, classNames, dropDownContent } = this.props
     const { showDropDown } = this.state
     const dropDownStyles = showDropDown ? `${style.dropDown} ${style.showDropDown}` : style.dropDown
 
     return (
-      <section className={ style.dropDownContainer }>
-        <button className={ `${style.dropDownButton} ${buttonStyles}` }>{buttonContent}</button>
-        <div className={ style.dropDown }>{this.generateDropDownLinks()}</div>
+      <section className={ `${style.dropDownContainer} ${classNames}` }>
+        <button className={ `${style.dropDownButton} ${buttonStyles}` } onClick={ this.toggleDropDown }>
+          {buttonContent}
+        </button>
+        <div className={ dropDownStyles }>{dropDownContent}</div>
       </section>
     )
   }
+}
+
+DropDown.propTypes = {
+  buttonContent: PropTypes.string.isRequired,
+  buttonStyles: PropTypes.string,
+  classNames: PropTypes.string,
+  dropDownContent: PropTypes.array,
 }
 
 export default DropDown
