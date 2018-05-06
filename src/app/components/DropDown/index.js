@@ -44,7 +44,7 @@ DropDown.propTypes = {
   buttonContent: PropTypes.object.isRequired,
   buttonStyles: PropTypes.string,
   classNames: PropTypes.string,
-  dropDownContent: PropTypes.array,
+  dropDownContent: PropTypes.object,
 }
 
 export default DropDown
