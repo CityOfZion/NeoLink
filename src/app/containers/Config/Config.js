@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TabBar, Tab } from 'rmwc/Tabs'
 import '@material/tabs/dist/mdc.tabs.min.css'
 
-import CustomNetworkList from '../../components/CustomNetworkList'
+import CustomNetworkList from '../../containers/CustomNetworkList'
 import AddCustomNetwork from '../../containers/AddCustomNetwork'
 
 import style from './Config.css'

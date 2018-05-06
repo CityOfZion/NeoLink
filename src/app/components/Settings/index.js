@@ -28,7 +28,7 @@ const Settings = props => (
         <SettingsButton
           icon='fas fa-cogs'
           text='Manage Networks'
-          onClickHandler={ () => props.history.push('/settings') }
+          onClickHandler={ () => props.history.push('/manageNetworks') }
         />
       </div>
     </div>

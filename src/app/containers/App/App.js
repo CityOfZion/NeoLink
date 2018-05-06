@@ -18,6 +18,7 @@ import Login from '../../components/Login'
 import Header from '../../components/Header'
 import Settings from '../../components/Settings'
 import AddCustomNetwork from '../../containers/AddCustomNetwork'
+import CustomNetworkList from '../../containers/CustomNetworkList'
 
 import style from './App.css'
 
@@ -46,6 +47,7 @@ export default class App extends Component {
             <Route path='/config' component={ Config } />
             <Route path='/settings' component={ Settings } />
             <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
+            <Route path='/manageNetworks' component={ CustomNetworkList } />
             <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>
