@@ -148,7 +148,7 @@ export class Send extends Component {
   }
 
   send = () => {
-    const { selectedNetworkId, networks, account, reset } = this.props
+    const { selectedNetworkId, account, reset } = this.props
     const { assetType, address, amount } = this.state
 
     this.setState({ loading: true })
