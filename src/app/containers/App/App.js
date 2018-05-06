@@ -17,7 +17,7 @@ import CreateAccountStartPage from '../../components/CreateAccountStartPage'
 import Login from '../../components/Login'
 import Header from '../../components/Header'
 import Settings from '../../components/Settings'
-import AddCustomNetwork from '../../components/AddCustomNetwork'
+import AddCustomNetwork from '../../containers/AddCustomNetwork'
 
 import style from './App.css'
 
