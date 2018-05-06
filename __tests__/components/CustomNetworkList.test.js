@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
