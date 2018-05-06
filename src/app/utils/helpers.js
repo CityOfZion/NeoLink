@@ -39,11 +39,12 @@ export const getBalance = (networks, network, account) => {
             gas: 0,
           }
         } else {
-          const gasAmount = results.assets['GAS'].balance.c
+          const neo = results.assets['NEO'] ? Number(results.assets['NEO'].balance.c[0]) : 0
+          const gasAmount = results.assets['GAS'] ? results.assets['GAS'].balance.c : 0
           const gas = formatGas(gasAmount)
 
           amounts = {
-            neo: Number(results.assets['NEO'].balance.c[0]),
+            neo,
             gas,
           }
         }
