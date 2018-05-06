@@ -56,6 +56,7 @@ export class AddCustomNetwork extends Component {
   _validateName = input => {
     if (!validateLength(input, 3)) {
       this._setErrorState('name', 'Name must be longer than 3 characters')
+      return false
     }
     return true
   }
@@ -63,6 +64,7 @@ export class AddCustomNetwork extends Component {
   _validateUrl = input => {
     if (!validateLength(input, 3)) {
       this._setErrorState('url', 'Url must be longer than 3 characters')
+      return false
     }
     return true
   }
