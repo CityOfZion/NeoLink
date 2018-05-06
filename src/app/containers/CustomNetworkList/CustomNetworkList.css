@@ -10,7 +10,9 @@
   background-color: #fff;
   display: flex;
   margin: 10px 0;
+  align-items: center;
   padding: 10px 40px;
+  height: 80px;
 }
 
 .customNetworkColorContainer {
@@ -28,6 +30,10 @@
   font-size: 0.9rem;
   margin: 0;
   color: #585858;
+}
+
+h3.customNetworkUrl {
+  margin-top: 5px;
 }
 
 .tempButton {

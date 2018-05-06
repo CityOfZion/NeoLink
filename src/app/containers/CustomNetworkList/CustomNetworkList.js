@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import SettingsNavigation from '../../components/SettingsNavigation'
 
 import style from './CustomNetworkList.css'
-import Settings from '../../components/Settings'
 
 class CustomNetworkList extends Component {
   delete = index => {
@@ -18,19 +17,21 @@ class CustomNetworkList extends Component {
     deleteCustomNetwork(index)
   }
 
+  truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
+
   generateNetworkRows(networks) {
     const networkRows = []
     Object.keys(networks).forEach(index => {
       const network = networks[index]
       if (network.canDelete) {
         networkRows.push(
-          <section className={ style.customNetworkCard }>
+          <section className={ style.customNetworkCard } key={ index }>
             <div className={ style.customNetworkColorContainer }>
               <div className={ style.customNetworkColor } />
             </div>
             <div className={ style.customNetworkContainer }>
               <h3>{network.name}</h3>
-              <h3>{network.url}</h3>
+              <h3 className={ style.customNetworkUrl }>{this.truncateUrl(network.url)}</h3>
             </div>
             <button onClick={ () => this.delete(index) } className={ style.tempButton }>
               <i className='fas fa-ellipsis-v' />
