@@ -55,7 +55,7 @@ class CustomNetworkList extends Component {
       <Fragment>
         <SettingsNavigation history={ history } />
         <section className={ style.manageNetworksContainer }>
-          <h1>Manage Networks</h1>
+          <h1 className={ style.manageNetworksHeading }>Manage Networks</h1>
           {content}
         </section>
       </Fragment>

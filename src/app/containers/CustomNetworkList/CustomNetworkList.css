@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+.manageNetworksHeading {
+  margin-top: 20px;
+}
+
 .customNetworkCard {
   width: 100%;
   background-color: #fff;
@@ -13,6 +17,7 @@
   align-items: center;
   padding: 10px 40px;
   height: 80px;
+  box-shadow: 2px 2px 2px rgba(211, 211, 211, 0.5);
 }
 
 .customNetworkColorContainer {
@@ -23,6 +28,7 @@
   width: 20px;
   height: 20px;
   background-color: rgb(241, 92, 92);
+  transform: translateY(-6px);
   border-radius: 3px;
 }
 
