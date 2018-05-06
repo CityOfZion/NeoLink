@@ -1,3 +1,43 @@
+.manageNetworksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.customNetworkCard {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  margin: 10px 0;
+  padding: 10px 40px;
+}
+
+.customNetworkColorContainer {
+  width: 20%;
+}
+
+.customNetworkColor {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(241, 92, 92);
+  border-radius: 3px;
+}
+
+.customNetworkCard h3 {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #585858;
+}
+
+.tempButton {
+  margin-left: auto;
+  border: none;
+  color: #585858;
+  background-color: transparent;
+  font-size: 0.9rem;
+}
+
 .networkWrapper {
   display: flex;
   width: 100%;
