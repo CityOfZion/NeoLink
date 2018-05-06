@@ -6,7 +6,7 @@ import style from './Overlay.css'
 const Overlay = ({ children }) => <section className={ style.overlay }>{children}</section>
 
 Overlay.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
 }
 
 export default Overlay

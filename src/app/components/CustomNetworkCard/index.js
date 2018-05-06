@@ -5,7 +5,7 @@ import DropDown from '../DropDown'
 
 import style from './CustomNetworkCard.css'
 
-const CustomNetworkCard = ({ name, url, onDeleteClickHandler, dropDownContent }) => (
+const CustomNetworkCard = ({ name, url, dropDownContent }) => (
   <section className={ style.customNetworkCard } key={ name }>
     <div className={ style.customNetworkColorContainer }>
       <div className={ style.customNetworkColor } />
@@ -26,7 +26,6 @@ const CustomNetworkCard = ({ name, url, onDeleteClickHandler, dropDownContent })
 CustomNetworkCard.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  onDeleteClickHandler: PropTypes.func.isRequired,
   dropDownContent: PropTypes.object.isRequired,
 }
 

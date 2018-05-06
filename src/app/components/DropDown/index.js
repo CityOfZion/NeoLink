@@ -41,7 +41,7 @@ class DropDown extends Component {
 }
 
 DropDown.propTypes = {
-  buttonContent: PropTypes.string.isRequired,
+  buttonContent: PropTypes.object.isRequired,
   buttonStyles: PropTypes.string,
   classNames: PropTypes.string,
   dropDownContent: PropTypes.array,

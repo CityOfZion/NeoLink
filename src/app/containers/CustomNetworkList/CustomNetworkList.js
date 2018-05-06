@@ -92,7 +92,7 @@ class CustomNetworkList extends Component {
     )
 
     return (
-      <Fragment>
+      <div>
         {showConfirmDelete && (
           <Overlay>
             <ConfirmDelete
@@ -107,7 +107,7 @@ class CustomNetworkList extends Component {
           <h1 className={ style.manageNetworksHeading }>Manage Networks</h1>
           {content}
         </section>
-      </Fragment>
+      </div>
     )
   }
 }
