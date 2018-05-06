@@ -1,0 +1,66 @@
+.confirmDeleteCard {
+  color: #585858;
+  font-size: 0.9rem;
+}
+
+.confirmDeleteBox {
+  padding: 0;
+  box-shadow: 2px 2px 2px rgb(70, 154, 83);
+}
+
+.confirmDeleteBoxContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmDeleteHeading {
+  font-weight: bold;
+  color: #000;
+}
+
+.confirmDeleteSecondHeading {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.confirmDeleteThirdHeading {
+  font-weight: bold;
+}
+
+.confirmDeleteCard svg {
+  font-size: 1.8rem;
+  color: #ff6f6f;
+}
+
+.confirmDeleteItem {
+  margin: 0;
+  color: #000;
+}
+
+.confirmDeleteButtons {
+  width: 100%;
+}
+
+.confirmDeleteButton {
+  width: 50%;
+  height: 60px;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.confirmDeleteAccept {
+  background-color: #ff6f6f;
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+
+.confirmDeleteReject {
+  color: #585858;
+  border-bottom-left-radius: 3px;
+}

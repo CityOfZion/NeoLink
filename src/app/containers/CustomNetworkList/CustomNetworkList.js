@@ -2,11 +2,17 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import SettingsNavigation from '../../components/SettingsNavigation'
-import DropDown from '../../components/DropDown'
+import CustomNetworkCard from '../../components/CustomNetworkCard'
+import Overlay from '../../components/Overlay'
+import ConfirmDelete from '../../components/ConfirmDelete'
 
 import style from './CustomNetworkList.css'
 
 class CustomNetworkList extends Component {
+  state = {
+    showConfirmDelete: false,
+  }
+
   delete = index => {
     const { deleteCustomNetwork, setNetwork, selectedNetworkId } = this.props
 
@@ -18,30 +24,34 @@ class CustomNetworkList extends Component {
     deleteCustomNetwork(index)
   }
 
-  truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
+  _truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
+
+  _generateDropDownContent = () => (
+    <ul className={ style.customNetworkDropdown }>
+      <li>
+        <button className={ style.customNetworkDropDownButton } onClick={ this.showConfirmDelete }>
+          <i className='fas fa-trash' /> Delete
+        </button>
+      </li>
+    </ul>
+  )
+
+  showConfirmDelete = () => this.setState({ showConfirmDelete: true })
 
   generateNetworkRows(networks) {
     const networkRows = []
     Object.keys(networks).forEach(index => {
       const network = networks[index]
+
       if (network.canDelete) {
         networkRows.push(
-          <section className={ style.customNetworkCard } key={ index }>
-            <div className={ style.customNetworkColorContainer }>
-              <div className={ style.customNetworkColor } />
-            </div>
-            <div className={ style.customNetworkContainer }>
-              <h3>{network.name}</h3>
-              <h3 className={ style.customNetworkUrl }>{this.truncateUrl(network.url)}</h3>
-            </div>
-            <DropDown
-              buttonContent={ <i className='fas fa-ellipsis-v' /> }
-              buttonStyles={ style.customNetworkDropdownButton }
-              dropDownContent={ 'something' }
-              classNames={ style.customNetworkDropDown }
-            />
-            {/* <button onClick={ () => this.delete(index) } className={ style.tempButton } /> */}
-          </section>
+          <CustomNetworkCard
+            name={ network.name }
+            url={ this._truncateUrl(network.url) }
+            key={ network.name }
+            dropDownContent={ this._generateDropDownContent() }
+            onDeleteClickHandler={ () => {} }
+          />
         )
       }
     })
@@ -50,6 +60,7 @@ class CustomNetworkList extends Component {
   }
 
   render() {
+    const { showConfirmDelete } = this.state
     const { networks, history } = this.props
 
     const networkRows = this.generateNetworkRows(networks)
@@ -58,6 +69,9 @@ class CustomNetworkList extends Component {
 
     return (
       <Fragment>
+        {showConfirmDelete && <Overlay>
+          <ConfirmDelete onClickAcceptHandler={() => {}} onRejectClickHandler={() => {}} item={'hello'}/>
+        </Overlay>}
         <SettingsNavigation history={ history } />
         <section className={ style.manageNetworksContainer }>
           <h1 className={ style.manageNetworksHeading }>Manage Networks</h1>

@@ -1,0 +1,45 @@
+.customNetworkCard {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  padding: 10px 40px;
+  height: 80px;
+  box-shadow: 2px 2px 2px rgba(211, 211, 211, 0.5);
+}
+
+.customNetworkColorContainer {
+  width: 20%;
+}
+
+.customNetworkColor {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(241, 92, 92);
+  transform: translateY(-6px);
+  border-radius: 3px;
+}
+
+.customNetworkCard h3 {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #585858;
+}
+
+h3.customNetworkUrl {
+  margin-top: 5px;
+}
+
+.customNetworkDropdownButton {
+  margin-left: auto;
+  border: none;
+  color: #585858;
+  background-color: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.customNetworkDropDown {
+  margin-left: auto;
+}
