@@ -5,6 +5,11 @@ ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <CustomNetworkList
+    config={
+      Object {
+        "selectedNetworkId": "MainNet ",
+      }
+    }
     deleteCustomNetwork={[MockFunction]}
     networks={
       Object {
@@ -33,131 +38,274 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "host",
+    "nodeType": "function",
     "props": Object {
-      "children": <div>
-        <div
-          className="networkWrapper"
+      "children": Array [
+        false,
+        <SettingsNavigation
+          history={undefined}
+        />,
+        <section
+          className="manageNetworksContainer"
         >
-          <div
-            className="networkInfo"
+          <h1
+            className="manageNetworksHeading"
           >
-            <div>
-              local
-            </div>
-            <div>
-              Endpoint: 
-              http://127.0.0.1:5000
-            </div>
-          </div>
-          <a
-            className="deleteIcon"
-            onClick={[Function]}
-          >
-            <svg
-              fill="red"
-              height="18"
-              viewBox="0 0 24 24"
-              width="18"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-              />
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>,
+            Manage Networks
+          </h1>
+          <UNDEFINED>
+            <CustomNetworkCard
+              dropDownContent={
+                <ul
+                  className="customNetworkDropdown"
+                >
+                  <li>
+                    <button
+                      className="customNetworkDropDownButton"
+                      onClick={[Function]}
+                    >
+                      <i
+                        className="fas fa-trash"
+                      />
+                       Delete
+                    </button>
+                  </li>
+                </ul>
+              }
+              name="local"
+              url="http://127.0.0.1:5000"
+            />
+          </UNDEFINED>
+        </section>,
+      ],
     },
     "ref": null,
-    "rendered": Object {
+    "rendered": Array [
+      false,
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "history": undefined,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <h1
+              className="manageNetworksHeading"
+            >
+              Manage Networks
+            </h1>,
+            <UNDEFINED>
+              <CustomNetworkCard
+                dropDownContent={
+                  <ul
+                    className="customNetworkDropdown"
+                  >
+                    <li>
+                      <button
+                        className="customNetworkDropDownButton"
+                        onClick={[Function]}
+                      >
+                        <i
+                          className="fas fa-trash"
+                        />
+                         Delete
+                      </button>
+                    </li>
+                  </ul>
+                }
+                name="local"
+                url="http://127.0.0.1:5000"
+              />
+            </UNDEFINED>,
+          ],
+          "className": "manageNetworksContainer",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Manage Networks",
+              "className": "manageNetworksHeading",
+            },
+            "ref": null,
+            "rendered": "Manage Networks",
+            "type": "h1",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <CustomNetworkCard
+                  dropDownContent={
+                    <ul
+                      className="customNetworkDropdown"
+                    >
+                      <li>
+                        <button
+                          className="customNetworkDropDownButton"
+                          onClick={[Function]}
+                        >
+                          <i
+                            className="fas fa-trash"
+                          />
+                           Delete
+                        </button>
+                      </li>
+                    </ul>
+                  }
+                  name="local"
+                  url="http://127.0.0.1:5000"
+                />,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": "local",
+                "nodeType": "function",
+                "props": Object {
+                  "dropDownContent": <ul
+                    className="customNetworkDropdown"
+                  >
+                    <li>
+                      <button
+                        className="customNetworkDropDownButton"
+                        onClick={[Function]}
+                      >
+                        <i
+                          className="fas fa-trash"
+                        />
+                         Delete
+                      </button>
+                    </li>
+                  </ul>,
+                  "name": "local",
+                  "url": "http://127.0.0.1:5000",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": Symbol(react.fragment),
+          },
+        ],
+        "type": "section",
+      },
+    ],
+    "type": Symbol(react.fragment),
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "host",
+      "nodeType": "function",
       "props": Object {
         "children": Array [
-          <div
-            className="networkWrapper"
+          false,
+          <SettingsNavigation
+            history={undefined}
+          />,
+          <section
+            className="manageNetworksContainer"
           >
-            <div
-              className="networkInfo"
+            <h1
+              className="manageNetworksHeading"
             >
-              <div>
-                local
-              </div>
-              <div>
-                Endpoint: 
-                http://127.0.0.1:5000
-              </div>
-            </div>
-            <a
-              className="deleteIcon"
-              onClick={[Function]}
-            >
-              <svg
-                fill="red"
-                height="18"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                />
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-              </svg>
-            </a>
-          </div>,
+              Manage Networks
+            </h1>
+            <UNDEFINED>
+              <CustomNetworkCard
+                dropDownContent={
+                  <ul
+                    className="customNetworkDropdown"
+                  >
+                    <li>
+                      <button
+                        className="customNetworkDropDownButton"
+                        onClick={[Function]}
+                      >
+                        <i
+                          className="fas fa-trash"
+                        />
+                         Delete
+                      </button>
+                    </li>
+                  </ul>
+                }
+                name="local"
+                url="http://127.0.0.1:5000"
+              />
+            </UNDEFINED>
+          </section>,
         ],
       },
       "ref": null,
       "rendered": Array [
+        false,
         Object {
           "instance": null,
-          "key": "network-item-Local",
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "history": undefined,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
-                className="networkInfo"
+              <h1
+                className="manageNetworksHeading"
               >
-                <div>
-                  local
-                </div>
-                <div>
-                  Endpoint: 
-                  http://127.0.0.1:5000
-                </div>
-              </div>,
-              <a
-                className="deleteIcon"
-                onClick={[Function]}
-              >
-                <svg
-                  fill="red"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                </svg>
-              </a>,
+                Manage Networks
+              </h1>,
+              <UNDEFINED>
+                <CustomNetworkCard
+                  dropDownContent={
+                    <ul
+                      className="customNetworkDropdown"
+                    >
+                      <li>
+                        <button
+                          className="customNetworkDropDownButton"
+                          onClick={[Function]}
+                        >
+                          <i
+                            className="fas fa-trash"
+                          />
+                           Delete
+                        </button>
+                      </li>
+                    </ul>
+                  }
+                  name="local"
+                  url="http://127.0.0.1:5000"
+                />
+              </UNDEFINED>,
             ],
-            "className": "networkWrapper",
+            "className": "manageNetworksContainer",
           },
           "ref": null,
           "rendered": Array [
@@ -166,394 +314,79 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "host",
               "props": Object {
+                "children": "Manage Networks",
+                "className": "manageNetworksHeading",
+              },
+              "ref": null,
+              "rendered": "Manage Networks",
+              "type": "h1",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
                 "children": Array [
-                  <div>
-                    local
-                  </div>,
-                  <div>
-                    Endpoint: 
-                    http://127.0.0.1:5000
-                  </div>,
+                  <CustomNetworkCard
+                    dropDownContent={
+                      <ul
+                        className="customNetworkDropdown"
+                      >
+                        <li>
+                          <button
+                            className="customNetworkDropDownButton"
+                            onClick={[Function]}
+                          >
+                            <i
+                              className="fas fa-trash"
+                            />
+                             Delete
+                          </button>
+                        </li>
+                      </ul>
+                    }
+                    name="local"
+                    url="http://127.0.0.1:5000"
+                  />,
                 ],
-                "className": "networkInfo",
               },
               "ref": null,
               "rendered": Array [
                 Object {
                   "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
+                  "key": "local",
+                  "nodeType": "function",
                   "props": Object {
-                    "children": "local",
+                    "dropDownContent": <ul
+                      className="customNetworkDropdown"
+                    >
+                      <li>
+                        <button
+                          className="customNetworkDropDownButton"
+                          onClick={[Function]}
+                        >
+                          <i
+                            className="fas fa-trash"
+                          />
+                           Delete
+                        </button>
+                      </li>
+                    </ul>,
+                    "name": "local",
+                    "url": "http://127.0.0.1:5000",
                   },
                   "ref": null,
-                  "rendered": "local",
-                  "type": "div",
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": Array [
-                      "Endpoint: ",
-                      "http://127.0.0.1:5000",
-                    ],
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    "Endpoint: ",
-                    "http://127.0.0.1:5000",
-                  ],
-                  "type": "div",
+                  "rendered": null,
+                  "type": [Function],
                 },
               ],
-              "type": "div",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": <svg
-                  fill="red"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                </svg>,
-                "className": "deleteIcon",
-                "onClick": [Function],
-              },
-              "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": Array [
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                    />,
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />,
-                  ],
-                  "fill": "red",
-                  "height": "18",
-                  "viewBox": "0 0 24 24",
-                  "width": "18",
-                  "xmlns": "http://www.w3.org/2000/svg",
-                },
-                "ref": null,
-                "rendered": Array [
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "d": "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z",
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": "path",
-                  },
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "d": "M0 0h24v24H0z",
-                      "fill": "none",
-                    },
-                    "ref": null,
-                    "rendered": null,
-                    "type": "path",
-                  },
-                ],
-                "type": "svg",
-              },
-              "type": "a",
+              "type": Symbol(react.fragment),
             },
           ],
-          "type": "div",
+          "type": "section",
         },
       ],
-      "type": "div",
-    },
-    "type": "div",
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": <div>
-          <div
-            className="networkWrapper"
-          >
-            <div
-              className="networkInfo"
-            >
-              <div>
-                local
-              </div>
-              <div>
-                Endpoint: 
-                http://127.0.0.1:5000
-              </div>
-            </div>
-            <a
-              className="deleteIcon"
-              onClick={[Function]}
-            >
-              <svg
-                fill="red"
-                height="18"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                />
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>,
-      },
-      "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": Array [
-            <div
-              className="networkWrapper"
-            >
-              <div
-                className="networkInfo"
-              >
-                <div>
-                  local
-                </div>
-                <div>
-                  Endpoint: 
-                  http://127.0.0.1:5000
-                </div>
-              </div>
-              <a
-                className="deleteIcon"
-                onClick={[Function]}
-              >
-                <svg
-                  fill="red"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                  />
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                </svg>
-              </a>
-            </div>,
-          ],
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": "network-item-Local",
-            "nodeType": "host",
-            "props": Object {
-              "children": Array [
-                <div
-                  className="networkInfo"
-                >
-                  <div>
-                    local
-                  </div>
-                  <div>
-                    Endpoint: 
-                    http://127.0.0.1:5000
-                  </div>
-                </div>,
-                <a
-                  className="deleteIcon"
-                  onClick={[Function]}
-                >
-                  <svg
-                    fill="red"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    width="18"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                    />
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
-                </a>,
-              ],
-              "className": "networkWrapper",
-            },
-            "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": Array [
-                    <div>
-                      local
-                    </div>,
-                    <div>
-                      Endpoint: 
-                      http://127.0.0.1:5000
-                    </div>,
-                  ],
-                  "className": "networkInfo",
-                },
-                "ref": null,
-                "rendered": Array [
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": "local",
-                    },
-                    "ref": null,
-                    "rendered": "local",
-                    "type": "div",
-                  },
-                  Object {
-                    "instance": null,
-                    "key": undefined,
-                    "nodeType": "host",
-                    "props": Object {
-                      "children": Array [
-                        "Endpoint: ",
-                        "http://127.0.0.1:5000",
-                      ],
-                    },
-                    "ref": null,
-                    "rendered": Array [
-                      "Endpoint: ",
-                      "http://127.0.0.1:5000",
-                    ],
-                    "type": "div",
-                  },
-                ],
-                "type": "div",
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": <svg
-                    fill="red"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    width="18"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                    />
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>,
-                  "className": "deleteIcon",
-                  "onClick": [Function],
-                },
-                "ref": null,
-                "rendered": Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": Array [
-                      <path
-                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                      />,
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />,
-                    ],
-                    "fill": "red",
-                    "height": "18",
-                    "viewBox": "0 0 24 24",
-                    "width": "18",
-                    "xmlns": "http://www.w3.org/2000/svg",
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    Object {
-                      "instance": null,
-                      "key": undefined,
-                      "nodeType": "host",
-                      "props": Object {
-                        "d": "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z",
-                      },
-                      "ref": null,
-                      "rendered": null,
-                      "type": "path",
-                    },
-                    Object {
-                      "instance": null,
-                      "key": undefined,
-                      "nodeType": "host",
-                      "props": Object {
-                        "d": "M0 0h24v24H0z",
-                        "fill": "none",
-                      },
-                      "ref": null,
-                      "rendered": null,
-                      "type": "path",
-                    },
-                  ],
-                  "type": "svg",
-                },
-                "type": "a",
-              },
-            ],
-            "type": "div",
-          },
-        ],
-        "type": "div",
-      },
-      "type": "div",
+      "type": Symbol(react.fragment),
     },
   ],
   Symbol(enzyme.__options__): Object {

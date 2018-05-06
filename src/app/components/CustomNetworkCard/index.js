@@ -20,7 +20,6 @@ const CustomNetworkCard = ({ name, url, onDeleteClickHandler, dropDownContent })
       dropDownContent={ dropDownContent }
       classNames={ style.customNetworkDropDown }
     />
-    {/* <button onClick={ () => this.delete(index) } className={ style.tempButton } /> */}
   </section>
 )
 
@@ -28,7 +27,7 @@ CustomNetworkCard.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   onDeleteClickHandler: PropTypes.func.isRequired,
-  dropDownContent: PropTypes.array.isRequired,
+  dropDownContent: PropTypes.object.isRequired,
 }
 
 export default CustomNetworkCard

@@ -5,13 +5,14 @@ import SettingsNavigation from '../../components/SettingsNavigation'
 import CustomNetworkCard from '../../components/CustomNetworkCard'
 import Overlay from '../../components/Overlay'
 import ConfirmDelete from '../../components/ConfirmDelete'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
 import style from './CustomNetworkList.css'
 
 class CustomNetworkList extends Component {
   state = {
     showConfirmDelete: false,
-    currentItem: '',
+    currentItem: {},
   }
 
   delete = index => {
@@ -27,14 +28,14 @@ class CustomNetworkList extends Component {
 
   _truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
 
-  _generateDropDownContent = index => (
+  _generateDropDownContent = (index, name) => (
     <ul className={ style.customNetworkDropdown }>
       <li>
         <button
           className={ style.customNetworkDropDownButton }
           onClick={ () => {
             this.showConfirmDelete()
-            this.setCurrentItem(index)
+            this.setCurrentItem(index, name)
           } }
         >
           <i className='fas fa-trash' /> Delete
@@ -45,7 +46,10 @@ class CustomNetworkList extends Component {
 
   showConfirmDelete = () => this.setState({ showConfirmDelete: true })
 
-  setCurrentItem = index => this.setState({ currentItem: index })
+  setCurrentItem = (index, name) => {
+    const currentItem = { name, index }
+    this.setState({ currentItem })
+  }
 
   handleDelete = index => {
     this.delete(index)
@@ -63,7 +67,7 @@ class CustomNetworkList extends Component {
             name={ network.name }
             url={ this._truncateUrl(network.url) }
             key={ network.name }
-            dropDownContent={ this._generateDropDownContent(index) }
+            dropDownContent={ this._generateDropDownContent(index, network.name) }
           />
         )
       }
@@ -78,16 +82,23 @@ class CustomNetworkList extends Component {
 
     const networkRows = this.generateNetworkRows(networks)
 
-    const content = networkRows.length ? <Fragment>{networkRows}</Fragment> : 'You have no custom networks defined'
+    const content = networkRows.length ? (
+      <Fragment>{networkRows}</Fragment>
+    ) : (
+      <div className={ style.customNetworkNoNetworksBox }>
+        <h4>You have no custom networks.</h4>
+        <PrimaryButton buttonText={ 'Add Network' } onClickHandler={ () => history.push('/addCustomNetwork') } />
+      </div>
+    )
 
     return (
       <Fragment>
         {showConfirmDelete && (
           <Overlay>
             <ConfirmDelete
-              onClickAcceptHandler={ () => this.handleDelete(currentItem) }
+              onClickAcceptHandler={ () => this.handleDelete(currentItem.index) }
               onClickRejectHandler={ () => this.setState({ showConfirmDelete: false }) }
-              item={ currentItem }
+              item={ currentItem.name }
             />
           </Overlay>
         )}

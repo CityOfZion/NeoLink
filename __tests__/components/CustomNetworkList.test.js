@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
-import CustomNetworkList from '../../src/app/components/CustomNetworkList'
+import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
 const setup = (selectedNetworkId = 'MainNet') => {
   const props = {
@@ -11,10 +11,11 @@ const setup = (selectedNetworkId = 'MainNet') => {
       Local: { name: 'local', url: 'http://127.0.0.1:5000', canDelete: true },
     },
     selectedNetworkId,
+    config: { selectedNetworkId: 'MainNet ' },
     deleteCustomNetwork: jest.fn(),
     setNetwork: jest.fn(),
   }
-  const wrapper = shallow(<CustomNetworkList { ...props } />)
+  const wrapper = mount(<CustomNetworkList { ...props } />)
 
   return {
     wrapper,
@@ -30,12 +31,16 @@ describe('CustomNetworkList', () => {
 
   test('lists networks properly', async () => {
     const { wrapper } = setup()
-
+    console.log(wrapper.html())
     // MainNet shouldn't show on this list, as it's not a custom network (canDelete = false).
-    expect(wrapper.contains('MainNet')).toEqual(false)
+    const mainNetNode = wrapper.find('.customNetworkContainer')
+    console.log(mainNetNode)
+    expect(wrapper.contains(expectedNode)).toEqual(false)
 
     // Local is a custom network and should show.
-    expect(wrapper.contains('local')).toEqual(true)
+    const localNode = wrapper.find('.customNetworkContainer')
+    console.log(localNode)
+    expect(wrapper.contains(expectedLocalNode)).toEqual(true)
   })
 
   test('delete network works', async () => {
