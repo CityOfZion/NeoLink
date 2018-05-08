@@ -1,7 +1,11 @@
 import * as types from '../constants/ActionTypes'
 
-export function addCustomNetwork(name, url, apiType, uid) {
+export function addCustomNetwork(name, url, apiType) {
   return { type: types.ADD_CUSTOM_NETWORK, name, url, apiType }
+}
+
+export function editCustomNetwork(name, url, apiType) {
+  return { type: types.EDIT_CUSTOM_NETWORK, name, url, apiType }
 }
 
 export function deleteCustomNetwork(id) {

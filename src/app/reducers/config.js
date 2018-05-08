@@ -4,21 +4,26 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
   networks: {
-    'MainNet': { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
-    'TestNet': { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
-    'CoZTestNet': { name: 'CoZ TestNet', url: 'https://coz.neoscan-testnet.io/api/main_net', canDelete: false, apiType: 'neoscan' },
+    MainNet: { name: 'MainNet', url: 'https://api.neoscan.io/api/main_net', canDelete: false, apiType: 'neoscan' },
+    TestNet: { name: 'TestNet', url: 'https://neoscan-testnet.io/api/test_net', canDelete: false, apiType: 'neoscan' },
+    CoZTestNet: {
+      name: 'CoZ TestNet',
+      url: 'https://coz.neoscan-testnet.io/api/main_net',
+      canDelete: false,
+      apiType: 'neoscan',
+    },
   },
   selectedNetworkId: 'MainNet',
 }
 
 const actionsMap = {
-  [ActionTypes.SWITCH_NETWORK] (state, action) {
+  [ActionTypes.SWITCH_NETWORK](state, action) {
     return {
       ...state,
       selectedNetworkId: action.id,
     }
   },
-  [ActionTypes.ADD_CUSTOM_NETWORK] (state, action) {
+  [ActionTypes.ADD_CUSTOM_NETWORK](state, action) {
     const networks = { ...state.networks }
     networks[uuidv4()] = { name: action.name, url: action.url, canDelete: true, apiType: action.apiType }
 
@@ -27,7 +32,18 @@ const actionsMap = {
       networks,
     }
   },
-  [ActionTypes.DELETE_CUSTOM_NETWORK] (state, action) {
+  [ActionTypes.EDIT_CUSTOM_NETWORK](state, action) {
+    const networks = { ...state.networks }
+    networks[action.name].name = action.name
+    networks[action.name].url = action.url
+    networks[action.name].apiType = action.apiType
+
+    return {
+      ...state,
+      networks,
+    }
+  },
+  [ActionTypes.DELETE_CUSTOM_NETWORK](state, action) {
     const networks = { ...state.networks }
     delete networks[action.id]
 
