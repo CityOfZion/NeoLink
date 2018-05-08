@@ -53,16 +53,30 @@ export class AddCustomNetwork extends Component {
     />
   )
 
+  _uniqueName = input => {
+    const { networks } = this.props
+
+    const filteredNetworks = Object.keys(networks).filter(network => network.toLowerCase() === input.toLowerCase())
+
+    return filteredNetworks.length === 0
+  }
+
   _validateName = input => {
     if (!validateLength(input, 3)) {
       this._setErrorState('name', 'Name must be longer than 3 characters')
       return false
     }
+
+    if (this._uniqueName(input)) {
+      this._setErrorState('name', 'Name must be unique')
+      return false
+    }
+
     return true
   }
 
   _validateUrl = input => {
-    if (!validateLength(input, 3)) {
+    if (!validateLength(input, 10)) {
       this._setErrorState('url', 'Url must be longer than 3 characters')
       return false
     }
@@ -149,6 +163,7 @@ AddCustomNetwork.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  networks: PropTypes.object.isRequired,
 }
 
 export default reduxForm({

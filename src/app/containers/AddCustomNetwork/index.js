@@ -9,6 +9,8 @@ const actionCreators = {
   addCustomNetwork,
 }
 
+const mapStateToProps = state => ({ networks: state.config.networks })
+
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default connect(null, mapDispatchToProps)(AddCustomNetwork)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCustomNetwork)
