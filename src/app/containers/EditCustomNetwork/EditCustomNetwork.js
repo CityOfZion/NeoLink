@@ -10,9 +10,9 @@ import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import AddNetworkSuccessPage from '../../components/successPages/AddNetworkSuccessPage'
 
-import style from './AddCustomNetwork.css'
+import style from './EditCustomNetwork.css'
 
-export class AddCustomNetwork extends Component {
+export class EditCustomNetwork extends Component {
   state = {
     name: '',
     url: '',
@@ -115,7 +115,7 @@ export class AddCustomNetwork extends Component {
           <AddNetworkSuccessPage history={ history } />
         ) : (
           <section className={ style.addCustomNetwork }>
-            <SettingsNavigation history={ history } />
+            <SettingsNavigation history={ history } path='/manageNetworks' />
             <section className={ style.addCustomNetworkContainer }>
               <Box classNames={ style.addCustomNetworkBox }>
                 <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
@@ -160,7 +160,7 @@ export class AddCustomNetwork extends Component {
   }
 }
 
-AddCustomNetwork.propTypes = {
+EditCustomNetwork.propTypes = {
   addCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
@@ -172,4 +172,4 @@ export default reduxForm({
   form: 'addCustomerNetwork',
   initialValues: { apiType: 'neoscan' },
   destroyOnUnmount: false,
-})(AddCustomNetwork)
+})(EditCustomNetwork)

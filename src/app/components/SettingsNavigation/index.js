@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import style from './SettingsNavigation.css'
 
-const SettingsNavigation = ({ history }) => (
+const SettingsNavigation = ({ history, path = '/settings' }) => (
   <section className={ style.settingsNavigation }>
-    <button className={ style.settingsNavigationButton } onClick={ () => history.push('/settings') }>
+    <button className={ style.settingsNavigationButton } onClick={ () => history.push(path) }>
       <i className='fa fa-arrow-left' />Back
     </button>
   </section>
@@ -13,6 +13,7 @@ const SettingsNavigation = ({ history }) => (
 
 SettingsNavigation.propTypes = {
   history: PropTypes.object.isRequired,
+  path: PropTypes.string,
 }
 
 export default SettingsNavigation

@@ -48,7 +48,7 @@ export default class App extends Component {
             <Route path='/config' component={ Config } />
             <Route path='/settings' component={ Settings } />
             <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
-            <Route path='/editCustomNetwork' component={ EditCustomNetwork } />
+            <Route path='/editCustomNetwork/:id' component={ EditCustomNetwork } />
             <Route path='/manageNetworks' component={ CustomNetworkList } />
             <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
