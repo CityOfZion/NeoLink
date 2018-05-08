@@ -56,9 +56,11 @@ export class AddCustomNetwork extends Component {
   _uniqueName = input => {
     const { networks } = this.props
 
-    const filteredNetworks = Object.keys(networks).filter(network => network.toLowerCase() === input.toLowerCase())
+    const filteredNetworks = Object.keys(networks).filter(
+      networkName => networks[networkName].name.toLowerCase() === input.toLowerCase()
+    )
 
-    return filteredNetworks.length === 0
+    return filteredNetworks.length !== 0
   }
 
   _validateName = input => {
