@@ -25,6 +25,22 @@ export class EditCustomNetwork extends Component {
     },
   }
 
+  componentDidMount() {
+    const { networks } = this.props
+    const { id } = this.props.match.params
+
+    const currentObjectName = Object.keys(networks).find(
+      network => networks[network].name.toLowerCase() === id.toLowerCase()
+    )
+
+    const currentObject = networks[currentObjectName]
+    console.log(currentObject)
+
+    this.setState({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType }, () =>
+      console.log(this.state)
+    )
+  }
+
   _clearErrors(key) {
     this._setErrorState(key, '')
   }
@@ -88,13 +104,13 @@ export class EditCustomNetwork extends Component {
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
     const { name, url, apiType } = values
-    const { addCustomNetwork } = this.props
+    const { editCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
 
     if (validatedName && validatedUrl && apiType) {
-      addCustomNetwork(name, url, apiType)
+      editCustomNetwork(name, url, apiType)
       this.setState({
         name: '',
         url: '',
@@ -161,15 +177,29 @@ export class EditCustomNetwork extends Component {
 }
 
 EditCustomNetwork.propTypes = {
-  addCustomNetwork: PropTypes.func,
+  editCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
+  match: PropTypes.object,
 }
 
-export default reduxForm({
-  form: 'addCustomerNetwork',
-  initialValues: { apiType: 'neoscan' },
-  destroyOnUnmount: false,
-})(EditCustomNetwork)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    initialValues: {
+      name: ownProps.name,
+      apiType: ownProps.apiType,
+      url: ownProps.url,
+    },
+  }
+}
+
+export default reduxForm(
+  {
+    form: 'addCustomerNetwork',
+    initialValues: { apiType: 'neoscan' },
+    destroyOnUnmount: false,
+  },
+  mapStateToProps
+)(EditCustomNetwork)

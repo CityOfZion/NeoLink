@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import SettingsNavigation from '../../components/SettingsNavigation'
 import CustomNetworkCard from '../../components/CustomNetworkCard'
@@ -40,6 +41,9 @@ class CustomNetworkList extends Component {
         >
           <i className='fas fa-trash' /> Delete
         </button>
+        <Link to={ `/editCustomNetwork/${name}` }>
+          <i className='fas fa-edit' />Edit
+        </Link>
       </li>
     </ul>
   )
