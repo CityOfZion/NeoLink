@@ -4,8 +4,8 @@ export function addCustomNetwork(name, url, apiType) {
   return { type: types.ADD_CUSTOM_NETWORK, name, url, apiType }
 }
 
-export function editCustomNetwork(name, url, apiType) {
-  return { type: types.EDIT_CUSTOM_NETWORK, name, url, apiType }
+export function editCustomNetwork(name, url, apiType, id) {
+  return { type: types.EDIT_CUSTOM_NETWORK, name, url, apiType, id }
 }
 
 export function deleteCustomNetwork(id) {

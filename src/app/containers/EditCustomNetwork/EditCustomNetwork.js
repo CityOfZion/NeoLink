@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { validateLength } from '../../utils/helpers'
+import { connect } from 'react-redux'
 
 import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
@@ -13,16 +14,21 @@ import AddNetworkSuccessPage from '../../components/successPages/AddNetworkSucce
 import style from './EditCustomNetwork.css'
 
 export class EditCustomNetwork extends Component {
-  state = {
-    name: '',
-    url: '',
-    apiType: 'neoscan',
-    showSuccess: false,
-    errors: {
-      name: '',
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      id: this.props.match.params.id,
+      name: 'somename',
       url: '',
-      apiType: '',
-    },
+      apiType: 'neoscan',
+      showSuccess: false,
+      errors: {
+        name: '',
+        url: '',
+        apiType: '',
+      },
+    }
   }
 
   componentDidMount() {
@@ -34,11 +40,8 @@ export class EditCustomNetwork extends Component {
     )
 
     const currentObject = networks[currentObjectName]
-    console.log(currentObject)
 
-    this.setState({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType }, () =>
-      console.log(this.state)
-    )
+    this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
   }
 
   _clearErrors(key) {
@@ -69,24 +72,9 @@ export class EditCustomNetwork extends Component {
     />
   )
 
-  _uniqueName = input => {
-    const { networks } = this.props
-
-    const filteredNetworks = Object.keys(networks).filter(
-      networkName => networks[networkName].name.toLowerCase() === input.toLowerCase()
-    )
-
-    return filteredNetworks.length !== 0
-  }
-
   _validateName = input => {
     if (!validateLength(input, 3)) {
       this._setErrorState('name', 'Name must be longer than 3 characters')
-      return false
-    }
-
-    if (this._uniqueName(input)) {
-      this._setErrorState('name', 'Name must be unique')
       return false
     }
 
@@ -104,13 +92,14 @@ export class EditCustomNetwork extends Component {
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
     const { name, url, apiType } = values
+    const { id } = this.state
     const { editCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
 
     if (validatedName && validatedUrl && apiType) {
-      editCustomNetwork(name, url, apiType)
+      editCustomNetwork(name, url, apiType, id)
       this.setState({
         name: '',
         url: '',
@@ -122,7 +111,7 @@ export class EditCustomNetwork extends Component {
   }
 
   render() {
-    const { errors, showSuccess } = this.state
+    const { errors, showSuccess, name } = this.state
     const { handleSubmit, history } = this.props
 
     return (
@@ -139,6 +128,7 @@ export class EditCustomNetwork extends Component {
                   <Field
                     component={ this._renderTextField }
                     type='text'
+                    value={ name }
                     name='name'
                     label='Network Name'
                     error={ errors.name }
@@ -183,23 +173,10 @@ EditCustomNetwork.propTypes = {
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
   match: PropTypes.object,
+  initialize: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    initialValues: {
-      name: ownProps.name,
-      apiType: ownProps.apiType,
-      url: ownProps.url,
-    },
-  }
-}
-
-export default reduxForm(
-  {
-    form: 'addCustomerNetwork',
-    initialValues: { apiType: 'neoscan' },
-    destroyOnUnmount: false,
-  },
-  mapStateToProps
-)(EditCustomNetwork)
+export default reduxForm({
+  form: 'editCustomNetwork',
+  destroyOnUnmount: false,
+})(EditCustomNetwork)

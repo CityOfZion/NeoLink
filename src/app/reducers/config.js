@@ -34,9 +34,11 @@ const actionsMap = {
   },
   [ActionTypes.EDIT_CUSTOM_NETWORK](state, action) {
     const networks = { ...state.networks }
-    networks[action.name].name = action.name
-    networks[action.name].url = action.url
-    networks[action.name].apiType = action.apiType
+    const objectName = Object.keys(networks).find(network => networks[network].name === action.id)
+    console.log(objectName, networks[objectName])
+    networks[objectName].name = action.name
+    networks[objectName].url = action.url
+    networks[objectName].apiType = action.apiType
 
     return {
       ...state,
