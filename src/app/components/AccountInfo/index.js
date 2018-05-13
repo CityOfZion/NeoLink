@@ -9,18 +9,7 @@ import neonPNG from '../../../img/icon-34.png'
 
 import style from './AccountInfo.css'
 
-const AccountInfo = ({
-  label,
-  onClickHandler,
-  neo,
-  gas,
-  address,
-  amountsError,
-  getBalance,
-  showDropDown,
-  toggleDropDownMenu,
-  showOptions,
-}) => {
+const AccountInfo = ({ label, onClickHandler, neo, gas, address, amountsError, getBalance, showOptions }) => {
   const accountDropDownMarkup = (
     <Fragment>
       <Link to='/send' className={ style.dropDownLinks }>
@@ -30,6 +19,9 @@ const AccountInfo = ({
       <Link to={ `https://neoscan.io/address/${address}` } target='_blank' className={ style.dropDownLinks }>
         <i className='fas fa-eye' />View on Neoscan
       </Link>
+      <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
+        <i className='fas fa-edit' />Edit Name
+      </button>
     </Fragment>
   )
 
@@ -87,8 +79,6 @@ AccountInfo.propTypes = {
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  showDropDown: PropTypes.bool,
-  toggleDropDownMenu: PropTypes.func,
 }
 
 export default AccountInfo

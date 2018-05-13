@@ -99,8 +99,6 @@ class Home extends Component {
                 address={ account.address }
                 amountsError={ amountsError }
                 getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
-                toggleDropDownMenu={ this.toggleDropDownMenu }
-                showDropDown={ showDropDown }
                 network={ selectedNetworkId }
                 showOptions
               />
