@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+
+import DropDown from '../DropDown'
 
 import style from './NetworkSwitcher.css'
 
@@ -11,37 +13,13 @@ import flask from '../../../img/flask.svg'
 import { getBalance, getTransactions } from '../../utils/helpers'
 
 class NetworkSwitcher extends Component {
-  state = {
-    networkMenuOpen: false,
-  }
-
-  componentDidMount() {
-    window.addEventListener('click', this.closeDropdownMenu)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('click', this.closeDropdownMenu)
-  }
-
-  changeNetwork = event => {
+  changeNetwork = selectedNetworkId => {
     const { setNetwork, setTransactions, account, setBalance, networks } = this.props
-    let selectedNetworkId = event.target.dataset.value || event.target.parentNode.dataset.value
 
     if (selectedNetworkId) {
       setNetwork(selectedNetworkId)
       getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
       getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
-      this.setState({ networkMenuOpen: false })
-    }
-  }
-
-  toggleDropdownMenu = () => {
-    this.setState({ networkMenuOpen: !this.state.networkMenuOpen })
-  }
-
-  closeDropdownMenu = event => {
-    if (event.target && !event.target.className.includes('NetworkSwitcher')) {
-      this.setState({ networkMenuOpen: false })
     }
   }
 
@@ -80,7 +58,11 @@ class NetworkSwitcher extends Component {
       const selected = selectedNetworkId === index
 
       networkOptions.push(
-        <button key={ `option-key-${index}` } data-value={ index } className={ style.networkOptionButton }>
+        <button
+          key={ `option-key-${index}` }
+          className={ style.networkOptionButton }
+          onClick={ () => this.changeNetwork(index) }
+        >
           {indicator}
           {networks[index].name}
           {selected && <div className={ style.networkNavigationOptionSelected } />}
@@ -90,32 +72,25 @@ class NetworkSwitcher extends Component {
     return networkOptions
   }
 
-  generateDropdownClasses = () => {
-    const { networkMenuOpen } = this.state
-
-    let dropdownStyles
-    if (networkMenuOpen) {
-      dropdownStyles = `${style.networkNavigationDropdown} ${style.networkNavigationDropdownOpen}`
-    } else {
-      dropdownStyles = style.networkNavigationDropdown
-    }
-
-    return dropdownStyles
-  }
-
   render() {
     const networkOptions = this.generateNetworkOptions()
-    const dropdownStyles = this.generateDropdownClasses()
+
+    const buttonContent = (
+      <Fragment>
+        <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
+        <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
+      </Fragment>
+    )
 
     return (
       <section className={ style.networkNavigation }>
-        <button className={ style.networkNavigationButton } onClick={ this.toggleDropdownMenu }>
-          <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
-          <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
-        </button>
-        <div className={ dropdownStyles } onClick={ this.changeNetwork }>
-          {networkOptions}
-        </div>
+        <DropDown
+          buttonContent={ buttonContent }
+          buttonStyles={ style.networkNavigationButton }
+          classNames={ style.networkNavigationButtonContainer }
+          dropDownContent={ networkOptions }
+          dropDownContentClassNames={ style.networkNavigationDropDownContainer }
+        />
       </section>
     )
   }
