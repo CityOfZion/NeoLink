@@ -4,16 +4,17 @@ import PropTypes from 'prop-types'
 import SuccessPage from '../SuccessPage'
 import SecondaryButton from '../../common/buttons/SecondaryButton'
 
-import style from './AddNetworkSuccessPage.css'
+import style from './NetworkSuccessPage.css'
 
-const AddNetworkSuccess = ({ history }) => (
-  <SuccessPage title={ 'Network Added' } classNames={ style.addNetworkSuccessPage }>
+const NetworkSuccessPage = ({ history, title }) => (
+  <SuccessPage title={ title } classNames={ style.networkSuccessPage }>
     <SecondaryButton buttonText='Back to home' onClickHandler={ () => history.push('/home') } />
   </SuccessPage>
 )
 
-AddNetworkSuccess.propTypes = {
+NetworkSuccessPage.propTypes = {
   history: PropTypes.object,
+  title: PropTypes.string,
 }
 
-export default AddNetworkSuccess
+export default NetworkSuccessPage
