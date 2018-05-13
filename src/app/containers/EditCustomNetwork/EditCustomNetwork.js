@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { validateLength } from '../../utils/helpers'
-import { connect } from 'react-redux'
 
 import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'

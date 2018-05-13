@@ -6,7 +6,7 @@ import DropDown from '../DropDown'
 import style from './CustomNetworkCard.css'
 
 const CustomNetworkCard = ({ name, url, dropDownContent }) => (
-  <section className={ style.customNetworkCard } key={ name }>
+  <section className={ style.customNetworkCard }>
     <div className={ style.customNetworkColorContainer }>
       <div className={ style.customNetworkColor } />
     </div>

@@ -10,7 +10,7 @@
 }
 
 .customNetworkColorContainer {
-  width: 20%;
+  width: 15%;
 }
 
 .customNetworkColor {
@@ -25,6 +25,10 @@
   font-size: 0.9rem;
   margin: 0;
   color: #585858;
+}
+
+.customNetworkContainer {
+  width: 65%;
 }
 
 h3.customNetworkUrl {
@@ -42,4 +46,5 @@ h3.customNetworkUrl {
 
 .customNetworkDropDown {
   margin-left: auto;
+  width: 20%;
 }

@@ -16,7 +16,8 @@
   width: 80px;
 }
 
-.customNetworkDropDownButton {
+.customNetworkDropDownButton,
+.customNetworkLink {
   width: 100%;
   height: 50px;
   color: #585858;
@@ -24,6 +25,25 @@
   background: transparent;
   font-size: 0.8rem;
   cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 35px;
+}
+
+.customNetworkLink {
+  display: flex;
+  padding: 5px 12px;
+  text-decoration: none;
+  align-items: center;
+}
+
+.customNetworkLink svg {
+  margin-right: 3px;
+}
+
+.customNetworkDropDownButton:hover,
+.customNetworkLink:hover {
+  background-color: #ededed;
 }
 
 .customNetworkNoNetworksBox {
