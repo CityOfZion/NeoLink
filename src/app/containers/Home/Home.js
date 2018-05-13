@@ -18,7 +18,6 @@ class Home extends Component {
     this.state = {
       showInputField: false,
       transactionHistoryError: '',
-      showDropDown: false,
       label: getAccountName(account, accounts),
       labelError: '',
       amountsError: '',
@@ -30,12 +29,6 @@ class Home extends Component {
 
     this.getHomeScreenTransactions(selectedNetworkId)
     this.getHomeScreenBalance(selectedNetworkId)
-
-    window.addEventListener('click', this._closeDropDownMenu)
-  }
-
-  comoponentWillUnmount() {
-    window.removeEventListener('click', this._closeDropDownMenu)
   }
 
   getHomeScreenBalance = network => {
@@ -59,16 +52,6 @@ class Home extends Component {
           })
         )
     })
-  }
-
-  toggleDropDownMenu = () => {
-    this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
-  }
-
-  _closeDropDownMenu = event => {
-    if (event.target && !event.target.className.includes('DropDown')) {
-      this.setState({ showDropDown: false })
-    }
   }
 
   handleRenameButtonFormSubmit = e => {
