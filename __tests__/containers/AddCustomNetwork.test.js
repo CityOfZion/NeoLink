@@ -9,12 +9,17 @@ import { mount } from 'enzyme'
 import AddCustomNetworkForm, { AddCustomNetwork } from '../../src/app/containers/AddCustomNetwork/AddCustomNetwork'
 
 describe('AddCustomNetwork', () => {
+  const networks = {
+    MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
+    Local: { name: 'local', url: 'http://127.0.0.1:5000', canDelete: true },
+  }
+
   test('Correctly displays errors', () => {
     const store = new MockStore()
 
     const wrapper = mount(
       <Provider store={ store }>
-        <AddCustomNetworkForm addCustomNetwork={ jest.fn() } history={ {} } />
+        <AddCustomNetworkForm addCustomNetwork={ jest.fn() } history={ {} } networks={ networks } />
       </Provider>
     )
 
@@ -33,7 +38,7 @@ describe('AddCustomNetwork', () => {
 
     const wrapper = mount(
       <Provider store={ store }>
-        <AddCustomNetworkForm addCustomNetwork={ addCustomNetwork } history={ {} } />
+        <AddCustomNetworkForm addCustomNetwork={ addCustomNetwork } history={ {} } networks={ networks } />
       </Provider>
     )
 

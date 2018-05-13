@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { mount } from 'enzyme'
+import { StaticRouter } from 'react-router'
+import toJson from 'enzyme-to-json'
 
 import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
@@ -17,7 +19,11 @@ const setup = (selectedNetworkId = 'MainNet') => {
     deleteCustomNetwork: jest.fn(),
     setNetwork: jest.fn(),
   }
-  const wrapper = mount(<CustomNetworkList { ...props } />)
+  const wrapper = mount(
+    <StaticRouter context={ {} }>
+      <CustomNetworkList { ...props } />
+    </StaticRouter>
+  )
 
   return {
     wrapper,
@@ -27,7 +33,7 @@ const setup = (selectedNetworkId = 'MainNet') => {
 describe('CustomNetworkList', () => {
   test('renders without crashing', () => {
     const { wrapper } = setup()
-    expect(wrapper).toMatchSnapshot()
+    expect(toJson(wrapper)).toMatchSnapshot()
   })
 
   test('lists networks properly', async () => {
@@ -39,13 +45,14 @@ describe('CustomNetworkList', () => {
 
   test('delete network works', async () => {
     const { wrapper } = setup('Local')
-    const instance = wrapper.instance()
 
     wrapper.find('.dropDownButton').simulate('click')
     wrapper.find('.customNetworkDropDownButton').simulate('click')
     wrapper.find('.confirmDeleteAccept').simulate('click')
 
-    expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
-    expect(instance.props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
+    const networkList = wrapper.find(CustomNetworkList)
+
+    expect(networkList.instance().props.setNetwork).toHaveBeenCalledWith('MainNet')
+    expect(networkList.instance().props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
   })
 })
