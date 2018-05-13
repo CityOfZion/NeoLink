@@ -60,7 +60,7 @@ class Home extends Component {
 
     if (validateLength(this.state.label, 3)) {
       walletActions.changeLabel({ address: account.address, label: this.state.label })
-      this.setState({ showInputField: false, showDropDown: false })
+      this.setState({ showInputField: false })
     } else {
       this.setState({ labelError: 'Label must be longer than 3 characters.' })
     }
@@ -77,7 +77,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId } = this.props
-    const { showInputField, amountsError, label, transactionHistoryError, labelError, showDropDown } = this.state
+    const { showInputField, amountsError, label, transactionHistoryError, labelError } = this.state
 
     return (
       <Fragment>
