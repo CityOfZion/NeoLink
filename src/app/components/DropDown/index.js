@@ -25,7 +25,7 @@ class DropDown extends Component {
   }
 
   render() {
-    const { buttonContent, buttonStyles, classNames, dropDownContent } = this.props
+    const { buttonContent, buttonStyles, classNames, dropDownContent, dropDownContentClassNames } = this.props
     const { showDropDown } = this.state
     const dropDownStyles = showDropDown ? `${style.dropDown} ${style.showDropDown}` : style.dropDown
 
@@ -34,7 +34,7 @@ class DropDown extends Component {
         <button className={ `${style.dropDownButton} ${buttonStyles}` } onClick={ this.toggleDropDown }>
           {buttonContent}
         </button>
-        <div className={ dropDownStyles }>{dropDownContent}</div>
+        <div className={ `${dropDownStyles} ${dropDownContentClassNames}` }>{dropDownContent}</div>
       </section>
     )
   }
@@ -45,6 +45,7 @@ DropDown.propTypes = {
   buttonStyles: PropTypes.string,
   classNames: PropTypes.string,
   dropDownContent: PropTypes.object,
+  dropDownContentClassNames: PropTypes.string,
 }
 
 export default DropDown
