@@ -92,7 +92,7 @@
 .accountInfoDropDown {
   background-color: #f5f5f5;
   top: 24px;
-  width: 155px;
+  width: 160px;
   border-radius: 3px;
   left: -127px;
   z-index: 999;
@@ -123,7 +123,7 @@
 .dropDownLinksButton svg {
   margin-right: 5px;
   color: #585858;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .accountInfoRefreshButton {
