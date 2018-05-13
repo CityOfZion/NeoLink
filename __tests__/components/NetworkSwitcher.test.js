@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 
 import NetworkSwitcher from '../../src/app/components/NetworkSwitcher'
-import { NOTFOUND } from 'dns'
 
 const setup = () => {
   const props = {
