@@ -19,7 +19,7 @@ class DropDown extends Component {
   toggleDropDown = () => this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
 
   _closeDropDownMenu = event => {
-    if (event.target && !event.target.className.includes('dropDown')) {
+    if (!this.node.contains(event.target) || !event.target.className.includes('dropDown')) {
       this.setState({ showDropDown: false })
     }
   }
@@ -30,7 +30,7 @@ class DropDown extends Component {
     const dropDownStyles = showDropDown ? `${style.dropDown} ${style.showDropDown}` : style.dropDown
 
     return (
-      <section className={ `${style.dropDownContainer} ${classNames}` }>
+      <section className={ `${style.dropDownContainer} ${classNames}` } ref={ node => (this.node = node) }>
         <button className={ `${style.dropDownButton} ${buttonStyles}` } onClick={ this.toggleDropDown }>
           {buttonContent}
         </button>
