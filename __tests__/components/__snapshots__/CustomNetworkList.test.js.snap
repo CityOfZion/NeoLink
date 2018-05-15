@@ -181,6 +181,9 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                   </button>
                   <div
                     className="dropDown undefined"
+
+                    className="dropDown"
+
                   >
                     <ul
                       className="customNetworkDropdown"
