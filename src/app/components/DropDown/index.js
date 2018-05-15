@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 import style from './DropDown.css'
 
+/*
+Global component to use for DropDown menus
+*/
+
 class DropDown extends Component {
   state = {
     showDropDown: false,
