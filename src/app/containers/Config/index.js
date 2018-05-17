@@ -5,7 +5,7 @@ import { addCustomNetwork, setNetwork, deleteCustomNetwork } from '../../actions
 
 import Config from './Config'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = state => ({
   selectedNetworkId: state.config.selectedNetworkId,
   networks: state.config.networks,
 })

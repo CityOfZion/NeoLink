@@ -5,7 +5,7 @@ ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <BrowserRouter>
-    <withRouter(MainNav) />
+    <Connect(withRouter(MainNav)) />
   </BrowserRouter>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -19,7 +19,7 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "children": <withRouter(MainNav) />,
+      "children": <Connect(withRouter(MainNav)) />,
       "history": Object {
         "action": "POP",
         "block": [Function],
@@ -43,7 +43,7 @@ ShallowWrapper {
     "rendered": Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "function",
+      "nodeType": "class",
       "props": Object {},
       "ref": null,
       "rendered": null,
@@ -57,7 +57,7 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "class",
       "props": Object {
-        "children": <withRouter(MainNav) />,
+        "children": <Connect(withRouter(MainNav)) />,
         "history": Object {
           "action": "POP",
           "block": [Function],
@@ -81,7 +81,7 @@ ShallowWrapper {
       "rendered": Object {
         "instance": null,
         "key": undefined,
-        "nodeType": "function",
+        "nodeType": "class",
         "props": Object {},
         "ref": null,
         "rendered": null,

@@ -1,0 +1,16 @@
+.addCustomNetworkContainer {
+  padding: 20px;
+}
+
+.addCustomNetworkForm {
+  width: 100%;
+}
+
+.addCustomNetworkHeading {
+  margin-top: 0;
+}
+
+.addCustomNetworkButton {
+  margin: 0 auto;
+  margin-top: 10px;
+}

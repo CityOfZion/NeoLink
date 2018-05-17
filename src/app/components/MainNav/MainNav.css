@@ -1,64 +1,48 @@
 .mainNavButton {
-    background-color: transparent;
-    margin-left: 8px;
-    height: 100%;
-    border: none;
-    cursor: pointer;
+  background-color: transparent;
+  margin-left: 8px;
+  height: 100%;
+  border: none;
+  cursor: pointer;
 }
 
-.mainNavButtonImg {
-    height: 25px;
+.mainNavButton svg {
+  color: #fff;
+  font-size: 1.5rem;
 }
 
-.mainNavDropdown {
-    box-shadow: 2px 2px 2px #bababa;
-    position: absolute;
-    background-color: #fff;
-    border-radius: 3px;
-    z-index: 999;
-    width: 60%;
-    left: 10px;
-    height: 0;
-    display: none;
-    padding: 8px 0;
-}
-
-.mainNavDropdownOpen {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    animation: fadeInMenu;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: 1;
+.mainNavDropDownContent {
+  left: 12px;
+  width: 180px;
 }
 
 .mainNavLinkButton {
-    background: transparent;
-    border: none;
-    display: flex;
-    font-family: Lato;
-    font-size: 1rem;
-    padding: 5px 10px;
-    cursor: pointer;
-    align-items: center;
+  background: transparent;
+  border: none;
+  display: flex;
+  font-family: Lato;
+  font-size: 1rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  align-items: center;
+  width: 100%;
 }
 
 .mainNavLinkButton:hover {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .mainNavLinkButtonImg {
-    height: 17px;
-    margin-right: 8px;
+  height: 17px;
+  margin-right: 8px;
 }
 
 @keyframes fadeInMenu {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }

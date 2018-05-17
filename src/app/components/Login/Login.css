@@ -1,0 +1,17 @@
+.loginWrapper {
+  background-color: #f1f1f1;
+  padding: 20px;
+  height: 100%;
+}
+
+.loginHeading {
+  margin-bottom: 30px;
+}
+
+.loginButton {
+  margin: 15px auto;
+}
+
+.loginForm {
+  width: 100%;
+}

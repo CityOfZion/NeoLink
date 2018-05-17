@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import NetworkSwitcher from '../../src/app/components/NetworkSwitcher'
 
@@ -13,8 +13,9 @@ const setup = () => {
       CoZTestNet: { name: 'CoZ TestNet', url: 'http://coz-privatenet.herokuapp.com/', canDelete: false },
     },
     setNetwork: jest.fn(),
+    getBalance: jest.fn(),
   }
-  const wrapper = shallow(<NetworkSwitcher { ...props } />)
+  const wrapper = mount(<NetworkSwitcher { ...props } />)
 
   return {
     wrapper,
@@ -30,23 +31,24 @@ describe('NetworkSwitch', () => {
 
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
+    wrapper.find('.dropDownButton').simulate('click')
+    const networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
 
-    const networkSelectorElement = wrapper.find('button[data-value="MainNet"]')
-
-    expect(networkSelectorElement.children().length).toBe(3)
+    expect(networkSelectorElement.contains(<div className='networkNavigationOptionSelected' />)).toBe(true)
   })
 
   test('switches to the correct network when chosen from the dropdown', async () => {
     const { wrapper } = setup()
 
     const instance = wrapper.instance()
-    const networkSelector = wrapper.find('.networkNavigationDropdown')
-
-    networkSelector.simulate('click', { target: { dataset: { value: 'TestNet' } } })
+    wrapper.find('.dropDownButton').simulate('click')
+    let networkSelectorElement = wrapper.find('.networkOptionButton').at(1)
+    networkSelectorElement.simulate('click')
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
 
-    networkSelector.simulate('click', { target: { dataset: { value: 'MainNet' } } })
+    networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
+    networkSelectorElement.simulate('click')
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
   })

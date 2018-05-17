@@ -6,7 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 90px;
+}
+
+.startPageCreateAccount {
+  padding-top: 90px;
 }
 
 .startPageButton {

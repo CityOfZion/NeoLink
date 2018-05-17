@@ -1,0 +1,60 @@
+.manageNetworksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.manageNetworksHeading {
+  margin-top: 20px;
+}
+
+.customNetworkDropdown {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 80px;
+}
+
+.customNetworkDropDownButton,
+.customNetworkLink {
+  width: 100%;
+  height: 50px;
+  color: #585858;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 35px;
+}
+
+.customNetworkLink {
+  display: flex;
+  padding: 5px 12px;
+  text-decoration: none;
+  align-items: center;
+}
+
+.customNetworkLink svg {
+  margin-right: 3px;
+}
+
+.customNetworkDropDownButton:hover,
+.customNetworkLink:hover {
+  background-color: #ededed;
+}
+
+.customNetworkNoNetworksBox {
+  width: 80%;
+  background-color: #fff;
+  color: #585858;
+  border-radius: 3px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

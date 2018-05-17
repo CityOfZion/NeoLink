@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { mount } from 'enzyme'
-import { api } from '@cityofzion/neon-js'
+import Neon from '@cityofzion/neon-js'
 import { createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
@@ -12,15 +12,29 @@ const setup = () => {
   const props = {
     selectedNetworkId: 'MainNet',
     networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
+      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
     },
     account: {
       wif: testKeys.t1.wif,
+      address: testKeys.t1.address,
     },
+    accounts: {
+      [testKeys['t1']['address']]: {
+        address: testKeys.t1.address,
+        label: 'My account',
+      },
+    },
+    setBalance: () => {},
+    label: 'Somelabel',
+    address: testKeys.t1.address,
   }
 
   const store = createStore(combineReducers({ form: formReducer }))
-  const wrapper = mount(<Provider store={ store }><SendForm { ...props } /></Provider>)
+  const wrapper = mount(
+    <Provider store={ store }>
+      <SendForm { ...props } />
+    </Provider>
+  )
 
   return {
     wrapper,
@@ -28,14 +42,16 @@ const setup = () => {
 }
 
 describe('Send', () => {
-  test('Amount passed to neon-js correctly', async (done) => {
+  test('Amount passed to neon-js correctly', async done => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '2.00000001' } })
     wrapper.find('select').simulate('change', { target: { value: 'GAS' } })
 
-    api.neonDB.doSendAsset = jest.fn((net, address, wif, amounts) => {
+    Neon.do.sendAsset = jest.fn((net, address, wif, amounts) => {
       return new Promise((resolve, reject) => {
         expect(amounts['GAS']).toEqual(2.00000001)
         done()
@@ -43,6 +59,7 @@ describe('Send', () => {
     })
 
     wrapper.find('form').simulate('submit')
+    wrapper.find('.confirmSendCardAcceptButton').simulate('click')
   })
 
   test('Address must be valid', async () => {
@@ -54,7 +71,7 @@ describe('Send', () => {
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('The address you entered was not valid.')
+    expect(sendState.errors.address).toEqual('The address you entered was not valid.')
   })
 
   test('Address must not be empty', async () => {
@@ -66,68 +83,80 @@ describe('Send', () => {
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('Address field is required')
+    expect(sendState.errors.address).toEqual('Address field is required')
   })
 
   test('Amount must not be empty', async () => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '' } })
 
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('Amount field is required')
+    expect(sendState.errors.amount).toEqual('Amount field is required')
   })
 
   test('Amount must be numeric', async () => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: 'a' } })
 
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('You must enter a valid number.')
+    expect(sendState.errors.amount).toEqual('You must enter a valid number.')
   })
 
   test('Amount must be positive', async () => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '-1' } })
 
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('You cannot send zero or negative amounts of an asset.')
+    expect(sendState.errors.amount).toEqual('You cannot send zero or negative amounts of an asset.')
   })
 
   test('Amount must be whole number if sending NEO', async () => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
     wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '1.01' } })
     wrapper.find('select').simulate('change', { target: { value: 'NEO' } })
 
     wrapper.find('form').simulate('submit')
 
     const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('You cannot send fractional amounts of NEO.')
+    expect(sendState.errors.amount).toEqual('You cannot send fractional amounts of NEO.')
   })
 
-  test('Asset type must be valid', async () => {
+  test('Correctly displays confirm screen when all validation passes', () => {
     const { wrapper } = setup()
 
-    wrapper.find('input[name="address"]').simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
-    wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '1' } })
-    wrapper.find('select').simulate('change', { target: { value: 'INVALID' } })
+    wrapper
+      .find('input[name="address"]')
+      .simulate('change', { target: { name: 'address', value: testKeys.t1.address } })
+    wrapper.find('input[name="amount"]').simulate('change', { target: { name: 'amount', value: '5' } })
+    wrapper.find('select').simulate('change', { target: { value: 'GAS' } })
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errorMsg).toEqual('Asset Type invalid.')
+    const sendConfirm = wrapper.find('.confirmSendCard')
+    const sendConfirmButton = wrapper.find('.confirmSendCardAcceptButton')
+    expect(sendConfirm).toBeTruthy()
+    expect(sendConfirmButton.text()).toBe('Accept')
   })
 })

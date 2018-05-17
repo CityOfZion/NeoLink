@@ -1,0 +1,26 @@
+.successPage {
+  color: #fff;
+  background-color: #36b049;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 40px;
+  height: 100%;
+  align-items: center;
+}
+
+.successPageIconContainer {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  color: #36b049;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.successPageHeading {
+  margin-bottom: 30px;
+}

@@ -1,0 +1,20 @@
+.settingsButton {
+  width: 45%;
+  margin: 2.5%;
+  padding: 30px 0;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.settingsButton svg {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}

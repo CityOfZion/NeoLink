@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
+import { StaticRouter } from 'react-router'
+import toJson from 'enzyme-to-json'
 
-import CustomNetworkList from '../../src/app/components/CustomNetworkList'
+import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
 const setup = (selectedNetworkId = 'MainNet') => {
   const props = {
@@ -11,10 +13,17 @@ const setup = (selectedNetworkId = 'MainNet') => {
       Local: { name: 'local', url: 'http://127.0.0.1:5000', canDelete: true },
     },
     selectedNetworkId,
+    config: { selectedNetworkId: 'MainNet ' },
+    history: {},
+    onDeleteClickHandler: jest.fn(),
     deleteCustomNetwork: jest.fn(),
     setNetwork: jest.fn(),
   }
-  const wrapper = shallow(<CustomNetworkList { ...props } />)
+  const wrapper = mount(
+    <StaticRouter context={ {} }>
+      <CustomNetworkList { ...props } />
+    </StaticRouter>
+  )
 
   return {
     wrapper,
@@ -22,34 +31,28 @@ const setup = (selectedNetworkId = 'MainNet') => {
 }
 
 describe('CustomNetworkList', () => {
-  test('renders without crashing', (done) => {
+  test('renders without crashing', () => {
     const { wrapper } = setup()
-    expect(wrapper).toMatchSnapshot()
-    done()
+    expect(toJson(wrapper)).toMatchSnapshot()
   })
 
   test('lists networks properly', async () => {
     const { wrapper } = setup()
 
-    // MainNet shouldn't show on this list, as it's not a custom network (canDelete = false).
-    expect(wrapper.contains('MainNet')).toEqual(false)
-
-    // Local is a custom network and should show.
-    expect(wrapper.contains('local')).toEqual(true)
+    expect(wrapper.html().includes('MainNet')).toBe(false)
+    expect(wrapper.html().includes('local')).toBe(true)
   })
 
   test('delete network works', async () => {
     const { wrapper } = setup('Local')
-    const instance = wrapper.instance()
 
-    // MainNet shouldn't show on this list, as it's not a custom network (canDelete = false).
-    expect(wrapper.contains('MainNet')).toEqual(false)
+    wrapper.find('.dropDownButton').simulate('click')
+    wrapper.find('.customNetworkDropDownButton').simulate('click')
+    wrapper.find('.confirmDeleteAccept').simulate('click')
 
-    // Local is a custom network and should show.
-    expect(wrapper.contains('local')).toEqual(true)
+    const networkList = wrapper.find(CustomNetworkList)
 
-    wrapper.find('a').simulate('click')
-    expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
-    expect(instance.props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
+    expect(networkList.instance().props.setNetwork).toHaveBeenCalledWith('MainNet')
+    expect(networkList.instance().props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
   })
 })

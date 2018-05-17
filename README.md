@@ -97,31 +97,13 @@ document.getElementById("runInvokeButton).addEventListener("click",
 </script>
 ```
 
-Please note that currently the code is limited to a maximum of three arguments to the smart contract.
+Please note that currently the code is limited to a maximum of two arguments to the smart contract.
 
-
-## Triggering an IoT Smart Contract Payment
-
-### Python
-
-Python command line: (must be synced to TestNet)
-```
-testinvoke b3a14d99a3fb6646c78bf2f4e2f25a7964d2956a putvalue ['test','0000ff'] --attach-gas=0.000025
-
-```
-
-### NeoLink
+## NeoLink - Demo
 
 - Install NeoLink
     - Clone github.com/cityofzion/neolink/
     - Follow the instructions there to install and build
     - Login with encrypted WIF (wallet needs a balance of TestNet gas)
-- Login to iot.splyse.tech
-    - user: neo@splyse.tech
-    - pass: neo
-- Locate contract with name 'test' in the list of Devices
-- Enter a color code hex value in the form of '00ff00' (without quotes) into the input field
-- Click pay
-- If you are logged into your NeoLink wallet you will see a message in the web page asking you to open NeoLink and authorize the transaction.
-- Open NeoLink and click the 'yes' button to authorize the transaction.
-
+- Visit sendeo.surge.sh and watch the video to learn how it works.
+- Code available at [on Githhub](https://github.com/slipo/sendeo)

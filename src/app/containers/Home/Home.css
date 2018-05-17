@@ -1,15 +1,22 @@
+.accountInfoWrapper {
+  height: 50%;
+  background-color: #fff;
+}
+
 .accountInfoContainer {
-    margin-top: 20px;
-    width:200px;
+  padding: 40px 20px 30px 20px;
+  width: 100%;
+  background-color: #fff;
 }
 
-.accountInfo {
-    width: 100%;
-    display: block;
-    word-wrap: break-word;
+.transactionInfo {
+  padding: 20px;
 }
 
-.accountInfo span {
-    word-wrap: break-word;
-    width:100%;
+.transactionInfoHeader {
+  margin: 0;
+  text-align: center;
+}
+.transactionInfo {
+  background-color: #f5f5f5;
 }

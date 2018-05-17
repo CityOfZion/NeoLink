@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { TabBar, Tab } from 'rmwc/Tabs'
 import '@material/tabs/dist/mdc.tabs.min.css'
 
-import CustomNetworkList from '../../components/CustomNetworkList'
-import AddCustomNetwork from '../../components/AddCustomNetwork'
+import CustomNetworkList from '../../containers/CustomNetworkList'
+import AddCustomNetwork from '../../containers/AddCustomNetwork'
 
 import style from './Config.css'
 
@@ -22,12 +22,14 @@ class Config extends Component {
     if (activeTabIndex === 1) {
       tabContent = <AddCustomNetwork addCustomNetwork={ addCustomNetwork } />
     } else {
-      tabContent = <CustomNetworkList
-        deleteCustomNetwork={ deleteCustomNetwork }
-        setNetwork={ setNetwork }
-        selectedNetworkId={ selectedNetworkId }
-        networks={ networks }
-      />
+      tabContent = (
+        <CustomNetworkList
+          deleteCustomNetwork={ deleteCustomNetwork }
+          setNetwork={ setNetwork }
+          selectedNetworkId={ selectedNetworkId }
+          networks={ networks }
+        />
+      )
     }
 
     return (
@@ -35,12 +37,12 @@ class Config extends Component {
         <TabBar
           className={ style.tabBar }
           activeTabIndex={ this.state.activeTabIndex || 0 }
-          onChange={ evt => this.setState({ 'activeTabIndex': evt.target.value }) }
+          onChange={ evt => this.setState({ activeTabIndex: evt.target.value }) }
         >
           <Tab className={ style.tab }>Networks</Tab>
           <Tab className={ style.tab }>Add</Tab>
         </TabBar>
-        { tabContent }
+        {tabContent}
       </div>
     )
   }

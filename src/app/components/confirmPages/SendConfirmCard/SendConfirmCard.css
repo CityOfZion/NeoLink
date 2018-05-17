@@ -1,0 +1,80 @@
+.confirmSendCard {
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(211, 211, 211, 0.5);
+}
+
+.confirmSendCardContainer {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmSendCardMainIcon {
+  font-size: 1.7rem;
+  margin: 10px;
+  color: #36b049;
+}
+
+.confirmSendCardDetailsHeading {
+  color: #000;
+  text-align: center;
+}
+
+.confirmSendCardDetails {
+  display: flex;
+  width: 80%;
+}
+
+.confirmSendSecondaryIcon {
+  font-size: 1.1rem;
+  margin-right: 10px;
+  transform: translateY(5px);
+  color: #36b049;
+}
+
+.confirmSendDetailsText {
+  font-size: 0.9rem;
+  margin-top: 0;
+  color: #585858;
+}
+
+.confirmSendHeader {
+  color: #585858;
+  margin-bottom: 0;
+}
+
+.confirmSendCardAddress {
+  width: 80%;
+  background-color: #f5f5f5;
+  color: #585858;
+  word-break: break-all;
+  padding: 10px;
+  font-size: 0.8rem;
+  border-radius: 3px;
+}
+
+.confirmSendButtons {
+  margin-top: 20px;
+}
+
+.confirmSendButton {
+  width: 50%;
+  border: none;
+  padding: 20px 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.confirmSendCardRejectButton {
+  color: #585858;
+  border-bottom-left-radius: 5px;
+}
+
+.confirmSendCardAcceptButton {
+  background-color: #36b049;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+}

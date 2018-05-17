@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-	--mdc-theme-primary: #36b049;
+  --mdc-theme-primary: #36b049;
 }
 
 body {
-	font-family: Roboto, sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 h1,
@@ -20,10 +20,18 @@ h5,
 h6 {
   font-family: Lato;
   font-weight: 400;
+  font-size: 1.2rem;
 }
 
 .popup {
-	width: 310px;
-	height: 550px;
-	background-color: #eaeaea;
+  width: 310px;
+  height: 550px;
+  background-color: #eaeaea;
+}
+
+/* Temporary styling to make WIP pages more usable */
+.tempFormStyle {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }

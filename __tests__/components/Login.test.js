@@ -27,7 +27,13 @@ describe('Login', () => {
   test('shows loading', done => {
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     loginForm
@@ -42,7 +48,15 @@ describe('Login', () => {
 
   test('shows create options if no wallet accounts found', () => {
     const loginForm = shallow(
-      <Login setAccount={ jest.fn } handleSubmit={ jest.fn } reset={ jest.fn } account={ { wif: '' } } accounts={ {} } />
+      <Login
+        setAccount={ jest.fn }
+        handleSubmit={ jest.fn }
+        reset={ jest.fn }
+        account={ { wif: '' } }
+        accounts={ {} }
+        setBalance={ jest.fn }
+        setTransactions={ jest.fn }
+      />
     )
     expect(loginForm.contains('CreateOrImportWallet'))
   })
@@ -55,7 +69,13 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ preLoggedIn } accounts={ validAccount } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ preLoggedIn }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     expect(loginForm.html()).toEqual(null)
@@ -65,7 +85,7 @@ describe('Login', () => {
     const expectedAddress = 'AQg2xUAPpA21FZMw44cpErGWekx3Hw8neA'
     const expectedWif = 'L3moZFQgcpyznreRqbR1uVcvrkARvRqJS4ttGfMdXGaQQR5DeYcZ'
 
-    const setAccount = jest.fn((wif, address) => {
+    const setAccount = jest.fn((wif, address, gas, neo) => {
       expect(wif).toEqual(expectedWif)
       expect(address).toEqual(expectedAddress)
       done()
@@ -73,32 +93,50 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ setAccount } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm
+          setAccount={ setAccount }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
+
     loginForm
       .find('input[name="passPhrase"]')
       .simulate('change', { target: { name: 'passPhrase', value: validPassword } })
     loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
-    loginForm.find('button').simulate('click')
+
+    loginForm.find('form').simulate('submit')
   })
 
-  test('Shows error with invalid credentials', () => {
+  test('Shows error with invalid credentials', done => {
     jest.useFakeTimers()
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     loginForm.find('input[name="passPhrase"]').simulate('change', { target: { id: 'passPhrase', value: 'wrong' } })
+
     loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
-    loginForm.find('button').simulate('click')
+    loginForm.find('form').simulate('submit')
 
     jest.runAllTimers()
 
-    const loginState = loginForm.find(Login).instance().state
-    expect(loginState.errorMsg).not.toEqual('')
-    expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+    process.nextTick(() => {
+      const loginState = loginForm.find(Login).instance().state
+      expect(loginState.errorMsg).not.toEqual('')
+      expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+      done()
+    })
   })
 })

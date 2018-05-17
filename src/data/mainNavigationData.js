@@ -24,7 +24,7 @@ export default [
     title: 'Settings',
     img: cogSVG,
     alt: 'Cog',
-    path: '/config',
+    path: '/settings',
     id: 3,
   },
   {
@@ -38,7 +38,7 @@ export default [
     title: 'Log Out',
     img: powerOffSVG,
     alt: 'Power off icon',
-    path: '/logout',
+    path: '/',
     id: 5,
   },
   {
@@ -54,20 +54,6 @@ export default [
     alt: 'test',
     path: '/sendInvoke',
     id: 7,
-  },
-  {
-    title: 'Transactions',
-    img: testSVG,
-    alt: 'test',
-    path: '/transactions',
-    id: 8,
-  },
-  {
-    title: 'Balance',
-    img: testSVG,
-    alt: 'test',
-    path: '/balance',
-    id: 9,
   },
   {
     title: 'Create Wallet',

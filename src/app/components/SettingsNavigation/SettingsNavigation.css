@@ -1,0 +1,22 @@
+.settingsNavigation {
+  background-color: #fff;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 2px 2px 2px rgba(211, 211, 211, 0.5);
+}
+
+.settingsNavigationButton {
+  height: 50px;
+  background: transparent;
+  color: #585858;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.settingsNavigationButton svg {
+  margin-right: 5px;
+}
