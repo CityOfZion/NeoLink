@@ -6,7 +6,7 @@ import Box from '../../components/common/Box'
 import FileUpload from '../../components/FileUpload'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import ImportWalletSuccessPage from '../../components/successPages/ImportWalletSuccessPage'
-import ErrorCard from '../../components/Errors/ErrorCard'
+import ErrorCard from '../../components/errors/ErrorCard'
 import ImportWalletInfo from '../../components/ImportWalletInfo'
 
 import style from './ImportWallet.css'
