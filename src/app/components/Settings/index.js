@@ -13,12 +13,12 @@ const Settings = props => (
         <SettingsButton
           icon='fas fa-upload'
           text='Import Wallet'
-          onClickHandler={ () => props.history.push('/settings') }
+          onClickHandler={ () => props.history.push('/importWallet') }
         />
         <SettingsButton
           icon='fas fa-download'
           text='Export Wallet'
-          onClickHandler={ () => props.history.push('/settings') }
+          onClickHandler={ () => props.history.push('/exportWallet') }
         />
         <SettingsButton
           icon='fas fa-plus-circle'
