@@ -7,10 +7,23 @@ import NetworkSwitcher from '../../src/app/components/NetworkSwitcher'
 const setup = () => {
   const props = {
     selectedNetworkId: 'MainNet',
+    account: {
+      address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
+    },
     networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
-      TestNet: { name: 'TestNet', url: 'http://testnet-api.wallet.cityofzion.io', canDelete: false },
-      CoZTestNet: { name: 'CoZ TestNet', url: 'http://coz-privatenet.herokuapp.com/', canDelete: false },
+      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
+      TestNet: {
+        name: 'TestNet',
+        url: 'http://testnet-api.wallet.cityofzion.io',
+        canDelete: false,
+        apiType: 'neoscan',
+      },
+      CoZTestNet: {
+        name: 'CoZ TestNet',
+        url: 'http://coz-privatenet.herokuapp.com/',
+        canDelete: false,
+        apiType: 'neoscan',
+      },
     },
     setNetwork: jest.fn(),
     getBalance: jest.fn(),

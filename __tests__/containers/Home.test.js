@@ -66,7 +66,6 @@ describe('Home', () => {
   })
 
   test('calls getBalance and getTransactions correctly', () => {
-    console.log(helpers)
     helpers.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
     helpers.getTransactions = jest.fn(() => new Promise((resolve, reject) => resolve()))
 
