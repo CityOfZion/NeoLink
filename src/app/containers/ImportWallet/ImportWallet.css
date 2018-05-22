@@ -1,0 +1,21 @@
+.importWallet {
+    padding: 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.importWalletHeading {
+    text-align: center;
+}
+
+.importWalletSubtitle {
+    color: #585858;
+    text-align: center;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.importAccountsButton {
+    margin: 0 auto;
+}

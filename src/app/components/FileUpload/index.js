@@ -1,12 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const FileUpload = ({ onClickHandler }) => {
-  return <input type='file' id='file' onChange={ this.handleFileUpload } />
+import style from './FileUpload.css'
+
+const FileUpload = ({ onChangeHandler }) => {
+  return (
+    <label className={ style.fileUpload }>
+      <i className='fas fa-download' />
+      <input type='file' id='file' onChange={ onChangeHandler } className={ style.fileUploadInput } />
+    </label>
+  )
 }
 
 FileUpload.propTypes = {
-  onClickHandler: PropTypes.func.isRequired,
+  onChangeHandler: PropTypes.func.isRequired,
 }
 
 export default FileUpload

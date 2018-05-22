@@ -1,0 +1,16 @@
+.importWalletInfo {
+    display: flex;
+    color: #585858;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.importWalletInfo svg {
+    margin: 0 10px 0 5px;
+    font-size: 1rem;
+    transform: translateY(-5px);
+}
+
+.importWalletInfoHeading {
+    font-size: 0.9rem;
+}

@@ -1,0 +1,22 @@
+.fileUpload {
+    width: 150px;
+    border: 2px dashed #36b049;
+    height: 150px;
+    margin: 40px;
+    display: block;
+    cursor: pointer;
+}
+
+.fileUpload svg {
+    color: #36b049;
+    font-size: 2em;
+    transform: translateX(61px) translateY(59px);
+}
+
+.fileUploadInput {
+    position: relative;
+    height: 100%;
+    width: auto;
+    opacity: 0;
+    cursor: pointer;
+}
