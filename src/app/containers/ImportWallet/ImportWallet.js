@@ -11,9 +11,6 @@ import ImportWalletInfo from '../../components/ImportWalletInfo'
 
 import style from './ImportWallet.css'
 
-import { Button } from 'rmwc/Button'
-import '@material/button/dist/mdc.button.min.css'
-
 export default class ImportWallet extends Component {
   state = {
     importAccounts: [],
