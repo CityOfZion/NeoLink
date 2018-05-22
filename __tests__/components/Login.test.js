@@ -20,16 +20,6 @@ describe('Login', () => {
     },
   }
 
-  const loginFormProps = {
-    setFormFieldError: jest.fn,
-    clearFormFieldError: jest.fn,
-    errors: {},
-    renderTextField: jest.fn,
-    renderSelectField: jest.fn,
-    setBalance: jest.fn,
-    setTransactions: jest.fn,
-  }
-
   beforeEach(() => {
     store = createStore(combineReducers({ form: formReducer }))
   })
@@ -37,7 +27,13 @@ describe('Login', () => {
   test('shows loading', done => {
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ { wif: '' } } accounts={ validAccount } { ...loginFormProps } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ { wif: '' } }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
 
@@ -59,7 +55,13 @@ describe('Login', () => {
         reset={ jest.fn }
         account={ { wif: '' } }
         accounts={ {} }
-        { ...loginFormProps }
+        setBalance={ jest.fn }
+        setTransactions={ jest.fn }
+        setFormFieldError={ jest.fn }
+        clearFormFieldError={ jest.fn }
+        errors={ {} }
+        renderTextField={ jest.fn }
+        renderSelectField={ jest.fn }
       />
     )
 
@@ -74,7 +76,13 @@ describe('Login', () => {
 
     const loginForm = mount(
       <Provider store={ store }>
-        <LoginForm setAccount={ jest.fn } account={ preLoggedIn } accounts={ validAccount } { ...loginFormProps } />
+        <LoginForm
+          setAccount={ jest.fn }
+          account={ preLoggedIn }
+          accounts={ validAccount }
+          setBalance={ jest.fn }
+          setTransactions={ jest.fn }
+        />
       </Provider>
     )
     expect(loginForm.html()).toEqual(null)
