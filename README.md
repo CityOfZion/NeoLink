@@ -2,10 +2,10 @@
 
 This is a Chrome extension wallet for the Neo Smart Economy.
 
-Currently the project is undergoing heavy development.
+Currently the project is undergoing heavy development. When running in development, the extension popup can
+be perceived as slow to start. Please be aware of this when running the unpacked extension build.
 
 ![alt](https://i.gyazo.com/816b21e8fcbb35073919603c9d6030c1.gif)
-
 
 ## Current Features
 
@@ -24,18 +24,18 @@ Currently the project is undergoing heavy development.
 
 ## Future Features
 
-*    Add progress indicator for all actions to show user something is happening
-*    Add global status bar or modal system
-*    Re-skin UI and layout
-*    Refactor: lint, modularity, and clarity
-*    Contact book that remembers addresses used
-*    Configurable watch wallet for any saved addresses to display balances all in one view
-*    Claim Gas
-*    Import Wallet
-*    Export Wallet
-*    Add arbitrary number of arguments for smart contract invocation
-*    Ledger hardware support
-*    Any ideas from the community!
+* Add progress indicator for all actions to show user something is happening
+* Add global status bar or modal system
+* Re-skin UI and layout
+* Refactor: lint, modularity, and clarity
+* Contact book that remembers addresses used
+* Configurable watch wallet for any saved addresses to display balances all in one view
+* Claim Gas
+* Import Wallet
+* Export Wallet
+* Add arbitrary number of arguments for smart contract invocation
+* Ledger hardware support
+* Any ideas from the community!
 
 ## Roadmap for Q1 2018
 
@@ -45,7 +45,6 @@ Currently the project is undergoing heavy development.
 * Version 1.0 Release (Release packed plug-in on Google and Firefox)
 * neon-api integration (NEO's web3 equivalent)
 
-
 ## Setup
 
 `npm install`
@@ -54,15 +53,16 @@ Currently the project is undergoing heavy development.
 
 `npm run build` (production)
 
-
 Your unpacked extension will be in the ./build/ folder.
 
 See https://developer.chrome.com/extensions/getstarted#unpacked for instructions on manually loading an unpacked Chrome extension in developer mode.
 
+Tip: If you inspect the extension with developer tools, the extension will stay open instead of closing as is default Chrome behavior on events outside of
+the extension window.
+
 ## Use NeoLink with your dApp
 
 Add the following code to your dApp:
-
 
 ```
 <input type='text' id='contractScriptHash' />
@@ -101,9 +101,9 @@ Please note that currently the code is limited to a maximum of two arguments to 
 
 ## NeoLink - Demo
 
-- Install NeoLink
-    - Clone github.com/cityofzion/neolink/
-    - Follow the instructions there to install and build
-    - Login with encrypted WIF (wallet needs a balance of TestNet gas)
-- Visit sendeo.surge.sh and watch the video to learn how it works.
-- Code available at [on Githhub](https://github.com/slipo/sendeo)
+* Install NeoLink
+  * Clone github.com/cityofzion/neolink/
+  * Follow the instructions there to install and build
+  * Login with encrypted WIF (wallet needs a balance of TestNet gas)
+* Visit sendeo.surge.sh and watch the video to learn how it works.
+* Code available at [on Githhub](https://github.com/slipo/sendeo)
