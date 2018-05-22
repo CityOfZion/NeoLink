@@ -22,7 +22,7 @@ const AccountInfoDropDownContent = ({ onClickHandler, address }) => {
 }
 
 AccountInfoDropDownContent.propTypes = {
-  onClickHandler: PropTypes.func.isRequired,
+  onClickHandler: PropTypes.func,
   address: PropTypes.string.isRequired,
 }
 
