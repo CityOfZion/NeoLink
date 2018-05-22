@@ -28,7 +28,7 @@ describe('Home', () => {
       },
     },
     networks: {
-      TestNetworks: 'TestNetworks',
+      TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
     },
   }
 
@@ -66,6 +66,7 @@ describe('Home', () => {
   })
 
   test('calls getBalance and getTransactions correctly', () => {
+    console.log(helpers)
     helpers.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
     helpers.getTransactions = jest.fn(() => new Promise((resolve, reject) => resolve()))
 
@@ -73,13 +74,25 @@ describe('Home', () => {
 
     expect(helpers.getBalance).toHaveBeenCalledTimes(1)
     expect(helpers.getTransactions).toHaveBeenCalledTimes(1)
-    expect(helpers.getBalance).toHaveBeenCalledWith({ TestNetworks: 'TestNetworks' }, 'TestNet', {
-      address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
-      wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
-    })
-    expect(helpers.getTransactions).toHaveBeenCalledWith({ TestNetworks: 'TestNetworks' }, 'TestNet', {
-      address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
-      wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
-    })
+    expect(helpers.getBalance).toHaveBeenCalledWith(
+      {
+        TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
+      },
+      'TestNet',
+      {
+        address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
+        wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
+      }
+    )
+    expect(helpers.getTransactions).toHaveBeenCalledWith(
+      {
+        TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
+      },
+      'TestNet',
+      {
+        address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
+        wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
+      }
+    )
   })
 })
