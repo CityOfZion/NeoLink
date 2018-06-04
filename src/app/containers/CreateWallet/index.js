@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import { addAccount } from '../../actions/wallet'
 import { setAccount } from '../../actions/account'
 
-import CreateWallet from './CreateWallet'
+import style from './CreateWallet.css'
 
 const actionCreators = {
   addAccount,
