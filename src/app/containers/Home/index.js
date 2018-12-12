@@ -14,7 +14,6 @@ const mapStateToProps = state => ({
   accounts: state.wallet.accounts,
   selectedNetworkId: state.config.selectedNetworkId,
   networks: state.config.networks,
-  // txs: state.account.transactions,
 })
 
 const mapDispatchToProps = dispatch => ({

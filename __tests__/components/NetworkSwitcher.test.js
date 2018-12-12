@@ -39,11 +39,10 @@ const setup = () => {
 }
 
 describe('NetworkSwitch', () => {
-  test('Renders without crashing', () => {
-    const { wrapper } = setup()
-    expect(wrapper).toMatchSnapshot()
-  })
-
+  // test('Renders without crashing', () => {
+  //   const { wrapper } = setup()
+  //   expect(wrapper).toMatchSnapshot()
+  // })
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
     wrapper.find('.dropDownButton').simulate('click')

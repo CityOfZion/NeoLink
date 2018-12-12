@@ -19,6 +19,8 @@ import { toNumber, toBigNumber } from '../../utils/math'
 
 import PasswordModal from '../../components/PasswordModal'
 
+import Asset from '../Asset'
+
 import { logDeep } from '../../utils/debug'
 
 import style from './Send.css'
@@ -92,6 +94,45 @@ export class Send extends Component {
     })
   }
 
+  getSelectedFieldValue = (option) => {
+    this.setState({ selectedField: option.target.value })
+  }
+
+  getPortfolio = () => {
+    const { account } = this.props
+    let portfolio = {
+      assets: [],
+      tokens: [],
+    }
+
+    if (account && account.results && account.results._tokens.length) {
+      portfolio.tokens = account.results._tokens
+
+      portfolio.tokens.forEach(token => {
+        portfolio.assets.push(<Asset assetName={ token.name } assetAmount={ token.amount.toLocaleString() } key={ token.name } />)
+      })
+    }
+    return portfolio
+  }
+
+  getAmount = (symbol) => {
+    const { account } = this.props
+    const portfolio = this.getPortfolio()
+    console.log(symbol)
+    let amount = 0
+
+    portfolio.tokens.forEach(token => {
+      if (token.symbol === symbol) amount = token.amount
+    })
+
+    if (!amount) {
+      if (symbol === 'GAS') amount = account.gas
+      else if (symbol === 'NEO') amount = account.neo
+    }
+
+    return amount
+  }
+
   handleCancelClick = () => {
     this.setState({ showConfirmation: false })
   }
@@ -130,7 +171,6 @@ export class Send extends Component {
     console.log('wif:' + wif)
     let amounts = {}
     amounts[assetType] = toNumber(amount)
-    // Neon.do.sendAsset(selectedNetworkId, address, account.wif, amounts)
     sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0).then(result => {
       this.setState({
         loading: false,
@@ -159,7 +199,7 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, showConfirmation, confirmationMessage, errorMessage } = this.state
+    const { txid, loading, showConfirmation, confirmationMessage, errorMessage, selectedField } = this.state
     const {
       handleSubmit,
       account,
@@ -173,11 +213,13 @@ export class Send extends Component {
 
     let content
 
+    const portfolio = this.getPortfolio()
+
     if (loading) {
       content = <Loader />
     } else if (showConfirmation) {
-      // console.log('showing form')
       let accountLabel
+
       if (Object.keys(accounts).length > 0) {
         Object.keys(accounts).forEach(index => {
           if (account.address === accounts[index].address) accountLabel = accounts[index].label
@@ -242,9 +284,15 @@ export class Send extends Component {
                   className={ style.sendAssetSelectBox }
                   type='select'
                   name='assetType'
+                  onChange={ e => this.getSelectedFieldValue(e) }
                 >
                   <option value='NEO'>NEO</option>
                   <option value='GAS'>GAS</option>
+                  { portfolio.tokens.map(token => (
+                    <option key={ token.hash } value={ token.symbol }>
+                      { token.name } { token.amount }
+                    </option>
+                  )) }
                 </Field>
               </section>
               <section className={ style.sendAddress }>
@@ -276,6 +324,9 @@ export class Send extends Component {
                   label='Amount'
                   classNames={ style.sendAmountsInputField }
                 />
+                <section className={ style.sendAmount }>
+                  Available: { this.getAmount(selectedField) }
+                </section>
                 <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
               </section>
             </form>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import style from './Asset.css'
 
@@ -12,21 +12,15 @@ class Asset extends Component {
   }
 
   componentDidMount() {
-    const { assetName, assetAmount } = this.props
     // this.icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
-    this.amount = assetAmount
-    this.name = assetName
   }
 
   render() {
+    const { assetName, assetAmount } = this.props
     return (
-      <div>
-        <div />
-        <div className={ style.assetCard }>
-          <h4 className={ style.assetCardName }>{this.name}</h4>
-          <h4 className={ style.assetCardAmount }>{this.amount}</h4>
-        </div>
-      </div>
+      <Fragment>
+        <h4 className={ style.assetCardName }>{assetName}: {assetAmount}</h4>
+      </Fragment>
     )
   }
 }

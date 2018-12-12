@@ -55,3 +55,8 @@
 .sendAmount {
   display: flex;
 }
+
+.assetInfoHeader {
+  margin: 0;
+  text-align: center;
+}

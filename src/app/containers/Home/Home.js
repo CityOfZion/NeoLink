@@ -15,6 +15,8 @@ import Asset from '../Asset'
 
 import { isArray } from 'lodash'
 
+import { logDeep } from '../../utils/debug'
+
 import style from './Home.css'
 
 class Home extends Component {
@@ -51,6 +53,8 @@ class Home extends Component {
 
   getHomeScreenTransactions = network => {
     const { account, accountActions } = this.props
+
+    logDeep('account results: ', account.results)
 
     let page = 1 // TODO add 'more' feature to list more txs
 
@@ -122,10 +126,11 @@ class Home extends Component {
     const { showInputField, amountsError, label, transactionHistoryError, labelError } = this.state
 
     let assets = []
+
     if (account.results) {
       for (let key in account.results) {
         if (account.results.hasOwnProperty(key)) {
-          if (key !== 'neo' && key !== 'gas') {
+          if (key !== 'neo' && key !== 'gas' && key !== '_tokens') {
             assets.push(<Asset assetName={ key } assetAmount={ account.results[key].toLocaleString() } key={ key } />)
           }
         }

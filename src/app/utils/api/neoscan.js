@@ -296,7 +296,7 @@ export const getTransaction = txid => {
 
 // getBalance for an address
 // /api/test_net/v1/get_balance/{address}
-// Returns the balance for an address including NEP5 Tokens.
+// Returns the balance for an address including NEP-5 Tokens.
 //
 // URI ParametersHide
 // address
@@ -310,8 +310,20 @@ export const getBalance = address => {
       return axios
         .get(url)
         .then(response => {
-          let assets = {}
           let data = response.data
+          let assets = {}
+
+          // Next line is new, keeping the above for backwards compatibility with current codebase (for now).
+          // The plan is to follow neoscan get_balance json result format. I.e.,
+          // _tokens[asset] = {
+          //    name: 'Contract Token X',
+          //    symbol: 'CTX',
+          //    hash: '9aff1e08aea2048a26a3d2ddbb3df495b932b1e7',
+          //    amount: 10000
+          // }
+
+          assets._tokens = []
+
           if (data.address === 'not found') {
             assets = {
               neo: 0,
@@ -319,15 +331,21 @@ export const getBalance = address => {
             }
           } else {
             data.balance.map(b => {
-              let ast = {}
-              ast[b.asset] = b.amount
-
               if (b.asset === 'NEO') {
                 assets['neo'] = b.amount
               } else if (b.asset === 'GAS') {
                 assets['gas'] = b.amount
               } else if (b.amount) {
                 assets[b.asset] = b.amount
+
+                const token = {
+                  'name': b.asset,
+                  'symbol': b.asset_symbol,
+                  'hash': b.asset_hash,
+                  'amount': b.amount,
+                }
+
+                assets._tokens.push(token)
               }
             })
           }
