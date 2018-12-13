@@ -48,7 +48,7 @@ Currently the project is undergoing heavy development.
 
 ## Setup
 
-`git clone git@github.com:CityOfZion/NeoLink.git .` 
+`git clone https://github.com/CityOfZion/NeoLink.git` 
 
 `npm install`
 
